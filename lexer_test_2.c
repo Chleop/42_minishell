@@ -1,12 +1,10 @@
 #include "minishell.h"
 
-void	init_lexer(char ***token, t_lex *lex, char *input)
+void	init_lexer(t_lex *lex, char *input)
 {
 	lex->input = input;
-	*token = ft_calloc(2, sizeof(char *));;
-	lex->token_nb = 1;
-	(*token)[lex->token_nb - 1] = ft_calloc(1, sizeof(char));
-	(*token)[lex->token_nb] = NULL;
+	lex->input_nb = 0;
+	lex->token_nb = 0;
 	lex->tok_char_nb = 0;
 	lex->inside_quotes = '\0';
 }
@@ -16,19 +14,24 @@ void	create_new_token(char ***token, t_lex *lex)
 	int		l;
 	char	**tab_temp;
 
+	while ((lex->input)[lex->input_nb] == ' ')
+		lex->input_nb++;
+	if ((lex->input)[lex->input_nb] == '\n')
+		return ;
 	lex->tok_char_nb = 0;
 	lex->token_nb = (lex->token_nb) + 1;
 	tab_temp = (*token);
-	(*token) = ft_calloc((lex->token_nb + 1), sizeof(char *));
-	l = 0;
-	while (tab_temp[l])
+	*token = ft_calloc((lex->token_nb + 1), sizeof(char *));
+	if (tab_temp)
 	{
-		(*token)[l] = tab_temp[l];
-		l++;
+		l = 0;
+		while (tab_temp[l])
+		{
+			(*token)[l] = tab_temp[l];
+			l++;
+		}
+		free(tab_temp);
 	}
-	free(tab_temp);
-	(*token)[lex->token_nb - 1] = ft_calloc(1, sizeof(char));
-	(*token)[lex->token_nb] = NULL;
 }
 
 void	add_to_token(char ***token, t_lex *lex, char input)
@@ -38,18 +41,20 @@ void	add_to_token(char ***token, t_lex *lex, char input)
 
 	if (input != '\n')
 	{
-		lex->tok_char_nb = lex->tok_char_nb + 1;
+		lex->tok_char_nb = lex->tok_char_nb + 1;	
 		str_temp = (*token)[lex->token_nb - 1];
 		(*token)[lex->token_nb - 1] = ft_calloc((lex->tok_char_nb + 1), sizeof(char));
-		l = 0;
-		while (str_temp[l])
+		if (str_temp)
 		{
-			(*token)[lex->token_nb - 1][l] = str_temp[l];
-			l++;
+			l = 0;
+			while (str_temp[l])
+			{
+				(*token)[lex->token_nb - 1][l] = str_temp[l];
+				l++;
+			}
+			free(str_temp);
 		}
-		free(str_temp);
 		(*token)[lex->token_nb - 1][lex->tok_char_nb - 1] = input;
-		(*token)[lex->token_nb - 1][lex->tok_char_nb] = '\0';
 	}
 }
 
@@ -69,43 +74,43 @@ char	**split_into_token(char *input)
 {
 	t_lex	*lex;
 	char	**token;
-	int		i;
 
 	lex = ft_calloc(1, sizeof(t_lex));
-	init_lexer(&token, lex, input);
-	i = 0;
-	while ((lex->input)[i] != '\n')
+	init_lexer(lex, input);
+	token = NULL;
+	while ((lex->input)[lex->input_nb] != '\n')
 	{
-		if ((((lex->input)[i] == '|') || ((lex->input)[i] == ' ')) && (!lex->inside_quotes))
-		{
-			while ((lex->input)[i + 1] == ' ')
-				i++;
-			i++;
+		if (!token)
 			create_new_token(&token, lex);
-		}
-		else if (((lex->input)[i] == '\'') || ((lex->input)[i] == '\"'))
+		if ((((lex->input)[lex->input_nb] == ' ') || ((lex->input)[lex->input_nb] == '|')
+		|| ((lex->input)[lex->input_nb] == '<') || ((lex->input)[lex->input_nb] == '>'))
+		&& (!lex->inside_quotes))
 		{
-			if (!(lex->inside_quotes) && (is_paired((lex->input)[i], lex->input, i)))
+			if (lex->token_nb > 1)
+				create_new_token(&token, lex);
+			if ((lex->input)[lex->input_nb] == '|')
 			{
-				lex->inside_quotes = lex->input[i];
-				i++;
+				add_to_token(&token, lex, (lex->input)[lex->input_nb++]);
+				create_new_token(&token, lex);
 			}
-			else if (lex->inside_quotes == lex->input[i])
+			if (((lex->input)[lex->input_nb] == '<') || ((lex->input)[lex->input_nb] == '>'))
 			{
+				add_to_token(&token, lex, (lex->input)[lex->input_nb++]);
+				if (((lex->input)[lex->input_nb - 1]) == ((lex->input)[lex->input_nb]))
+					add_to_token(&token, lex, (lex->input)[lex->input_nb++]);
+				create_new_token(&token, lex);
+			}
+		}
+		else if (((lex->input)[lex->input_nb] == '\'') || ((lex->input)[lex->input_nb] == '\"'))
+		{
+			if (!(lex->inside_quotes) && (is_paired((lex->input)[lex->input_nb], lex->input, lex->input_nb)))
+				lex->inside_quotes = lex->input[lex->input_nb];
+			else if (lex->inside_quotes == lex->input[lex->input_nb])
 				lex->inside_quotes = '\0';
-				i++;
-			}
-			else
-			{
-				add_to_token(&token, lex, (lex->input)[i]);
-				i++;
-			}
+			add_to_token(&token, lex, (lex->input)[lex->input_nb++]);
 		}
 		else
-		{
-			add_to_token(&token, lex, (lex->input)[i]);
-			i++;
-		}
+			add_to_token(&token, lex, (lex->input)[lex->input_nb++]);
 	}
 	return(token);
 }
@@ -118,7 +123,7 @@ int	main(int argc, char **argv)
 	if (argc > 1)
 		printf("Error: too many arguments");
 	if (ft_strncmp(argv[0], "./minishell", 11))
-		printf("Error:     ");
+		printf("Error: ");
 	while (42)
 	{
 		ft_putstr_fd("minishou:~$ ", 1);
