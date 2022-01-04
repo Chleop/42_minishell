@@ -1,109 +1,104 @@
 #include "minishell.h"
 
-void	print_table(char **tab)
+void	init_lexer(char ***token, t_lex *lex, char *input)
 {
-	int	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		printf("Token %d = %s\n", i, tab[i]);
-		i++;
-	}
-	return ;
+	lex->input = input;
+	*token = ft_calloc(2, sizeof(char *));;
+	lex->token_nb = 1;
+	(*token)[(lex->token_nb) - 1] = ft_calloc(1, sizeof(char));
+	(*token)[(lex->token_nb)] = NULL;
+	lex->tok_char_nb = 0;
+	lex->inside_quotes = '\0';
 }
 
-void	ft_del_stringtab(char ***tab)
-{
-	int	i;
-
-	i = 0;
-	while ((*tab)[i])
-		free((*tab)[i++]);
-	free(*tab);
-	*tab = NULL;
-}
-
-void	create_new_token(int *tok_char_nb, int *token_nb, char ***token, char input)
+void	create_new_token(char ***token, t_lex *lex)
 {
 	int		l;
 	char	**tab_temp;
 
-	*tok_char_nb = 1;
-	*token_nb = (*token_nb) + 1;
-	if ((*token) == NULL)
-		*token = ft_calloc(2, sizeof(char *));
-	else
+	lex->tok_char_nb = 0;
+	lex->token_nb = (lex->token_nb) + 1;
+	tab_temp = (*token);
+	(*token) = ft_calloc(((lex->token_nb) + 1), sizeof(char *));
+	l = 0;
+	while (tab_temp[l])
 	{
-		tab_temp = (*token);
-		(*token) = ft_calloc(((*token_nb) + 1), sizeof(char *));
-		l = 0;
-		while (tab_temp[l])
-		{
-			(*token)[l] = tab_temp[l];
-			l++;
-		}
-		free(tab_temp);
+		(*token)[l] = tab_temp[l];
+		l++;
 	}
-	(*token)[(*token_nb) - 1] = ft_calloc((2), sizeof(char));
-	(*token)[(*token_nb) - 1][0] = input;
-	(*token)[(*token_nb) - 1][1] = '\0';
-	(*token)[(*token_nb)] = NULL;
+	free(tab_temp);
+	(*token)[(lex->token_nb) - 1] = ft_calloc(1, sizeof(char));
+	(*token)[(lex->token_nb)] = NULL;
 }
 
-void	add_to_token(int *tok_char_nb, int token_nb, char ***token, char input)
+void	add_to_token(char ***token, t_lex *lex, char input)
 {
 	int		l;
 	char	*str_temp;
 
-	*tok_char_nb = *tok_char_nb + 1;
-	str_temp = (*token)[token_nb - 1];
-	(*token)[token_nb - 1] = ft_calloc(((*tok_char_nb) + 1), sizeof(char));
-	l = 0;
-	while (str_temp[l])
+	if (input != '\n')
 	{
-		(*token)[token_nb - 1][l] = str_temp[l];
-		l++;
+		lex->tok_char_nb = lex->tok_char_nb + 1;
+		str_temp = (*token)[lex->token_nb - 1];
+		(*token)[lex->token_nb - 1] = ft_calloc(((lex->tok_char_nb) + 1), sizeof(char));
+		l = 0;
+		while (str_temp[l])
+		{
+			(*token)[lex->token_nb - 1][l] = str_temp[l];
+			l++;
+		}
+		free(str_temp);
+		(*token)[lex->token_nb - 1][(lex->tok_char_nb) - 1] = input;
+		(*token)[lex->token_nb - 1][(lex->tok_char_nb)] = '\0';
 	}
-	free(str_temp);
-	(*token)[token_nb - 1][(*tok_char_nb) - 1] = input;
-	(*token)[token_nb - 1][(*tok_char_nb)] = '\0';
 }
 
-int	is_new_token(char **token, char input, int *i)
+int	is_paired(char q, char *input, int i)
 {
-	int	new_token;
-
-	new_token = 0;
-	if (token == NULL)
-		new_token = 1;
-	else if (input == ' ')
+	i++;
+	while (input[i])
 	{
-		*i = *i + 1;
-		new_token = 1;
+		if (input[i] == q)
+			return (1);
+		i++;
 	}
-	return(new_token);
+	return (0);
 }
 
 char	**split_into_token(char *input)
 {
-	int		i;
-	int		token_nb;
-	int		tok_char_nb;
+	t_lex	*lex;
 	char	**token;
+	int		i;
 
+	lex = ft_calloc(1, sizeof(t_lex));
+	init_lexer(&token, lex, input);
 	i = 0;
-	token_nb = 0;
-	tok_char_nb = 0;
-	token = NULL;
-	while (input[i])
+	while (((lex->input)[i]) && ((lex->input)[i] != '\n'))
 	{
-		if (input[i] == '\n')
-			break;
-		else if (is_new_token(token, input[i], &i))
-			create_new_token(&tok_char_nb, &token_nb, &token, input[i]);
+		if ((!lex->inside_quotes) && (((lex->input)[i] == '|') || ((lex->input)[i] == ' ')))
+		{
+			while ((lex->input)[i + 1] == ' ')
+				i++;
+			create_new_token(&token, lex);
+		}
 		else
-			add_to_token(&tok_char_nb, token_nb, &token, input[i]);
+		{
+			if (((lex->input)[i] == '\'') || ((lex->input)[i] == '\"'))
+			{
+				if (!(lex->inside_quotes) && (is_paired((lex->input)[i], lex->input, i)))
+				{
+					lex->inside_quotes = lex->input[i];
+					i++;
+				}
+				else if (lex->inside_quotes == lex->input[i])
+				{
+					lex->inside_quotes = 0;
+					i++;
+				}
+			}
+			add_to_token(&token, lex, (lex->input)[i]);
+		}
 		i++;
 	}
 	return(token);
@@ -122,6 +117,7 @@ int	main(int argc, char **argv)
 	{
 		ft_putstr_fd("minishou:~$ ", 1);
 		input = get_next_line(0);
+
 		token = split_into_token(input);
 		free (input);
 		print_table(token);

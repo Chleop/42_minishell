@@ -6,13 +6,15 @@
 #    By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 12:28:36 by cproesch          #+#    #+#              #
-#    Updated: 2021/12/09 12:29:59 by cproesch         ###   ########.fr        #
+#    Updated: 2022/01/03 18:39:07 by cproesch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS		= src/main_bonus.c src/find_path_bonus.c \
-			src/del_exit_utils_bonus.c src/process_bonus.c \
-			src/process_utils_bonus.c
+# SRCS		= src/main_bonus.c src/find_path_bonus.c \
+# 			src/del_exit_utils_bonus.c src/process_bonus.c \
+# 			src/process_utils_bonus.c \
+
+SRCS		= lexer_test_2.c lexer_utils.c
 
 OBJS		= $(SRCS:.c=.o)
 
