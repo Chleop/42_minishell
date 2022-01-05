@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/30 14:03:39 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/04 15:16:13 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/05 12:27:58 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 typedef struct s_lex
 {
 	char	*input;
-	int		input_nb;
+	int		i;
 	int		token_nb;
 	int		tok_char_nb;
 	int		inside_quotes;

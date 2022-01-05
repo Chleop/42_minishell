@@ -83,94 +83,35 @@ char	**split_into_token(char *input)
 	while ((lex->input)[lex->i] != '\n')
 	{
 		if (!token)
-		{
-	 		// printf("1\n");
 			create_new_token(&token, lex);
-			add_to_token(&token, lex, (lex->input)[lex->i++]);
-		}
-		else if (ft_strchr("|<>", (lex->input)[lex->i - 1]) && !(lex->inside_quotes))
+		if ((ft_strchr("|<> ", (lex->input)[lex->i])) && (!lex->inside_quotes))
 		{
-			// printf("2\n");
-			if (ft_strchr("|<>", (lex->input)[lex->i]))
-				add_to_token(&token, lex, (lex->input)[lex->i++]);
-			else if ((lex->input)[lex->i] != '\n')
-			{
+			if (lex->i)
 				create_new_token(&token, lex);
-				add_to_token(&token, lex, (lex->input)[lex->i++]);
+			if (ft_strchr("|<>", (lex->input)[lex->i]))
+			{
+				while (ft_strchr("|<>", (lex->input)[lex->i]))
+					add_to_token(&token, lex, (lex->input)[lex->i++]);
+				create_new_token(&token, lex);
 			}
 		}
 		else if (((lex->input)[lex->i] == '\'') || ((lex->input)[lex->i] == '\"'))
 		{
-			// printf("3\n");
-			add_to_token(&token, lex, (lex->input)[lex->i++]);
-			if (!(lex->inside_quotes) && (is_paired((lex->input)[lex->i - 1], lex->input, lex->i - 1)))
-			{
+			if (!(lex->inside_quotes) && (is_paired((lex->input)[lex->i], lex->input, lex->i)))
 				lex->inside_quotes = lex->input[lex->i];
-				lex->i++;
-				while (lex->inside_quotes != lex->input[lex->i])
-					add_to_token(&token, lex, (lex->input)[lex->i++]);
+			else if (lex->inside_quotes == lex->input[lex->i])
 				lex->inside_quotes = '\0';
-			}
-		}
-		else if (!(lex->inside_quotes) && ft_strchr("|<>", (lex->input)[lex->i]))
-		{
-			// printf("4\n");
-			if (lex->token_nb > 0)
-				create_new_token(&token, lex);
 			add_to_token(&token, lex, (lex->input)[lex->i++]);
 		}
-		else if (!(lex->inside_quotes) && ((lex->input)[lex->i] == ' '))
-		{
-			// printf("5 (space)\n");
-			while ((lex->input)[lex->i] == ' ')
-				lex->i++;
-		}
-		else if (!(lex->inside_quotes) && !(ft_strchr("|<> ", (lex->input)[lex->i - 1])))
-		{
-			// printf("6\n");
-			add_to_token(&token, lex, (lex->input)[lex->i++]);
-		}
+		// else if ((lex->input)[lex->i] == '$')
+		// {
+		// 	if (lex->token_nb > 1)
+		// 		create_new_token(&token, lex);
+		// 	add_to_token(&token, lex, (lex->input)[lex->i++]);
+		// }
 		else
-		{
-			// printf("7\n");
-			if (lex->tok_char_nb != 0)
-				create_new_token(&token, lex);
 			add_to_token(&token, lex, (lex->input)[lex->i++]);
-		}
 	}
-
-	// while ((lex->input)[lex->i] != '\n')
-	// {
-	// 	if (!token)
-	// 		create_new_token(&token, lex);
-	// 	if ((ft_strchr("|<> ", (lex->input)[lex->i])) && (!lex->inside_quotes))
-	// 	{
-	// 		if (lex->i)
-	// 			create_new_token(&token, lex);
-	// 		if (ft_strchr("|<>", (lex->input)[lex->i]))
-	// 		{
-	// 			while (ft_strchr("|<>", (lex->input)[lex->i]))
-	// 				add_to_token(&token, lex, (lex->input)[lex->i++]);
-	// 			create_new_token(&token, lex);
-	// 		}
-	// 	}
-	// 	else if (((lex->input)[lex->i] == '\'') || ((lex->input)[lex->i] == '\"'))
-	// 	{
-	// 		if (!(lex->inside_quotes) && (is_paired((lex->input)[lex->i], lex->input, lex->i)))
-	// 			lex->inside_quotes = lex->input[lex->i];
-	// 		else if (lex->inside_quotes == lex->input[lex->i])
-	// 			lex->inside_quotes = '\0';
-	// 		add_to_token(&token, lex, (lex->input)[lex->i++]);
-	// 	}
-	// 	// else if ((lex->input)[lex->i] == '$')
-	// 	// {
-	// 	// 	if (lex->token_nb > 1)
-	// 	// 		create_new_token(&token, lex);
-	// 	// 	add_to_token(&token, lex, (lex->input)[lex->i++]);
-	// 	// }
-	// 	else
-	// 		add_to_token(&token, lex, (lex->input)[lex->i++]);
-	// }
 	return(token);
 }
 
