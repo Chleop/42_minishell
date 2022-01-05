@@ -138,39 +138,6 @@ char	**split_into_token(char *input)
 			add_to_token(&token, lex, (lex->input)[lex->i++]);
 		}
 	}
-
-	// while ((lex->input)[lex->i] != '\n')
-	// {
-	// 	if (!token)
-	// 		create_new_token(&token, lex);
-	// 	if ((ft_strchr("|<> ", (lex->input)[lex->i])) && (!lex->inside_quotes))
-	// 	{
-	// 		if (lex->i)
-	// 			create_new_token(&token, lex);
-	// 		if (ft_strchr("|<>", (lex->input)[lex->i]))
-	// 		{
-	// 			while (ft_strchr("|<>", (lex->input)[lex->i]))
-	// 				add_to_token(&token, lex, (lex->input)[lex->i++]);
-	// 			create_new_token(&token, lex);
-	// 		}
-	// 	}
-	// 	else if (((lex->input)[lex->i] == '\'') || ((lex->input)[lex->i] == '\"'))
-	// 	{
-	// 		if (!(lex->inside_quotes) && (is_paired((lex->input)[lex->i], lex->input, lex->i)))
-	// 			lex->inside_quotes = lex->input[lex->i];
-	// 		else if (lex->inside_quotes == lex->input[lex->i])
-	// 			lex->inside_quotes = '\0';
-	// 		add_to_token(&token, lex, (lex->input)[lex->i++]);
-	// 	}
-	// 	// else if ((lex->input)[lex->i] == '$')
-	// 	// {
-	// 	// 	if (lex->token_nb > 1)
-	// 	// 		create_new_token(&token, lex);
-	// 	// 	add_to_token(&token, lex, (lex->input)[lex->i++]);
-	// 	// }
-	// 	else
-	// 		add_to_token(&token, lex, (lex->input)[lex->i++]);
-	// }
 	return(token);
 }
 
