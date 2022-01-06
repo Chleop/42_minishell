@@ -9,20 +9,23 @@ void	create_new_token(char ***token, t_lex *lex)
 		lex->i++;
 	if ((lex->input)[lex->i] == '\n')
 		return ;
-	lex->tok_char_nb = 0;
-	lex->token_nb = (lex->token_nb) + 1;
-	// printf("Creating token %d for input %c\n", lex->token_nb, (lex->input)[lex->i]);
-	tab_temp = (*token);
-	*token = ft_calloc((lex->token_nb + 1), sizeof(char *));
-	if (tab_temp)
+	if ((!(*token)) || (lex->tok_char_nb != 0))
 	{
-		l = 0;
-		while (tab_temp[l])
+		lex->tok_char_nb = 0;
+		lex->token_nb = (lex->token_nb) + 1;
+		// printf("Creating token %d for input %c\n", lex->token_nb, (lex->input)[lex->i]);
+		tab_temp = (*token);
+		*token = ft_calloc((lex->token_nb + 1), sizeof(char *));
+		if (tab_temp)
 		{
-			(*token)[l] = tab_temp[l];
-			l++;
+			l = 0;
+			while (tab_temp[l])
+			{
+				(*token)[l] = tab_temp[l];
+				l++;
+			}
+			free(tab_temp);
 		}
-		free(tab_temp);
 	}
 }
 
@@ -34,6 +37,7 @@ void	add_to_token(char ***token, t_lex *lex, char input)
 	// printf("Adding %c to token %d\n", input, lex->token_nb);
 	if (input != '\n')
 	{
+		// printf("%c", input);
 		lex->tok_char_nb = lex->tok_char_nb + 1;	
 		str_temp = (*token)[lex->token_nb - 1];
 		(*token)[lex->token_nb - 1] = ft_calloc((lex->tok_char_nb + 1), sizeof(char));
@@ -89,31 +93,46 @@ void	function_2(t_lex *lex, char ***token)
 	{
 		while (lex->input[lex->i] != c)
 			add_to_token(token, lex, (lex->input)[lex->i++]);
+		add_to_token(token, lex, (lex->input)[lex->i++]);
 	}
 }
 
 void	function_3(t_lex *lex, char ***token)
+{
+	if ((lex->tok_char_nb != 0) && (lex->input)[lex->i - 1] == ' ')
+		create_new_token(token, lex);
+	add_to_token(token, lex, (lex->input)[lex->i++]);
+	while (((lex->input)[lex->i] != ' ') && ((lex->input)[lex->i] != '\n'))
+	{
+		if (((lex->input)[lex->i] == '\'') || ((lex->input)[lex->i] == '\"'))
+			function_2(lex, token);
+		else if ((lex->input)[lex->i] == '$')
+			function_3(lex, token);
+		else
+			add_to_token(token, lex, (lex->input)[lex->i++]);
+	}
+}
+
+void	function_4(t_lex *lex, char ***token)
 {
 	if (lex->token_nb > 0)
 		create_new_token(token, lex);
 	add_to_token(token, lex, (lex->input)[lex->i++]);
 }
 
-void	function_4(t_lex *lex, char ***token)
+void	function_5(t_lex *lex, char ***token)
 {
-	char ***temp;
-
 	while ((lex->input)[lex->i] == ' ')
 		lex->i++;
-	temp = token;
+	create_new_token(token, lex);
 }
 
-void	function_5(t_lex *lex, char ***token)
+void	function_6(t_lex *lex, char ***token)
 {
 	add_to_token(token, lex, (lex->input)[lex->i++]);
 }
 
-void	function_6(t_lex *lex, char ***token)
+void	function_7(t_lex *lex, char ***token)
 {
 	if (lex->tok_char_nb != 0)
 		create_new_token(token, lex);

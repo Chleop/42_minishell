@@ -16,14 +16,16 @@ int	condition_tree(t_lex *lex, char ***token)
 		return (1);
 	else if (((lex->input)[lex->i] == '\'') || ((lex->input)[lex->i] == '\"'))
 		return (2);
-	else if (ft_strchr("|<>", (lex->input)[lex->i]))
+	else if ((lex->input)[lex->i] == '$')
 		return (3);
-	else if ((lex->input)[lex->i] == ' ')
+	else if (ft_strchr("|<>", (lex->input)[lex->i]))
 		return (4);
-	else if (!(ft_strchr("|<> ", (lex->input)[lex->i - 1])))
+	else if ((lex->input)[lex->i] == ' ')
 		return (5);
-	else
+	else if (!(ft_strchr("|<> ", (lex->input)[lex->i - 1])))
 		return (6);
+	else
+		return (7);
 }
 
 char	**split_into_token(char *input)
@@ -31,7 +33,7 @@ char	**split_into_token(char *input)
 	t_lex		*lex;
 	char		**token;
 	int			met_condition;
-	static void	(*function_table[8])(t_lex *lex, char ***token) = {
+	static void	(*function_table[9])(t_lex *lex, char ***token) = {
 		function_0,
 		function_1,
 		function_2,
@@ -39,6 +41,7 @@ char	**split_into_token(char *input)
 		function_4,
 		function_5,
 		function_6,
+		function_7,
 		NULL,
 	};
 

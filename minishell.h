@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/30 14:03:39 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/06 15:14:06 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/06 15:20:46 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,6 @@ void	function_3(t_lex *lex, char ***token);
 void	function_4(t_lex *lex, char ***token);
 void	function_5(t_lex *lex, char ***token);
 void	function_6(t_lex *lex, char ***token);
+void	function_7(t_lex *lex, char ***token);
 
 #endif
