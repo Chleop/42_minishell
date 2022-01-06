@@ -6,11 +6,11 @@
 #    By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 12:28:36 by cproesch          #+#    #+#              #
-#    Updated: 2022/01/05 14:46:10 by cproesch         ###   ########.fr        #
+#    Updated: 2022/01/06 15:03:51 by cproesch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS		= lexer_test_2.c lexer_utils.c
+SRCS		= main.c lexer/lexer.c lexer/lexer_functions.c lexer/lexer_utils.c
 
 OBJS		= $(SRCS:.c=.o)
 
@@ -31,7 +31,7 @@ RM			= rm -rf
 
 $(NAME):	$(OBJS)
 			make -C libft
-			$(CC) $(OBJS) $(LFLAGS) -o $(NAME)
+			$(CC) $(OBJS) $(LFLAGS) -o $(NAME) -v
 
 all:		$(NAME)
 
