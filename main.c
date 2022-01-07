@@ -4,6 +4,7 @@ int	main(int argc, char **argv)
 {
 	char	*input;
 	char	**token;
+	// t_data	data;
 
 	if (argc > 1)
 		printf("Error: too many arguments");
@@ -14,6 +15,7 @@ int	main(int argc, char **argv)
 		ft_putstr_fd("minishou:~$ ", 1);
 		input = get_next_line(0);
 		token = split_into_token(input);
+		
 		free (input);
 		print_table(token);
 		ft_del_stringtab(&token);

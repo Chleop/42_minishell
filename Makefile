@@ -6,11 +6,12 @@
 #    By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 12:28:36 by cproesch          #+#    #+#              #
-#    Updated: 2022/01/06 15:03:51 by cproesch         ###   ########.fr        #
+#    Updated: 2022/01/07 14:28:07 by cproesch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS		= main.c lexer/lexer.c lexer/lexer_functions.c lexer/lexer_utils.c
+SRCS		= main.c lexer/lexer.c lexer/lexer_functions_1.c lexer/lexer_functions_2.c \
+			lexer/lexer_utils.c utils_for_all.c
 
 OBJS		= $(SRCS:.c=.o)
 
