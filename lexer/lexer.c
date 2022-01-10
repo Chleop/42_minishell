@@ -12,7 +12,7 @@ int	condition_tree(t_lex *lex, char ***token)
 {
 	if (!(*token))
 		return (0);
-	if ((ft_strchr("|<>", (lex->input)[lex->i - 1])) && ((lex->i - 1) >= 0))
+	if ((lex->i > 0) && (ft_strchr("|<>", (lex->input)[lex->i - 1])))
 		return (1);
 	if (((lex->input)[lex->i] == '\'') || ((lex->input)[lex->i] == '\"'))
 		return (2);
@@ -22,7 +22,7 @@ int	condition_tree(t_lex *lex, char ***token)
 		return (4);
 	if ((lex->input)[lex->i] == ' ')
 		return (5);
-	if ((!(ft_strchr("|<> ", (lex->input)[lex->i - 1]))) && (lex->i - 1 >= 0))
+	if ((lex->i > 0) && (!(ft_strchr("|<> ", (lex->input)[lex->i - 1]))))
 		return (6);
 	return (7);
 }
@@ -47,12 +47,10 @@ char	**split_into_token(char *input)
 	lex = ft_calloc(1, sizeof(t_lex));
 	init_lexer(lex, input);
 	token = NULL;
-	int j = 0;
-	while (((lex->input)[lex->i] != '\n') && (j < 10))
+	while (((lex->input)[lex->i] != '\n'))
 	{
 		met_condition = condition_tree(lex, &token);
 		function_table[met_condition](lex, &token);
-		j++;
 	}
 	return (token);
 }
