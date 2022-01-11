@@ -1,7 +1,8 @@
 #include "minishell.h"
 
-void	init_lexer(t_lex *lex, char *input)
+void	init_lexer(t_lex *lex, char *input, char **envpo)
 {
+	lex->envp = envpo;
 	lex->input = input;
 	lex->i = 0;
 	lex->token_nb = 0;
@@ -27,7 +28,7 @@ int	condition_tree(t_lex *lex, char ***token)
 	return (7);
 }
 
-char	**split_into_token(char *input)
+char	**split_into_token(char *input, char **envp)
 {
 	t_lex		*lex;
 	char		**token;
@@ -45,7 +46,7 @@ char	**split_into_token(char *input)
 	};
 
 	lex = ft_calloc(1, sizeof(t_lex));
-	init_lexer(lex, input);
+	init_lexer(lex, input, envp);
 	token = NULL;
 	while (((lex->input)[lex->i] != '\n'))
 	{

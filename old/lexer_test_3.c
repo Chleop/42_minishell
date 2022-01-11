@@ -121,9 +121,9 @@ int	main(int argc, char **argv)
 	char	**token;
 
 	if (argc > 1)
-		printf("Error: too many arguments");
+		perror("Error: too many arguments");
 	if (ft_strncmp(argv[0], "./minishell", 11))
-		printf("Error: ");
+		perror("Error: ");
 	while (42)
 	{
 		ft_putstr_fd("minishou:~$ ", 1);

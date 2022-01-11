@@ -1,20 +1,24 @@
 #include "minishell.h"
 
-int	main(int argc, char **argv)
+int	main(int argc, char **argv, char **envp)
 {
 	char	*input;
 	char	**token;
-	// t_data	data;
+	// t_data	*data;
 
 	if (argc > 1)
-		printf("Error: too many arguments");
+		perror("Error: too many arguments");
 	if (ft_strncmp(argv[0], "./minishell", 11))
-		printf("Error: ");
+		perror("Error: ");
+	// data = (t_data *)malloc(sizeof(t_data) * 1);
+	// if (!data)
+	// 	perror("Error: ");
+	// data->envp = envp;
 	while (42)
 	{
 		ft_putstr_fd("minishou:~$ ", 1);
 		input = get_next_line(0);
-		token = split_into_token(input);
+		token = split_into_token(input, envp);
 		
 		print_table(token);
 		ft_del_stringtab(&token);
