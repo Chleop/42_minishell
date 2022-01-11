@@ -52,5 +52,7 @@ char	**split_into_token(char *input)
 		met_condition = condition_tree(lex, &token);
 		function_table[met_condition](lex, &token);
 	}
+	free (lex->input);
+	free (lex);
 	return (token);
 }

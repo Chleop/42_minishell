@@ -6,7 +6,7 @@
 #    By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 12:28:36 by cproesch          #+#    #+#              #
-#    Updated: 2022/01/07 14:28:07 by cproesch         ###   ########.fr        #
+#    Updated: 2022/01/11 11:15:08 by cproesch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ CC			= clang
 
 IFLAGS		= -I. -Ilibft
 
-CFLAGS		= -Wall -Wextra -Werror $(IFLAGS)
+CFLAGS		= -Wall -Wextra -Werror -fsanitize=address -g3 $(IFLAGS)
 
 LFLAGS		= -Llibft -lft 
 
@@ -32,7 +32,7 @@ RM			= rm -rf
 
 $(NAME):	$(OBJS)
 			make -C libft
-			$(CC) $(OBJS) $(LFLAGS) -o $(NAME) -v
+			$(CC) $(OBJS) $(LFLAGS) $(CFLAGS) -o $(NAME) -v
 
 all:		$(NAME)
 

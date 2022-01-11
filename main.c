@@ -16,7 +16,6 @@ int	main(int argc, char **argv)
 		input = get_next_line(0);
 		token = split_into_token(input);
 		
-		free (input);
 		print_table(token);
 		ft_del_stringtab(&token);
 	}
