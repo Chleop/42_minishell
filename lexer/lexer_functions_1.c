@@ -14,13 +14,13 @@
 
 void	condition_0(t_lex *lex, char ***token)
 {
-	printf("cond 0\n");
+	// printf("cond 0\n");
 	create_new_token(token, lex);
 }
 
 void	condition_1(t_lex *lex, char ***token)
 {
-	printf("cond 1\n");
+	// printf("cond 1\n");
 	if (ft_strchr("|<>", (lex->input)[lex->i]))
 		add_to_token(token, lex, (lex->input)[lex->i++]);
 	else if ((lex->input)[lex->i] != '\n')
@@ -37,38 +37,22 @@ void	condition_2(t_lex *lex, char ***token)
 {
 	char	c;
 
-	printf("cond 2\n");
+	// printf("cond 2\n");
 	c = lex->input[lex->i];
 	add_to_token(token, lex, (lex->input)[lex->i++]);
-	lex->i++;
+	// lex->i++;
 	if ((is_paired(c, lex->input, lex->i)))
 	{
 		while (lex->input[lex->i] != c)
 			add_to_token(token, lex, (lex->input)[lex->i++]);
 		add_to_token(token, lex, (lex->input)[lex->i++]);
-		lex->i++;
+		// lex->i++;
 	}
 }
 
-// void	condition_3(t_lex *lex, char ***token)
-// {
-// 	printf("cond 3\n");
-// 	add_to_token(token, lex, (lex->input)[lex->i++]);
-// 	while (((lex->input)[lex->i] != ' ') && ((lex->input)[lex->i] != '\n'))
-// 	{
-// 		if (((lex->input)[lex->i] == '\'') || ((lex->input)[lex->i] == '\"'))
-// 			condition_2(lex, token);
-// 		else if ((lex->input)[lex->i] == '$')
-// 			condition_3(lex, token);
-// 		else
-// 			add_to_token(token, lex, (lex->input)[lex->i++]);
-// 	}
-
-// }
-
 void	condition_3(t_lex *lex, char ***token)
 {
-	printf("cond 3\n");
+	// printf("cond 3\n");
 	add_to_token(token, lex, (lex->input)[lex->i++]);
 	while (((lex->input)[lex->i] != ' ') && ((lex->input)[lex->i] != '\n'))
 	{
@@ -85,7 +69,7 @@ void	condition_3(t_lex *lex, char ***token)
 
 void	condition_4(t_lex *lex, char ***token)
 {
-	printf("cond 4\n");
+	// printf("cond 4\n");
 	if (lex->token_nb != 0)
 		create_new_token(token, lex);
 	add_to_token(token, lex, (lex->input)[lex->i++]);
