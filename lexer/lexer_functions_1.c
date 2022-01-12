@@ -79,7 +79,7 @@ void	condition_3(t_lex *lex, char ***token)
 		else
 			add_to_token(token, lex, (lex->input)[lex->i++]);
 	}
-	manage_expansions(lex, token, (*token)[lex->token_nb - 1]);
+	manage_expansions(lex, token);
 
 }
 
