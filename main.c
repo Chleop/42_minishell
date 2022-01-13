@@ -19,8 +19,8 @@ int	main(int argc, char **argv, char **envp)
 		ft_putstr_fd("minishou:~$ ", 1);
 		input = get_next_line(0);
 		token = split_into_token(input, envp);
-		
-		print_table(token);
+		print_char_table(token);
+		parse(token);
 		ft_del_stringtab(&token);
 	}
 	return (0);
