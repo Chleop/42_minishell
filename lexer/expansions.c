@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:56:24 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/12 16:30:06 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/12 17:21:00 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ char	*replace_param_by_extansion(t_lex *lex, char* pre_param, char *param, char 
 
 	i = 0;
 	len = (int)ft_strlen(param);
+	expansion = "\0";
 	while (lex->envp[i])
 	{
 		if (ft_strnstr(lex->envp[i], param, len))
@@ -30,10 +31,11 @@ char	*replace_param_by_extansion(t_lex *lex, char* pre_param, char *param, char 
 	}
 	// printf("expansion = %s\n", expansion);
 	new_token = ft_strjoin(pre_param, expansion);
+	printf("new_temp = %s\n", new_token);
 	free_var = new_token;
 	new_token = ft_strjoin(new_token, post_param);
 	free (free_var);
-	// printf("new_temp = %s\n", new_token);
+	printf("new_temp = %s\n", new_token);
 	return (new_token);
 }
 

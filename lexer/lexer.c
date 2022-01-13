@@ -1,13 +1,13 @@
 #include "minishell.h"
 
-void	init_lexer(t_lex *lex, char *input, char **envpo)
-{
-	lex->envp = envpo;
-	lex->input = input;
-	lex->i = 0;
-	lex->token_nb = 0;
-	lex->tok_char_nb = 0;
-}
+// void	init_lexer(t_lex *lex, char *input, char **envpo)
+// {
+// 	lex->envp = envpo;
+// 	lex->input = input;
+// 	lex->i = 0;
+// 	lex->token_nb = 0;
+// 	lex->tok_char_nb = 0;
+// }
 
 int	condition_tree(t_lex *lex, char ***token)
 {
@@ -33,6 +33,7 @@ char	**split_into_token(char *input, char **envp)
 	t_lex		*lex;
 	char		**token;
 	int			met_condition;
+	int			i;
 	static void	(*function_table[9])(t_lex *lex, char ***token) = {
 		condition_0,
 		condition_1,
@@ -46,7 +47,11 @@ char	**split_into_token(char *input, char **envp)
 	};
 
 	lex = ft_calloc(1, sizeof(t_lex));
-	init_lexer(lex, input, envp);
+	lex->envp = envp;
+	lex->input = input;
+	lex->i = 0;
+	lex->token_nb = 0;
+	lex->tok_char_nb = 0;
 	token = NULL;
 	while (((lex->input)[lex->i] != '\n'))
 	{
@@ -54,6 +59,13 @@ char	**split_into_token(char *input, char **envp)
 		function_table[met_condition](lex, &token);
 	}
 	free (lex->input);
+	i = 0;
+	while (i < lex->token_nb)
+	{
+		while (ft_strchr(token[i], '$'))
+			manage_expansions(lex, &token);
+		i++;
+	}
 	free (lex);
 	return (token);
 }
