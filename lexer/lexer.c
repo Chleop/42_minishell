@@ -33,7 +33,6 @@ char	**split_into_token(char *input, char **envp)
 	t_lex		*lex;
 	char		**token;
 	int			met_condition;
-	int			i;
 	static void	(*function_table[9])(t_lex *lex, char ***token) = {
 		condition_0,
 		condition_1,
@@ -59,13 +58,6 @@ char	**split_into_token(char *input, char **envp)
 		function_table[met_condition](lex, &token);
 	}
 	free (lex->input);
-	i = 0;
-	while (i < lex->token_nb)
-	{
-		while (ft_strchr(token[i], '$'))
-			manage_expansions(lex, &token);
-		i++;
-	}
 	free (lex);
 	return (token);
 }

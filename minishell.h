@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/30 14:03:39 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/12 16:22:32 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/13 16:39:00 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	**split_into_token(char *input, char **envp);
 void	create_new_token(char ***token, t_lex *lex);
 void	add_to_token(char ***token, t_lex *lex, char input);
 int		is_paired(char q, char *input, int i);
-void	manage_expansions(t_lex *lex, char ***token);
+void	manage_expansions(t_lex *lex, char **token);
 
 void	condition_0(t_lex *lex, char ***token);
 void	condition_1(t_lex *lex, char ***token);

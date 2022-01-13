@@ -21,7 +21,7 @@ void	condition_0(t_lex *lex, char ***token)
 void	condition_1(t_lex *lex, char ***token)
 {
 	// printf("cond 1\n");
-	if (ft_strchr("|<>", (lex->input)[lex->i]))
+	if (((lex->input)[lex->i - 1] != '|') && (ft_strchr("|<>", (lex->input)[lex->i])))
 		add_to_token(token, lex, (lex->input)[lex->i++]);
 	else if ((lex->input)[lex->i] != '\n')
 	{
@@ -40,13 +40,11 @@ void	condition_2(t_lex *lex, char ***token)
 	// printf("cond 2\n");
 	c = lex->input[lex->i];
 	add_to_token(token, lex, (lex->input)[lex->i++]);
-	// lex->i++;
 	if ((is_paired(c, lex->input, lex->i)))
 	{
 		while (lex->input[lex->i] != c)
 			add_to_token(token, lex, (lex->input)[lex->i++]);
 		add_to_token(token, lex, (lex->input)[lex->i++]);
-		// lex->i++;
 	}
 }
 
@@ -63,8 +61,6 @@ void	condition_3(t_lex *lex, char ***token)
 		else
 			add_to_token(token, lex, (lex->input)[lex->i++]);
 	}
-	manage_expansions(lex, token);
-
 }
 
 void	condition_4(t_lex *lex, char ***token)
