@@ -6,12 +6,13 @@
 #    By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 12:28:36 by cproesch          #+#    #+#              #
-#    Updated: 2022/01/13 19:05:34 by cproesch         ###   ########.fr        #
+#    Updated: 2022/01/14 14:38:26 by cproesch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS		= main.c lexer/lexer.c lexer/lexer_functions_1.c lexer/lexer_functions_2.c \
-			lexer/lexer_utils.c utils_for_all.c lexer/expansions.c parser/parser.c
+			lexer/lexer_utils.c utils_for_all.c lexer/expansions.c parser/parser.c \
+			parser/parser_utils.c 
 
 OBJS		= $(SRCS:.c=.o)
 

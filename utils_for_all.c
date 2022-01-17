@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:26:28 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/13 19:49:08 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/17 13:20:02 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	print_char_table(char **tab)
 	i = 0;
 	while (tab[i])
 	{
-		printf("Token %d = %s\n", i, tab[i]);
+		printf("tab %d = %s\n", i, tab[i]);
 		i++;
 	}
 	return ;
@@ -47,4 +47,16 @@ void	ft_del_stringtab(char ***tab)
 		free((*tab)[i++]);
 	free(*tab);
 	*tab = NULL;
+}
+
+int	ft_error(char *str)
+{
+	printf("%s\n", str);
+	return (0);
+}
+
+void	ft_exit(int	i, char *str)
+{
+	printf("%s\n", str);
+	exit (i);
 }

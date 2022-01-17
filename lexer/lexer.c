@@ -46,13 +46,18 @@ char	**split_into_token(char *input, char **envp)
 	};
 
 	lex = ft_calloc(1, sizeof(t_lex));
+	if (!lex)
+	{
+		perror("Error: malloc failed");
+		return (NULL);
+	}
 	lex->envp = envp;
 	lex->input = input;
 	lex->i = 0;
 	lex->token_nb = 0;
 	lex->tok_char_nb = 0;
 	token = NULL;
-	while (((lex->input)[lex->i] != '\n'))
+	while (((lex->input)[lex->i] != '\n') && ((lex->input)[lex->i] != '\0'))
 	{
 		met_condition = condition_tree(lex, &token);
 		function_table[met_condition](lex, &token);

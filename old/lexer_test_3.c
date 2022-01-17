@@ -131,7 +131,7 @@ int	main(int argc, char **argv)
 
 		token = split_into_token(input);
 		free (input);
-		print_table(token);
+		print_char_table(token);
 		ft_del_stringtab(&token);
 	}
 	return (0);

@@ -1,27 +1,34 @@
 #include "minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+int	main(int argc, char **envp)
 {
 	char	*input;
 	char	**token;
-	// t_data	*data;
+	t_data	*data;
+	int		ret;
 
 	if (argc > 1)
-		perror("Error: too many arguments");
-	if (ft_strncmp(argv[0], "./minishell", 11))
-		perror("Error: ");
-	// data = (t_data *)malloc(sizeof(t_data) * 1);
-	// if (!data)
-	// 	perror("Error: ");
-	// data->envp = envp;
+		ft_exit(0, "Error: too many arguments");
+	input = NULL;
+	token = NULL;
+	data = (t_data *)malloc(sizeof(t_data) * 1);
+	if (!data)
+		perror("Error: malloc failed");
+	data->envp = envp;
+	// data->env doit etre malloc -- voir code Amber
 	while (42)
 	{
 		ft_putstr_fd("minishou:~$ ", 1);
 		input = get_next_line(0);
-		token = split_into_token(input, envp);
-		print_char_table(token);
-		parse(token);
-		ft_del_stringtab(&token);
+		if (input)
+			token = split_into_token(input, envp);
+		if (token)
+			print_char_table(token);
+		if (token)
+			ret = parse(data, token);
+		if (ret)
+			ft_del_stringtab(&token);
 	}
+	ft_exit(1, NULL);
 	return (0);
 }

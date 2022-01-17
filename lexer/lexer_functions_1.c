@@ -20,10 +20,10 @@ void	condition_0(t_lex *lex, char ***token)
 
 void	condition_1(t_lex *lex, char ***token)
 {
-	// printf("cond 1\n");
+	// printf("cond 1");
 	if (((lex->input)[lex->i - 1] != '|') && (ft_strchr("|<>", (lex->input)[lex->i])))
 		add_to_token(token, lex, (lex->input)[lex->i++]);
-	else if ((lex->input)[lex->i] != '\n')
+	else
 	{
 		create_new_token(token, lex);
 		if (((lex->input)[lex->i] == '\'') || ((lex->input)[lex->i] == '\"'))

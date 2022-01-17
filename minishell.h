@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/30 14:03:39 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/13 20:00:04 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/14 18:11:01 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,22 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 
-# define EMPTY		0
-# define VAR		1
-# define RED_I		2 
-# define RED_OS		3
-# define RED_OD		4
-# define HERE_END	5
-# define CMD		6
-# define PARAM		7
+# define EMPTY		999
+# define OPERATOR	1
+# define VAR		2
+# define RED_IN		3 
+# define RED_OUT_S	4
+# define RED_OUT_D	5
+# define HERE_END	6
+# define CMD		7
+# define PARAM		8
 
 struct s_cmd;
 
 typedef struct s_data
 {
 	char			**envp;
+	int				nr_token;
 	int				nr_cmds;
 	struct s_cmd	*cmd;
 	int				pipe_fd[1023][2];
@@ -52,11 +54,18 @@ typedef struct s_lex
 
 typedef struct s_cmd
 {
+	char	**tok;
 	char	**params;
 	char	*i_file;
 	char	*o_file;
 	int		cmd_id;
 } t_cmd;
+
+void	print_char_table(char **tab);
+void	print_int_table(int *tab);
+void	ft_del_stringtab(char ***tab);
+int		ft_error(char *str);
+void	ft_exit(int	i, char *str);
 
 char	**split_into_token(char *input, char **envp);
 void	create_new_token(char ***token, t_lex *lex);
@@ -72,14 +81,11 @@ void	condition_5(t_lex *lex, char ***token);
 void	condition_6(t_lex *lex, char ***token);
 void	condition_7(t_lex *lex, char ***token);
 
-void	print_char_table(char **tab);
-void	print_int_table(int *tab);
-void	ft_del_stringtab(char ***tab);
-
-void	parse(char **token);
+int	parse(t_data *data, char **token);
 void	manage_expansions(t_lex *lex, char **token);
 
-
+int		count_token(char **token);
+int		count_pipes(t_data *data, char **token);
 
 
 #endif
