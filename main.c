@@ -23,12 +23,11 @@ int	main(int argc, char **envp)
 		if (input)
 			token = split_into_token(input, envp);
 		if (token)
-			print_char_table(token);
-		if (token)
 			ret = parse(data, token);
 		if (ret)
 			ft_del_stringtab(&token);
 	}
+	ft_free(data, token);
 	ft_exit(1, NULL);
 	return (0);
 }

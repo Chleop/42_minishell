@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 14:37:25 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/17 11:53:15 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/18 18:03:43 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,10 @@ int	count_token(char **token)
 	i = 0;
 	while (token[i])
 		i++;
-	printf ("nb token = %d\n", i);
 	return (i);
 }
 
-int	count_pipes(t_data *data, char **token)
+int	localize_pipes(t_data *data, char **token)
 {
 	int	i;
 	int	j;
@@ -34,13 +33,10 @@ int	count_pipes(t_data *data, char **token)
 	{
 		if (token[i][0] == '|')
 		{
-			if ((i == 0) || (i == (data->nr_token - 1)))
-				perror("Syntax error");
-			else
-				j++;
+			data->parser.pipe[j] = i;
+			j++;
 		}
 		i++;
 	}
 	return (j);
 }
-
