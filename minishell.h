@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/30 14:03:39 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/18 18:21:16 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/19 18:47:10 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@
 
 typedef struct s_cmd
 {
+	int		nr_tok;
 	char	**tok;
+	int		*qualif;
 	char	**params;
 	char	*i_file;
 	char	*o_file;
@@ -53,8 +55,6 @@ typedef struct s_data
 	int				nr_cmds;
 	t_pars			parser;
 	t_cmd			*cmd;
-	int				pipe_fd[1023][2];
-	int				process_id[1024];
 }	t_data;
 
 typedef struct s_lex
@@ -62,20 +62,23 @@ typedef struct s_lex
 	char	**envp;
 	char	*input;
 	int		i;
-	int		token_nb;
-	int		tok_char_nb;
+	int		tok_nb;
+	int		char_nb;
 }	t_lex;
 
+//PRINTS
 void	print_char_table(char **tab);
 void	print_int_table(int *tab);
 void	print_cmds_and_tokens(t_data *data);
 
+//UTILS FOR ALL
 void	ft_del_stringtab(char ***tab);
 int		ft_error(char *str);
 void	ft_exit(int	i, char *str);
 void	ft_free(t_data *data, char **token);
 
-char	**split_into_token(char *input, char **envp);
+//LEXER
+char	**lexer(char *input, char **envp);
 void	create_new_token(char ***token, t_lex *lex);
 void	add_to_token(char ***token, t_lex *lex, char input);
 int		is_paired(char q, char *input, int i);
@@ -89,16 +92,22 @@ void	condition_5(t_lex *lex, char ***token);
 void	condition_6(t_lex *lex, char ***token);
 void	condition_7(t_lex *lex, char ***token);
 
+//PARSER
 int		initialize_data(t_data *data, char **token);
 int		set_end(t_data *data, int i);
 int		divide_token(t_data *data, char **token, int *start, int end, int i);
 int		initialize_cmds(t_data *data, char **token);
-void	initialize_grammar(int **grammar, int nr_token);
-
-int		parse(t_data *data, char **token);
-void	manage_expansions(t_lex *lex, char **token);
+int		grammatize_cmds(t_data *data);
+int		initialize_grammar(t_cmd *cmd);
 
 int		count_token(char **token);
 int		localize_pipes(t_data *data, char **token);
+int		parse(t_data *data, char **token);
+void	manage_expansions(t_lex *lex, char **token);
+
+void	qualifiy_var(t_cmd *cmd);
+void	set_red_qualification(t_cmd *cmd, int *i, int qualif);
+void	qualifiy_red(t_cmd *cmd);
+void	qualify_cmds(t_cmd *cmd);
 
 #endif

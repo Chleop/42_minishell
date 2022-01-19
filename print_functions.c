@@ -20,7 +20,7 @@ void	print_int_table(int *tab)
 	i = 0;
 	while (tab[i])
 	{
-		printf("grammar %d = %d\n", i, tab[i]);
+		printf("Int tab %d = %d\n", i, tab[i]);
 		i++;
 	}
 	return ;

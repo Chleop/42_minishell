@@ -1,13 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/19 13:20:21 by cproesch          #+#    #+#             */
+/*   Updated: 2022/01/19 16:32:33 by cproesch         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-// void	init_lexer(t_lex *lex, char *input, char **envpo)
-// {
-// 	lex->envp = envpo;
-// 	lex->input = input;
-// 	lex->i = 0;
-// 	lex->token_nb = 0;
-// 	lex->tok_char_nb = 0;
-// }
+void	init_lexer(t_lex *lex, char *input, char **envpo)
+{
+	lex->envp = envpo;
+	lex->input = input;
+	lex->i = 0;
+	lex->tok_nb = 0;
+	lex->char_nb = 0;
+}
 
 int	condition_tree(t_lex *lex, char ***token)
 {
@@ -28,41 +40,23 @@ int	condition_tree(t_lex *lex, char ***token)
 	return (7);
 }
 
-char	**split_into_token(char *input, char **envp)
+char	**lexer(char *input, char **envp)
 {
-	t_lex		*lex;
+	t_lex		lex;
 	char		**token;
 	int			met_condition;
 	static void	(*function_table[9])(t_lex *lex, char ***token) = {
-		condition_0,
-		condition_1,
-		condition_2,
-		condition_3,
-		condition_4,
-		condition_5,
-		condition_6,
-		condition_7,
-		NULL,
+		condition_0, condition_1, condition_2, condition_3, condition_4,
+		condition_5, condition_6, condition_7, NULL,
 	};
 
-	lex = ft_calloc(1, sizeof(t_lex));
-	if (!lex)
-	{
-		perror("Error: malloc failed");
-		return (NULL);
-	}
-	lex->envp = envp;
-	lex->input = input;
-	lex->i = 0;
-	lex->token_nb = 0;
-	lex->tok_char_nb = 0;
+	init_lexer(&lex, input, envp);
 	token = NULL;
-	while (((lex->input)[lex->i] != '\n') && ((lex->input)[lex->i] != '\0'))
+	while (((lex.input)[lex.i] != '\n') && ((lex.input)[lex.i] != '\0'))
 	{
-		met_condition = condition_tree(lex, &token);
-		function_table[met_condition](lex, &token);
+		met_condition = condition_tree(&lex, &token);
+		function_table[met_condition](&lex, &token);
 	}
-	free (lex->input);
-	free (lex);
+	free (lex.input);
 	return (token);
 }

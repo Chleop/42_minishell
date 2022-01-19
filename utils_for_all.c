@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:26:28 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/18 18:00:53 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/19 16:32:29 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	ft_del_stringtab(char ***tab)
 	int	i;
 
 	i = 0;
+	if (!*tab)
+		return ;
 	while ((*tab)[i])
 	{
 		if ((*tab)[i])
@@ -55,7 +57,6 @@ void	ft_free(t_data *data, char **token)
 			ft_free_data_cmd(data);
 		// if (data->envp)
 		// 	free envp avec ft_del_strintab
-		free(data);
 		data = NULL;
 	}
 

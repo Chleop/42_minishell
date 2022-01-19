@@ -5,7 +5,7 @@ void	init_lexer(t_lex *lex, char *input)
 	lex->input = input;
 	lex->i = 0;
 	lex->token_nb = 0;
-	lex->tok_char_nb = 0;
+	lex->char_nb = 0;
 	lex->inside_quotes = '\0';
 }
 
@@ -18,7 +18,7 @@ void	create_new_token(char ***token, t_lex *lex)
 		lex->i++;
 	if ((lex->input)[lex->i] == '\n')
 		return ;
-	lex->tok_char_nb = 0;
+	lex->char_nb = 0;
 	lex->token_nb = (lex->token_nb) + 1;
 	// printf("Creating token %d for input %c\n", lex->token_nb, (lex->input)[lex->i]);
 	tab_temp = (*token);
@@ -43,9 +43,9 @@ void	add_to_token(char ***token, t_lex *lex, char input)
 	// printf("Adding %c to token %d\n", input, lex->token_nb);
 	if (input != '\n')
 	{
-		lex->tok_char_nb = lex->tok_char_nb + 1;	
+		lex->char_nb = lex->char_nb + 1;	
 		str_temp = (*token)[lex->token_nb - 1];
-		(*token)[lex->token_nb - 1] = ft_calloc((lex->tok_char_nb + 1), sizeof(char));
+		(*token)[lex->token_nb - 1] = ft_calloc((lex->char_nb + 1), sizeof(char));
 		if (str_temp)
 		{
 			l = 0;
@@ -56,7 +56,7 @@ void	add_to_token(char ***token, t_lex *lex, char input)
 			}
 			free(str_temp);
 		}
-		(*token)[lex->token_nb - 1][lex->tok_char_nb - 1] = input;
+		(*token)[lex->token_nb - 1][lex->char_nb - 1] = input;
 	}
 }
 

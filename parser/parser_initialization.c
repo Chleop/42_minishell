@@ -18,13 +18,11 @@ int	initialize_data(t_data *data, char **token)
 
 	data->parser.pipe[0] = 0;
 	data->nr_token = count_token(token);
-	if ((token[0][0] == '|') || (token[data->nr_token - 1][0] == '|'))
-		return (ft_error("Syntax error"));
 	nb_pipes = localize_pipes(data, token);
 	data->nr_cmds = nb_pipes + 1;
 	data->cmd = (t_cmd *)ft_calloc(data->nr_cmds + 1, sizeof(t_cmd));
 	if (!data->cmd)
-		return (ft_error("Error:malloc failed\n"));
+		return (ft_error("Error: malloc failed"));
 	return (1);
 }
 
@@ -65,26 +63,15 @@ int	initialize_cmds(t_data *data, char **token)
 	while (i < data->nr_cmds)
 	{
 		end = set_end(data, i);
+		data->cmd[i].nr_tok = end - start;
+		printf("la commande %d contient %d token\n", i, data->cmd[i].nr_tok);
 		data->cmd[i].tok = (char **)ft_calloc((end - start + 1), sizeof(char *));
 		if (!data->cmd->tok)
-			return (ft_error("Error:malloc failed\n"));
+			return (ft_error("Error: malloc failed"));
 		if (!divide_token(data, token, &start, end, i))
 			return (0);
 		i++;
 		start++;
 	}
 	return (1);
-}
-
-void	initialize_grammar(int **grammar, int nr_token)
-{
-	int	i;
-
-	i = 0;
-	while (i < nr_token)
-	{
-		(*grammar)[i] = EMPTY;
-		i++;
-	}
-	return ;
 }
