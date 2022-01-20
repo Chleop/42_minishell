@@ -6,7 +6,7 @@
 #    By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 12:28:36 by cproesch          #+#    #+#              #
-#    Updated: 2022/01/19 18:37:42 by cproesch         ###   ########.fr        #
+#    Updated: 2022/01/20 12:45:25 by cproesch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ RM			= rm -rf
 
 $(NAME):	$(OBJS)
 			make -C libft
-			$(CC) $(OBJS) $(LFLAGS) $(CFLAGS) -o $(NAME) -v
+			$(CC) $(OBJS) $(LFLAGS) $(CFLAGS) -o $(NAME) -v -lreadline
 
 all:		$(NAME)
 

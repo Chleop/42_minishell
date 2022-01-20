@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/30 14:03:39 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/19 18:47:10 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/20 13:17:12 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <time.h>
 # include <sys/wait.h>
 # include <fcntl.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 # define EMPTY		999
 # define OPERATOR	1

@@ -1,4 +1,7 @@
 #include "minishell.h"
+#include <stdio.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 
 int	main(int argc, char **envp)
 {
@@ -15,8 +18,10 @@ int	main(int argc, char **envp)
 	// data->env doit etre malloc -- voir code Amber
 	while (42)
 	{
-		ft_putstr_fd("minishou:~$ ", 1);
-		input = get_next_line(0);
+		// ft_putstr_fd("minishou:~$ ", 1);
+		// input = get_next_line(0);
+		input = readline("our_minishell:~$ ");
+		add_history(input);
 		if (input)
 			token = lexer(input, envp);
 		if (token)
