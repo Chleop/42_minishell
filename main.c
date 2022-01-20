@@ -1,16 +1,13 @@
 #include "minishell.h"
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
 
-int	main(int argc, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	char	*input;
 	char	**token;
 	t_data	data;
 	int		ret;
 
-	if (argc > 1)
+	if ((argc > 1) || (argv[1]))
 		ft_exit(0, "Error: too many arguments");
 	input = NULL;
 	token = NULL;

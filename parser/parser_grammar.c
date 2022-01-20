@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 18:18:18 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/19 18:47:04 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/20 15:28:07 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ int	grammatize_cmds(t_data *data)
 	{
 		if (!grammatize_tokens(&(data->cmd[i])))
 			return (0);
-		printf("Commande %d\n", i);
-		print_int_table(data->cmd[i].qualif);
 		i++;
 	}
 	return (1);

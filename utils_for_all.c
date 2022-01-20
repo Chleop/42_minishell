@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:26:28 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/19 16:32:29 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/20 17:37:06 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,3 +73,4 @@ void	ft_exit(int	i, char *str)
 	printf("%s\n", str);
 	exit (i);
 }
+

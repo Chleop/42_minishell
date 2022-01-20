@@ -64,7 +64,6 @@ int	initialize_cmds(t_data *data, char **token)
 	{
 		end = set_end(data, i);
 		data->cmd[i].nr_tok = end - start;
-		printf("la commande %d contient %d token\n", i, data->cmd[i].nr_tok);
 		data->cmd[i].tok = (char **)ft_calloc((end - start + 1), sizeof(char *));
 		if (!data->cmd->tok)
 			return (ft_error("Error: malloc failed"));

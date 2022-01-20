@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 18:38:33 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/19 13:28:35 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/20 16:41:58 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	is_paired(char q, char *input, int i)
 	while (input[i])
 	{
 		if (input[i] == q)
-			return (1);
+			return (i);
 		i++;
 	}
 	return (0);
