@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:55:08 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/20 15:45:42 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/21 15:24:28 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,11 @@ int	parse(t_data *data, char **token)
 		return (0);
 	if (!initialize_cmds(data, token))
 		return (0);
+	if (!expand_variables(data))
+		return (0);
 	if (!grammatize_cmds(data))
 		return (0);
-	if (!apply_expansions(data))
+	if (!expand_commands(data->envp, &(data->cmd[i])))
 		return (0);
 	print_cmds_and_tokens(data);
 	return (1);

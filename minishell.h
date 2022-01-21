@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/30 14:03:39 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/20 19:22:50 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/21 15:07:26 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,20 +100,14 @@ int		set_end(t_data *data, int i);
 int		divide_token(t_data *data, char **token, int *start, int end, int i);
 int		initialize_cmds(t_data *data, char **token);
 int		grammatize_cmds(t_data *data);
-int		initialize_grammar(t_cmd *cmd);
 
 int		count_token(char **token);
 int		localize_pipes(t_data *data, char **token);
 int		parse(t_data *data, char **token);
 int		apply_expansions(t_data *data);
 char	*find_path(char **envp, char *cmd);
-int		remove_quotes(char **token);
+int		identify_remove_quotes(char **token);
 
 int		is_quoted(char *token);
-
-void	qualifiy_var(t_cmd *cmd);
-void	set_red_qualification(t_cmd *cmd, int *i, int qualif);
-void	qualifiy_red(t_cmd *cmd);
-void	qualify_cmds(t_cmd *cmd);
 
 #endif
