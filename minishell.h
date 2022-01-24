@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/30 14:03:39 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/21 15:07:26 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/24 13:37:42 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,13 @@ int		grammatize_cmds(t_data *data);
 int		count_token(char **token);
 int		localize_pipes(t_data *data, char **token);
 int		parse(t_data *data, char **token);
-int		apply_expansions(t_data *data);
 char	*find_path(char **envp, char *cmd);
-int		identify_remove_quotes(char **token);
 
 int		is_quoted(char *token);
+
+int		expand_and_classify_dollars(t_data *data);
+int		identify_remove_quotes(char **token);
+int		expand_and_classify_others(t_data *data);
+
 
 #endif

@@ -6,7 +6,7 @@
 #    By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 12:28:36 by cproesch          #+#    #+#              #
-#    Updated: 2022/01/21 15:06:10 by cproesch         ###   ########.fr        #
+#    Updated: 2022/01/24 13:37:00 by cproesch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,9 @@ SRCS		= main.c utils_for_all.c print_functions.c \
 			lexer/lexer.c lexer/lexer_functions_1.c lexer/lexer_functions_2.c \
 			lexer/lexer_utils.c \
 			parser/parser.c parser/parser_initialization.c parser/parser_utils.c \
-			parser/parser_grammar.c parser/parser_expansions.c \
+			parser/parser_grammar.c parser/parser_general_expansions.c \
 			parser/parser_quotes_removal.c parser/parser_expansions_path.c \
+			parser/parser_dollar_expansions.c
 
 OBJS		= $(SRCS:.c=.o)
 
