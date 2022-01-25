@@ -25,6 +25,7 @@ int	initialize_grammar(t_cmd *cmd)
 		(*cmd).qualif[i] = EMPTY;
 		i++;
 	}
+	(*cmd).qualif[i] = 0;
 	return (1);
 }
 

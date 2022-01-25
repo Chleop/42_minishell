@@ -38,7 +38,8 @@ typedef struct s_cmd
 	int		nr_tok;
 	char	**tok;
 	int		*qualif;
-	char	**params;
+	int		nr_param;
+	char	**param;
 	char	*i_file;
 	char	*o_file;
 	int		cmd_id;
@@ -110,6 +111,7 @@ int		is_quoted(char *token);
 
 int		expand_and_classify_dollars(t_data *data);
 int		identify_remove_quotes(char **token);
+int		remove_quotes(char **token, int firstq_i, int secondq_i, int *i);
 int		expand_and_classify_others(t_data *data);
 
 

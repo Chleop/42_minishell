@@ -4,6 +4,11 @@ void	print_char_table(char **tab)
 {
 	int	i;
 
+	if (!tab)
+	{
+		printf("tab n'existe pas\n");
+		return ;
+	}
 	i = 0;
 	while (tab[i])
 	{

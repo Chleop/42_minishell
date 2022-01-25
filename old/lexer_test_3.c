@@ -16,7 +16,7 @@ void	create_new_token(char ***token, t_lex *lex)
 
 	while ((lex->input)[lex->i] == ' ')
 		lex->i++;
-	if ((lex->input)[lex->i] == '\n')
+	if (((lex->input)[lex->i] == '\n') || ((lex->input)[lex->i] == '\0'))
 		return ;
 	lex->char_nb = 0;
 	lex->token_nb = (lex->token_nb) + 1;
@@ -41,7 +41,7 @@ void	add_to_token(char ***token, t_lex *lex, char input)
 	char	*str_temp;
 
 	// printf("Adding %c to token %d\n", input, lex->token_nb);
-	if (input != '\n')
+	if ((input != '\n') && (input != '\0'))
 	{
 		lex->char_nb = lex->char_nb + 1;	
 		str_temp = (*token)[lex->token_nb - 1];
@@ -80,7 +80,7 @@ char	**split_into_token(char *input)
 	lex = ft_calloc(1, sizeof(t_lex));
 	init_lexer(lex, input);
 	token = NULL;
-	while ((lex->input)[lex->i] != '\n')
+	while (((lex->input)[lex->i] != '\n') && ((lex->input)[lex->i] != '\0'))
 	{
 		if (!token)
 			create_new_token(&token, lex);

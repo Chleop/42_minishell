@@ -65,10 +65,12 @@ int	initialize_cmds(t_data *data, char **token)
 		end = set_end(data, i);
 		data->cmd[i].nr_tok = end - start;
 		data->cmd[i].tok = (char **)ft_calloc((end - start + 1), sizeof(char *));
-		if (!data->cmd->tok)
+		if (!data->cmd[i].tok)
 			return (ft_error("Error: malloc failed"));
 		if (!divide_token(data, token, &start, end, i))
 			return (0);
+		data->cmd[i].param = NULL;
+		data->cmd[i].nr_param = 0;
 		i++;
 		start++;
 	}

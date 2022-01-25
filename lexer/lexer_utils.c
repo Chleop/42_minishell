@@ -45,7 +45,7 @@ void	add_to_token(char ***token, t_lex *lex, char input)
 	int		l;
 	char	*str_temp;
 
-	if (input != '\n')
+	if ((input != '\n') && (input != '\0'))
 	{
 		lex->char_nb = lex->char_nb + 1;
 		str_temp = (*token)[lex->tok_nb - 1];

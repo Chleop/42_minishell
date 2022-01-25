@@ -48,8 +48,10 @@ void	condition_2(t_lex *lex, char ***token)
 
 void	condition_3(t_lex *lex, char ***token)
 {
+	int i = 0;
+
 	add_to_token(token, lex, (lex->input)[lex->i++]);
-	while (((lex->input)[lex->i] != ' ') && ((lex->input)[lex->i] != '\n'))
+	while (((lex->input)[lex->i] != ' ') && ((lex->input)[lex->i] != '\n') && ((lex->input)[lex->i] != '\0'))
 	{
 		if (((lex->input)[lex->i] == '\'') || ((lex->input)[lex->i] == '\"'))
 			condition_2(lex, token);
@@ -57,7 +59,10 @@ void	condition_3(t_lex *lex, char ***token)
 			condition_3(lex, token);
 		else
 			add_to_token(token, lex, (lex->input)[lex->i++]);
+		i++;
+		printf ("token[%d] = [%c]\n", i, (lex->input)[lex->i]);
 	}
+	return ;
 }
 
 void	condition_4(t_lex *lex, char ***token)
