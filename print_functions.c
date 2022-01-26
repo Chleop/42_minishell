@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	print_char_table(char **tab)
+void	print_char_table(char *str, char **tab)
 {
 	int	i;
 
@@ -12,7 +12,7 @@ void	print_char_table(char **tab)
 	i = 0;
 	while (tab[i])
 	{
-		printf("Char tab %d = [%s]\n", i, tab[i]);
+		printf("%s[%d] = [%s]\n",str, i, tab[i]);
 		i++;
 	}
 	return ;
@@ -37,8 +37,20 @@ void	print_cmds_and_tokens(t_data *data)
 	while (i < data->nr_cmds)
 	{
 		printf("Commande %d\n", i);
-		print_char_table(data->cmd[i].tok);
+		print_char_table("Token", data->cmd[i].tok);
 		print_int_table(data->cmd[i].qualif);
+		i++;
+	}
+}
+
+void	print_cmd_parameters(t_data *data)
+{
+	printf("LES PARAMETRES SONT:\n");
+	int i = 0;
+	while (i < data->nr_cmds)
+	{
+		printf ("Commande %d\n", i);
+		print_char_table("Param", data->cmd[i].param);
 		i++;
 	}
 }

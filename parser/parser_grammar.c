@@ -81,7 +81,7 @@ void	qualify_cmds(t_cmd *cmd)
 	}
 }
 
-int	grammatize_cmds(t_data *data)
+int	grammatize_tokens(t_data *data)
 {
 	int i;
 

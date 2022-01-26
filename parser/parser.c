@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:55:08 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/24 13:09:37 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/26 18:10:05 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,11 @@ int	parse(t_data *data, char **token)
 		return (0);
 	if (!initialize_cmds(data, token))
 		return (0);
-	if (!grammatize_cmds(data))
+	if (!grammatize_tokens(data))
 		return (0);
-	print_cmds_and_tokens(data);
-	if (!expand_and_classify_dollars(data))
+	// print_cmds_and_tokens(data);
+	if (!set_into_structure(data))
 		return (0);
-	// if (!expand_and_classify_others(data))
-	// 	return (0);
-	print_cmds_and_tokens(data);
-	print_char_table(data->cmd[0].param);
+	print_cmd_parameters(data);
 	return (1);
 }

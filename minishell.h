@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/30 14:03:39 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/24 13:37:42 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/26 18:13:40 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,10 @@ typedef struct s_lex
 }	t_lex;
 
 //PRINTS
-void	print_char_table(char **tab);
+void	print_char_table(char *str, char **tab);
 void	print_int_table(int *tab);
 void	print_cmds_and_tokens(t_data *data);
+void	print_cmd_parameters(t_data *data);
 
 //UTILS FOR ALL
 void	ft_del_stringtab(char ***tab);
@@ -100,19 +101,22 @@ int		initialize_data(t_data *data, char **token);
 int		set_end(t_data *data, int i);
 int		divide_token(t_data *data, char **token, int *start, int end, int i);
 int		initialize_cmds(t_data *data, char **token);
-int		grammatize_cmds(t_data *data);
+int		grammatize_tokens(t_data *data);
 
 int		count_token(char **token);
 int		localize_pipes(t_data *data, char **token);
 int		parse(t_data *data, char **token);
 char	*find_path(char **envp, char *cmd);
 
+int		set_into_structure(t_data *data);
 int		expand_and_classify_dollars(t_data *data);
 int		is_quoted(char *token);
 int		identify_remove_quotes(char **token);
 int		remove_quotes(char **token, int firstq_i, int secondq_i);
-int		expand_and_classify_others(t_data *data);
+int		classify_others(t_data *data);
 void	manage_expansions(t_data *data, char **token);
+int		tidy_token(t_data *data, char **token, int cmd_nr, int tok_nr);
+void    expand_cmd_path(t_data *data);
 
 
 #endif
