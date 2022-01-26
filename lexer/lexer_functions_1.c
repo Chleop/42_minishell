@@ -60,7 +60,6 @@ void	condition_3(t_lex *lex, char ***token)
 		else
 			add_to_token(token, lex, (lex->input)[lex->i++]);
 		i++;
-		printf ("token[%d] = [%c]\n", i, (lex->input)[lex->i]);
 	}
 	return ;
 }

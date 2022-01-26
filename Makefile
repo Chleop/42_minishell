@@ -16,7 +16,7 @@ SRCS		= main.c utils_for_all.c print_functions.c \
 			parser/parser.c parser/parser_initialization.c parser/parser_utils.c \
 			parser/parser_grammar.c parser/parser_general_expansions.c \
 			parser/parser_quotes_removal.c parser/parser_expansions_path.c \
-			parser/parser_dollar_expansions.c
+			parser/parser_dollar_expansions.c parser/expansions.c
 
 OBJS		= $(SRCS:.c=.o)
 

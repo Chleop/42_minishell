@@ -45,13 +45,11 @@ void	cpy_after_quotes(char **token, char *temp, int secondq_i)
 	return ;
 }
 
-int	remove_quotes(char **token, int firstq_i, int secondq_i, int *i)
+int	remove_quotes(char **token, int firstq_i, int secondq_i)
 {
 	char	*temp;
-	char	c;
 
 	temp = NULL;
-	c = (*token)[*i];
 	temp = *token;
 	*token = ft_calloc(ft_strlen(temp) - 1, sizeof(char));
 	if (!*token)
@@ -60,7 +58,6 @@ int	remove_quotes(char **token, int firstq_i, int secondq_i, int *i)
 	cpy_between_quotes(token, temp, firstq_i, secondq_i);
 	if (temp[secondq_i + 1])
 		cpy_after_quotes(token, temp, secondq_i);
-	*i = secondq_i - 2;
 	free (temp);
 	temp = NULL;
 	return (1);
@@ -80,7 +77,7 @@ int	identify_remove_quotes(char **token)
 			firstq_i = i;
 			secondq_i = is_paired((*token)[i], *token, i + 1);
 			if (secondq_i)
-				remove_quotes(token, firstq_i, secondq_i, &i);
+				remove_quotes(token, firstq_i, secondq_i);
 		}
 		i++;
 	}

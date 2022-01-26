@@ -48,6 +48,7 @@ int	parse(t_data *data, char **token)
 		return (0);
 	// if (!expand_and_classify_others(data))
 	// 	return (0);
+	print_cmds_and_tokens(data);
 	print_char_table(data->cmd[0].param);
 	return (1);
 }

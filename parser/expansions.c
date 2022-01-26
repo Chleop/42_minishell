@@ -33,7 +33,7 @@
 	// 	// i++;
 	// }
 
-char	*replace_param_by_extansion(t_lex *lex, char* pre_param, char *param, char *post_param)
+char	*replace_param_by_extansion(t_data *data, char* pre_param, char *param, char *post_param)
 {
 	int		i;
 	int		len;
@@ -43,14 +43,12 @@ char	*replace_param_by_extansion(t_lex *lex, char* pre_param, char *param, char 
 
 	i = 0;
 	len = (int)ft_strlen(param);
-	expansion = "\0";
-	while (lex->envp[i])
+	while (data->envp[i])
 	{
-		if (ft_strnstr(lex->envp[i], param, len))
-			expansion = ft_substr(lex->envp[i], len + 1, (ft_strlen(lex->envp[i]) - len));
+		if (ft_strnstr(data->envp[i], param, len))
+			expansion = ft_substr(data->envp[i], len + 1, (ft_strlen(data->envp[i]) - len - 1));
 		i++;
 	}
-	// printf("expansion = %s\n", expansion);
 	new_token = ft_strjoin(pre_param, expansion);
 	printf("new_temp = %s\n", new_token);
 	free_var = new_token;
@@ -108,7 +106,7 @@ int	ft_param_len(char *str)
 // 	return ;
 // }
 
-void	manage_expansions(t_lex *lex, char **token)
+void	manage_expansions(t_data *data, char **token)
 {
 	char	*pre_param;
 	char	*param;
@@ -140,7 +138,7 @@ void	manage_expansions(t_lex *lex, char **token)
 		ft_memcpy(post_param, *token + param_position + ft_param_len(*token), post_param_len);
 		// printf("post_param = %s\n", post_param);
 		free_var = *token;
-		*token = replace_param_by_extansion(lex, pre_param, param, post_param);
+		*token = replace_param_by_extansion(data, pre_param, param, post_param);
 		free(free_var);
 		free(pre_param);
 		free(param);

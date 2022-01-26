@@ -107,12 +107,12 @@ int		localize_pipes(t_data *data, char **token);
 int		parse(t_data *data, char **token);
 char	*find_path(char **envp, char *cmd);
 
-int		is_quoted(char *token);
-
 int		expand_and_classify_dollars(t_data *data);
+int		is_quoted(char *token);
 int		identify_remove_quotes(char **token);
-int		remove_quotes(char **token, int firstq_i, int secondq_i, int *i);
+int		remove_quotes(char **token, int firstq_i, int secondq_i);
 int		expand_and_classify_others(t_data *data);
+void	manage_expansions(t_data *data, char **token);
 
 
 #endif
