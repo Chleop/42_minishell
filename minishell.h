@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/30 14:03:39 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/27 13:40:53 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/27 17:56:56 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int		is_quoted(char *token);
 int		identify_remove_quotes(char **token);
 int		remove_quotes(char **token, int firstq_i, int secondq_i);
 int		classify_others(t_data *data);
-void	manage_expansions(t_data *data, char **token);
+char	*manage_expansions(char *token);
 int		classify_token(t_data *data, char **token, int cmd_nr, int tok_nr);
 void    expand_cmd_path(t_data *data);
 
