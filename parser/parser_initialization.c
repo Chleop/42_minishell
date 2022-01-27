@@ -12,20 +12,6 @@
 
 #include "minishell.h"
 
-int	initialize_data(t_data *data, char **token)
-{
-	int	nb_pipes;
-
-	data->parser.pipe[0] = 0;
-	data->nr_token = count_token(token);
-	nb_pipes = localize_pipes(data, token);
-	data->nr_cmds = nb_pipes + 1;
-	data->cmd = (t_cmd *)ft_calloc(data->nr_cmds + 1, sizeof(t_cmd));
-	if (!data->cmd)
-		return (ft_error("Error: malloc failed"));
-	return (1);
-}
-
 int	set_end(t_data *data, int i)
 {
 	if ((data->nr_cmds == 1) || (i == (data->nr_cmds - 1)))
@@ -71,8 +57,25 @@ int	initialize_cmds(t_data *data, char **token)
 			return (0);
 		data->cmd[i].param = NULL;
 		data->cmd[i].nr_param = 0;
+		data->cmd[i].i_file = NULL;
+		data->cmd[i].o_file = NULL;
+		data->cmd[i].red_out_type = 0;
 		i++;
 		start++;
 	}
+	return (1);
+}
+
+int	initialize_data(t_data *data, char **token)
+{
+	int	nb_pipes;
+
+	data->parser.pipe[0] = 0;
+	data->nr_token = count_token(token);
+	nb_pipes = localize_pipes(data, token);
+	data->nr_cmds = nb_pipes + 1;
+	data->cmd = (t_cmd *)ft_calloc(data->nr_cmds + 1, sizeof(t_cmd));
+	if (!data->cmd)
+		return (ft_error("Error: malloc failed"));
 	return (1);
 }

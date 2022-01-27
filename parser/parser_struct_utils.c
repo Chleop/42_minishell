@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 13:34:16 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/26 18:10:58 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/27 10:40:59 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,18 +85,47 @@ int	set_command(t_data *data, int cmd_nr, char **token)
 	return (1);
 }
 
-int	tidy_token(t_data *data, char **token, int cmd_nr, int tok_nr)
+void	set_redirections(t_data *data, char **token, int cmd_nr, int qualif)
 {
-	if (data->cmd[cmd_nr].qualif[tok_nr] == CMD)
+	if (qualif == RED_IN)
+		data->cmd[cmd_nr].i_file = ft_strdup(*token);
+	else if (qualif == HERE_END)
+	{
+		ft_free(data, token);
+		ft_exit (1, "HERE_DOCS NON GERES pour l'instant :)\n");
+	}
+	else if (qualif == RED_OUT_S)
+	{
+		data->cmd[cmd_nr].o_file = ft_strdup(*token);
+		data->cmd[cmd_nr].red_out_type = 1;
+	}
+	else if (qualif == RED_OUT_D)
+	{
+		data->cmd[cmd_nr].o_file = ft_strdup(*token);
+		data->cmd[cmd_nr].red_out_type = 2;
+	}
+}
+
+int	classify_token(t_data *data, char **token, int cmd_nr, int tok_nr)
+{
+	int	qualif;
+	
+	qualif = data->cmd[cmd_nr].qualif[tok_nr];
+	if (qualif == CMD)
 	{
 		if (!set_command(data, cmd_nr, token))
 			return (0);
 		data->cmd[cmd_nr].qualif[tok_nr] = EMPTY;
 	}
-	else if (data->cmd[cmd_nr].qualif[tok_nr] == PARAM)
+	else if (qualif == PARAM)
 	{
-		if(!add_to_params(data, cmd_nr, data->cmd[cmd_nr].tok[tok_nr]))
+		if(!add_to_params(data, cmd_nr, *token))
 			return (0);
+		data->cmd[cmd_nr].qualif[tok_nr] = EMPTY;
+	}
+	else if ((qualif != OPERATOR) && (qualif != EMPTY))
+	{
+		set_redirections(data, token, cmd_nr, qualif);
 		data->cmd[cmd_nr].qualif[tok_nr] = EMPTY;
 	}
 	return (1);

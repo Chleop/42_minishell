@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 17:54:01 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/26 17:58:22 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/27 11:14:54 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int expand_and_classify(t_data *data, char **token, int cmd_nr, int tok_nr)
 	}
 	if ((ft_strchr(data->cmd[cmd_nr].tok[tok_nr], '$')) && (quote != '\''))
 		manage_expansions(data, token);
-	if (!tidy_token(data, token, cmd_nr, tok_nr))
+	if (!classify_token(data, token, cmd_nr, tok_nr))
 		return (0);
 	return (1);
 }
@@ -65,6 +65,7 @@ int	set_into_structure(t_data *data)
 		}
 		i++;
 	}
-	expand_cmd_path(data);
+	if ((data->cmd[i].param) && (data->cmd[i].param[0]))
+		expand_cmd_path(data);
 	return (1);
 }

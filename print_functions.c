@@ -51,6 +51,9 @@ void	print_cmd_parameters(t_data *data)
 	{
 		printf ("Commande %d\n", i);
 		print_char_table("Param", data->cmd[i].param);
+		printf("Nb param = %d\nIn file = [%s]\nOut file = [%s] of type %d\n", 
+		data->cmd[i].nr_param, data->cmd[i].i_file, data->cmd[i].o_file, 
+		data->cmd[i].red_out_type);
 		i++;
 	}
 }

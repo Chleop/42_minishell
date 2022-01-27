@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/30 14:03:39 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/26 18:13:40 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/27 11:33:53 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 # define EMPTY		999
 # define OPERATOR	1
-# define VAR		2
+// # define VAR		2
 # define RED_IN		3 
 # define RED_OUT_S	4
 # define RED_OUT_D	5
@@ -40,9 +40,9 @@ typedef struct s_cmd
 	int		*qualif;
 	int		nr_param;
 	char	**param;
-	char	*i_file;
-	char	*o_file;
-	int		cmd_id;
+	char	**i_file;
+	char	**o_file;
+	int		*red_out_type;
 } t_cmd;
 
 typedef struct s_pars
@@ -115,7 +115,7 @@ int		identify_remove_quotes(char **token);
 int		remove_quotes(char **token, int firstq_i, int secondq_i);
 int		classify_others(t_data *data);
 void	manage_expansions(t_data *data, char **token);
-int		tidy_token(t_data *data, char **token, int cmd_nr, int tok_nr);
+int		classify_token(t_data *data, char **token, int cmd_nr, int tok_nr);
 void    expand_cmd_path(t_data *data);
 
 
