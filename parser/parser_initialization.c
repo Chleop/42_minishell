@@ -58,8 +58,10 @@ int	initialize_cmds(t_data *data, char **token)
 		data->cmd[i].param = NULL;
 		data->cmd[i].nr_param = 0;
 		data->cmd[i].i_file = NULL;
+		data->cmd[i].nr_in = 0;
 		data->cmd[i].o_file = NULL;
-		data->cmd[i].red_out_type = 0;
+		data->cmd[i].nr_out = 0;
+		data->cmd[i].red_out_type = NULL;
 		i++;
 		start++;
 	}

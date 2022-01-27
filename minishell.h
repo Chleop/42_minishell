@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/30 14:03:39 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/27 11:33:53 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/27 13:40:53 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,12 @@ typedef struct s_cmd
 	int		*qualif;
 	int		nr_param;
 	char	**param;
+	// char	*i_file;
+	// char	*o_file;
+	// int		red_out_type;
+	int		nr_in;
 	char	**i_file;
+	int		nr_out;
 	char	**o_file;
 	int		*red_out_type;
 } t_cmd;
@@ -76,6 +81,8 @@ void	print_cmds_and_tokens(t_data *data);
 void	print_cmd_parameters(t_data *data);
 
 //UTILS FOR ALL
+int		add_to_tab(char ***tab, int *count, char *param);
+int		add_to_int_tab(int **tab, int count, int param);
 void	ft_del_stringtab(char ***tab);
 int		ft_error(char *str);
 void	ft_exit(int	i, char *str);

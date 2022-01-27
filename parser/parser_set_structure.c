@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 17:54:01 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/27 11:14:54 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/27 13:56:27 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void    expand_cmd_path(t_data *data)
 	i = 0;
 	while (i < data->nr_cmds)
 	{
+		if (!data->cmd[i].param)
+			return ;
         temp = data->cmd[i].param[0];
         data->cmd[i].param[0] = find_path(data->envp, data->cmd[i].param[0]);
 		free (temp);
@@ -65,7 +67,6 @@ int	set_into_structure(t_data *data)
 		}
 		i++;
 	}
-	if ((data->cmd[i].param) && (data->cmd[i].param[0]))
-		expand_cmd_path(data);
+	expand_cmd_path(data);
 	return (1);
 }

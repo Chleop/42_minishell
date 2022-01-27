@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 13:34:16 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/27 10:40:59 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/27 13:52:58 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,36 +27,6 @@ int	is_quoted(char *token)
 	return (0);
 }
 
-int	add_to_params(t_data *data, int cmd_nr, char *param)
-{
-	char	**temp;
-	int		l;
-
-	data->cmd[cmd_nr].nr_param++;
-	temp = data->cmd[cmd_nr].param;
-	data->cmd[cmd_nr].param = (char **)ft_calloc(data->cmd[cmd_nr].nr_param + 1, sizeof(char *));
-	if (!data->cmd[cmd_nr].param)
-		return (0);
-	if (temp)
-	{
-		l = 0;
-		while (temp[l])
-		{
-			data->cmd[cmd_nr].param[l] = ft_strdup(temp[l]);
-			free (temp[l]);
-			l++;
-		}
-		free(temp);
-		if (!data->cmd[cmd_nr].param[l - 1])
-			return (0);
-	}
-	data->cmd[cmd_nr].param[data->cmd[cmd_nr].nr_param - 1] = ft_strdup(param);
-	if (!data->cmd[cmd_nr].param[data->cmd[cmd_nr].nr_param - 1])
-		return (0);
-	data->cmd[cmd_nr].param[data->cmd[cmd_nr].nr_param] = NULL;
-	return (1);
-}
-
 int	set_command(t_data *data, int cmd_nr, char **token)
 {
 	int		i;
@@ -73,7 +43,7 @@ int	set_command(t_data *data, int cmd_nr, char **token)
 			param = ft_substr(*token, j, i);
 			if (!param)
 				return (0);
-			if(!add_to_params(data, cmd_nr, param))
+			if(!add_to_tab(&(data->cmd[cmd_nr].param), &(data->cmd[cmd_nr].nr_param), param))
 				return (0);
 			free (param);
 			if ((*token)[i] == '\0')
@@ -85,25 +55,24 @@ int	set_command(t_data *data, int cmd_nr, char **token)
 	return (1);
 }
 
-void	set_redirections(t_data *data, char **token, int cmd_nr, int qualif)
+int	set_redirections(t_data *data, char **token, int cmd_nr, int qualif)
 {
 	if (qualif == RED_IN)
-		data->cmd[cmd_nr].i_file = ft_strdup(*token);
+		add_to_tab(&(data->cmd[cmd_nr].i_file), &(data->cmd[cmd_nr].nr_in), *token);
 	else if (qualif == HERE_END)
 	{
 		ft_free(data, token);
 		ft_exit (1, "HERE_DOCS NON GERES pour l'instant :)\n");
 	}
-	else if (qualif == RED_OUT_S)
+	else
 	{
-		data->cmd[cmd_nr].o_file = ft_strdup(*token);
-		data->cmd[cmd_nr].red_out_type = 1;
+		add_to_tab(&(data->cmd[cmd_nr].o_file), &(data->cmd[cmd_nr].nr_out), *token);
+		if (qualif == RED_OUT_S)
+			add_to_int_tab(&(data->cmd[cmd_nr].red_out_type), data->cmd[cmd_nr].nr_out, 1);
+		else
+			add_to_int_tab(&(data->cmd[cmd_nr].red_out_type), data->cmd[cmd_nr].nr_out, 2);
 	}
-	else if (qualif == RED_OUT_D)
-	{
-		data->cmd[cmd_nr].o_file = ft_strdup(*token);
-		data->cmd[cmd_nr].red_out_type = 2;
-	}
+	return (1);
 }
 
 int	classify_token(t_data *data, char **token, int cmd_nr, int tok_nr)
@@ -119,7 +88,7 @@ int	classify_token(t_data *data, char **token, int cmd_nr, int tok_nr)
 	}
 	else if (qualif == PARAM)
 	{
-		if(!add_to_params(data, cmd_nr, *token))
+		if(!add_to_tab(&(data->cmd[cmd_nr].param), &(data->cmd[cmd_nr].nr_param), *token))
 			return (0);
 		data->cmd[cmd_nr].qualif[tok_nr] = EMPTY;
 	}

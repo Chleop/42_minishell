@@ -6,7 +6,7 @@ void	print_char_table(char *str, char **tab)
 
 	if (!tab)
 	{
-		printf("tab n'existe pas\n");
+		printf("tab [%s] n'existe pas\n", str);
 		return ;
 	}
 	i = 0;
@@ -22,6 +22,11 @@ void	print_int_table(int *tab)
 {
 	int	i;
 
+	if (!tab)
+	{
+		printf("Int Stab n'existe pas\n");
+		return ;
+	}
 	i = 0;
 	while (tab[i])
 	{
@@ -50,10 +55,13 @@ void	print_cmd_parameters(t_data *data)
 	while (i < data->nr_cmds)
 	{
 		printf ("Commande %d\n", i);
+		printf("Nb param = %d\n", data->cmd[i].nr_param);
 		print_char_table("Param", data->cmd[i].param);
-		printf("Nb param = %d\nIn file = [%s]\nOut file = [%s] of type %d\n", 
-		data->cmd[i].nr_param, data->cmd[i].i_file, data->cmd[i].o_file, 
-		data->cmd[i].red_out_type);
+		printf("Nb in files = %d\n", data->cmd[i].nr_in);
+		print_char_table("IN file", data->cmd[i].i_file);
+		printf("Nb out files = %d\n", data->cmd[i].nr_out);
+		print_char_table("OUT file", data->cmd[i].o_file);
+		print_int_table(data->cmd[i].red_out_type);
 		i++;
 	}
 }
