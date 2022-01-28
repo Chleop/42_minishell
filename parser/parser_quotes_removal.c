@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:51:50 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/24 13:44:38 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/28 18:06:47 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int	remove_quotes(char **token, int firstq_i, int secondq_i)
 {
 	char	*temp;
 
-	temp = NULL;
 	temp = *token;
 	*token = ft_calloc(ft_strlen(temp) - 1, sizeof(char));
 	if (!*token)
@@ -65,21 +64,17 @@ int	remove_quotes(char **token, int firstq_i, int secondq_i)
 
 int	identify_remove_quotes(char **token)
 {
-	int	i;
 	int	firstq_i;
 	int	secondq_i;
+	int	quote;
 
-	i = 0;
-	while ((*token)[i])
+	quote = is_quoted(*token);
+	if (quote)
 	{
-		if (((*token)[i] == '\'') || ((*token)[i] == '\"'))
-		{
-			firstq_i = i;
-			secondq_i = is_paired((*token)[i], *token, i + 1);
-			if (secondq_i)
-				remove_quotes(token, firstq_i, secondq_i);
-		}
-		i++;
+		firstq_i = ft_strchr(*token, quote) - *token;
+		secondq_i = ft_strchr(*token + firstq_i + 1, quote) - *token;
+		if (!remove_quotes(token, firstq_i, secondq_i))
+			return (0);
 	}
 	return (1);
 }

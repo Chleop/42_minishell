@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 17:54:01 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/27 17:56:42 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/28 13:09:15 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,18 @@
 
 int expand_and_classify(t_data *data, char **token, int cmd_nr, int tok_nr)
 {
-	int		firstq_i;
-	int		secondq_i;
-	int		quote;
 	char	*temp;
 
 	if (ft_strchr(data->cmd[cmd_nr].tok[tok_nr], '$'))
 	{
 		temp = *token;
-		*token = manage_expansions(temp);
+		*token = manage_expansions(data, temp);
 		if (!(*token))
 			return (0);
 		free (temp);
 	}
-	quote = is_quoted(*token);
-	if (quote)
-	{
-		firstq_i = ft_strchr(*token, quote) - *token;
-		secondq_i = ft_strchr(*token + firstq_i + 1, quote) - *token;
-		if (!remove_quotes(token, firstq_i, secondq_i))
-			return (0);
-	}
+	else
+		identify_remove_quotes(token);
 	if (!classify_token(data, token, cmd_nr, tok_nr))
 		return (0);
 	return (1);

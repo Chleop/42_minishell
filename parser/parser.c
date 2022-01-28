@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:55:08 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/27 13:53:18 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/28 16:57:36 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ int	review_operators(char **token)
 				return (ft_error("Syntax error"));
 			else if (!token[i + 1])
 				return (ft_error("Syntax error"));
+			else if (((i - 1) > -1) && ((token[i - 1][0] == '|')
+			|| (token[i - 1][0] == '>') || (token[i - 1][0] == '<')))
+				return (ft_error("Syntax error"));
 		}
 		i++;
 	}
@@ -35,9 +38,9 @@ int	review_operators(char **token)
 
 int	parse(t_data *data, char **token)
 {
-	if (!review_operators(token))
-		return (0);
 	if (!initialize_data(data, token))
+		return (0);
+	if (!review_operators(token))
 		return (0);
 	if (!initialize_cmds(data, token))
 		return (0);

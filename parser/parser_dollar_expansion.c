@@ -6,36 +6,74 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:56:24 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/27 18:26:15 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/28 18:07:23 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*replace_param_by_extansion(t_data *data, char* pre, char *param, char *post)
+char	*replace_param_by_extansion(t_data *data, char *param)
 {
 	int		i;
+	int		j;
 	int		len;
-	char	*exp;
-	char	*new_token;
-	char	*free_var;
+	char	*pre_param;
+	char	*expanded_param;
+	char	*temp;
+	char	*needle;
+	char	quote[2];
 
-	i = 0;
-	len = (int)ft_strlen(param);
-	exp = NULL;
-	while (data->envp[i])
+	if (is_quoted(param) && param[0] == '\'')
 	{
-		if (ft_strnstr(data->envp[i], param, len))
-			exp = ft_substr(data->envp[i], len + 1, (ft_strlen(data->envp[i]) - len - 1));
+		identify_remove_quotes(&param);
+		return (ft_strdup(param));
+	}
+	identify_remove_quotes(&param);
+	pre_param = NULL;
+	expanded_param = NULL;
+	temp = NULL;
+	j = 0;
+	quote[0] = is_quoted(param);
+	quote[1] = '\0';
+	if (quote[0])
+		identify_remove_quotes(&param);
+	while (param[j] != '$')
+		j++;
+	if (j)
+		pre_param = ft_substr(param, 0, j);
+	needle = ft_strjoin(param + j + 1, "=");
+	len = (int)ft_strlen(param) - j;
+	i = 0;
+	while ((data->envp[i]) && (ft_strlen(needle) != 1))
+	{
+		if (ft_strnstr(data->envp[i], needle, ft_strlen(needle)))
+		{
+			expanded_param = ft_substr(data->envp[i], len, (ft_strlen(data->envp[i]) - len));
+			break;
+		}
 		i++;
 	}
-	if (!exp)
-		return(ft_strjoin(pre, post));
-	new_token = ft_strjoin(pre, exp);
-	free_var = new_token;
-	new_token = ft_strjoin(new_token, post);
-	free (free_var);
-	return (new_token);
+	free (needle);
+	if (quote[0])
+	{
+		temp = expanded_param;
+		expanded_param = ft_strjoin(quote, expanded_param);
+		free(temp);
+		temp = expanded_param;
+		expanded_param = ft_strjoin(expanded_param, quote);
+		free(temp);
+	}
+	if (!expanded_param)
+		return (pre_param);
+	if (pre_param)
+	{
+		temp = expanded_param;
+		expanded_param = ft_strjoin(pre_param, expanded_param);
+		free(temp);
+		free(pre_param);
+	}
+
+	return (expanded_param);
 }
 
 int	ft_param_len(char *str)
@@ -62,97 +100,51 @@ int	ft_param_len(char *str)
 	return (j);
 }
 
-// char	*get_sub_tok(char **token)
-// {
-// 	char	*pre;
-// 	int		start;
-// 	int		end;
-
-// 	start = 0;
-// 	while ((((*token)[pre_end]) != '\0') && (((*token)[pre_end]) != '\'')
-// 	&& (((*token)[pre_end]) != '\"') && (((*token)[pre_end]) != '$'))
-// 		pre_end++;
-// 	pre = (char *)ft_calloc(pre_end + 1, sizeof(char));
-// 	if (!pre)
-// 		return (NULL);
-// 	ft_memcpy(pre, *token, pre_end);
-// 	return (pre);
-// }
-
-char	*manage_expansions(char *token)
+int	get_end(char *token, int i)
 {
-	int		i;
-	int		start;
-	int		end;
-	char	*sub_tok;
-	char	*new_token;
-	char	*temp;
-
-	i = 0;
-	new_token = ft_strdup("\0");
-	while (((token)[i]) != '\0')
+	if (((token[i] == '\'') || (token[i] == '\"'))
+	&& is_paired(token[i], token, i + 1))
+		return (is_paired(token[i], token, i + 1));
+	else
 	{
-		start = i;
-		if (((token[i] == '\'') || (token[i] == '\"'))
-		&& is_paired(token[i], token, i + 1))
-			end = is_paired(token[i], token, i + 1);
-		else
-		{
-			i++;
-			while ((((token)[i]) != '\0') && (((token)[i]) != '\'')
-			&& (((token)[i]) != '\"') && (((token)[i]) != '$'))
-				i++;
-			end = i;
-		}
-		printf ("start = %d, end = %d\n", start, end);
-		sub_tok = ft_substr(token, start, end - start);
-		if (!sub_tok)
-			return (NULL);
-		printf("subtok = [%s]\n", sub_tok);
-		temp = new_token;
-		new_token = ft_strjoin(temp, sub_tok);
-		free(temp);
-		free(sub_tok);
-		printf("new_token = [%s]\n", new_token);
-		exit(1);
 		i++;
+		while ((token[i] != '\0') && (token[i] != '\n')
+		&& (token[i] != '\'') && (token[i] != '\"') 
+		&& (token[i] != '$'))
+			i++;
+		return (i - 1);
 	}
-	return (new_token);
 }
 
-// void	manage_expansions(t_data *data, char **token)
-// {
-// 	char	*pre;
-// 	char	*param;
-// 	char	*post;
-// 	char	*free_var;
-// 	int		par_i;
-// 	int		post_len;
+char	*manage_expansions(t_data *data, char *token)
+{
+	int	i;
+	int	start;
+	int	end;
+	char	*subtok;
+	char	*new_tok;
+	char	*temp;
 
-// 	printf("*token = [%s] with size %lu\n", *token, ft_strlen(*token));
-// 	while (ft_strchr(*token, '$'))
-// 	{
-// 		par_i = ft_strchr(*token, '$') - *token + 1;
-// 		pre = (char *)ft_calloc(par_i, sizeof(char));
-// 		if (!pre)
-// 			perror("Error");
-// 		ft_memcpy(pre, *token, par_i - 1);
-// 		param = (char *)ft_calloc(ft_param_len(*token) + 1, sizeof(char));
-// 		if (!param)
-// 			perror("Error");
-// 		ft_memcpy(param, *token + par_i, ft_param_len(*token));
-// 		post_len = ft_strlen(*token) - (par_i + ft_param_len(*token));
-// 		post = (char *)ft_calloc(post_len + 1, sizeof(char));
-// 		if (!post)
-// 			perror("Error");
-// 		ft_memcpy(post, *token + par_i + ft_param_len(*token), post_len);
-// 		free_var = *token;
-// 		printf ("pre = [%s], param = [%s], post = [%s]\n", pre, param, post);
-// 		*token = replace_param_by_extansion(data, pre, param, post);
-// 		free(free_var);
-// 		free(pre);
-// 		free(param);
-// 		free(post);
-// 	}
-// 	return ;
-// }
+	new_tok = NULL;
+	i = 0;
+	while ((token[i] != '\0') && (token[i] != '\n'))
+	{
+		start = i;
+		end = get_end(token, i);
+		subtok = ft_substr(token, start, end - start + 1);
+		if (!subtok)
+			return (NULL);
+		if (((start == 0) && (end == (int)ft_strlen(token) + 1)) || (ft_strchr(subtok, '$')))
+			subtok = replace_param_by_extansion(data, subtok);
+		else
+			identify_remove_quotes(&subtok);
+		temp = new_tok;
+		new_tok = ft_strjoin(new_tok, subtok);
+		if (temp)
+			free (temp);
+		if (end == (int)ft_strlen(token) + 1)
+			break;
+		i = end + 1;
+	}
+	return (new_tok);
+}
