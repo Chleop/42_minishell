@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/30 14:03:39 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/28 12:17:05 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/31 13:34:42 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,6 @@ typedef struct s_cmd
 	int		*qualif;
 	int		nr_param;
 	char	**param;
-	// char	*i_file;
-	// char	*o_file;
-	// int		red_out_type;
 	int		nr_in;
 	char	**i_file;
 	int		nr_out;
@@ -124,5 +121,7 @@ int		classify_others(t_data *data);
 char	*manage_expansions(t_data *data, char *token);
 int		classify_token(t_data *data, char **token, int cmd_nr, int tok_nr);
 void    expand_cmd_path(t_data *data);
+char	*double_quoted_exp(t_data *data, char *param);
+char	*get_and_expand(char **env, char *token);
 
 #endif

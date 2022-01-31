@@ -6,98 +6,64 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:56:24 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/28 18:07:23 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/31 13:35:17 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*replace_param_by_extansion(t_data *data, char *param)
+char	*get_expansion(char **env, char *token, int j)
 {
-	int		i;
-	int		j;
 	int		len;
-	char	*pre_param;
-	char	*expanded_param;
-	char	*temp;
 	char	*needle;
-	char	quote[2];
-
-	if (is_quoted(param) && param[0] == '\'')
-	{
-		identify_remove_quotes(&param);
-		return (ft_strdup(param));
-	}
-	identify_remove_quotes(&param);
-	pre_param = NULL;
-	expanded_param = NULL;
-	temp = NULL;
+	char	*exp;
+	
+	needle = ft_strjoin(token + j + 1, "=");
+	len = (int)ft_strlen(token) - j;
+	exp = ft_strdup("\0");
 	j = 0;
-	quote[0] = is_quoted(param);
-	quote[1] = '\0';
-	if (quote[0])
-		identify_remove_quotes(&param);
-	while (param[j] != '$')
-		j++;
-	if (j)
-		pre_param = ft_substr(param, 0, j);
-	needle = ft_strjoin(param + j + 1, "=");
-	len = (int)ft_strlen(param) - j;
-	i = 0;
-	while ((data->envp[i]) && (ft_strlen(needle) != 1))
+	while ((env[j]) && (ft_strlen(needle) != 1))
 	{
-		if (ft_strnstr(data->envp[i], needle, ft_strlen(needle)))
+		if (ft_strnstr(env[j], needle, ft_strlen(needle)))
 		{
-			expanded_param = ft_substr(data->envp[i], len, (ft_strlen(data->envp[i]) - len));
+			exp = ft_substr(env[j], len, (ft_strlen(env[j]) - len));
 			break;
 		}
-		i++;
-	}
-	free (needle);
-	if (quote[0])
-	{
-		temp = expanded_param;
-		expanded_param = ft_strjoin(quote, expanded_param);
-		free(temp);
-		temp = expanded_param;
-		expanded_param = ft_strjoin(expanded_param, quote);
-		free(temp);
-	}
-	if (!expanded_param)
-		return (pre_param);
-	if (pre_param)
-	{
-		temp = expanded_param;
-		expanded_param = ft_strjoin(pre_param, expanded_param);
-		free(temp);
-		free(pre_param);
-	}
-
-	return (expanded_param);
-}
-
-int	ft_param_len(char *str)
-{
-	int	i;
-	int j;
-
-	i = 0;
-	while (str[i])
-	{
-		if (ft_strchr("$", str[i]))
-			break ;
-		i++;
-	}
-	i++;
-	j = 0;
-	while (str[i])
-	{
-		if (ft_strchr("$", str[i]))
-			return (j);
-		i++;
 		j++;
 	}
-	return (j);
+	free (needle);
+	return (exp);
+}
+
+char	*get_and_expand(char **env, char *token)
+{
+	int		i;
+	char	*expanded_token;
+	char	*pre_param;
+	char	*exp;
+	
+	i = 0;
+	while (token[i] != '$')
+		i++;
+	pre_param = ft_substr(token, 0, i);
+	exp = get_expansion(env, token, i);
+	expanded_token = ft_strjoin(pre_param, exp);
+	free(exp);
+	free(pre_param);
+	return (expanded_token);
+}
+
+char	*replace_param_by_expansion(t_data *data, char *param)
+{
+	int		quote;
+
+	quote = is_quoted(param);
+	identify_remove_quotes(&param);
+	if (quote == '\'')
+		return (ft_strdup(param));
+	if ((quote == '\"') && is_quoted(param))
+		return (double_quoted_exp(data, param));
+	return (get_and_expand(data->envp, param));
 }
 
 int	get_end(char *token, int i)
@@ -135,7 +101,7 @@ char	*manage_expansions(t_data *data, char *token)
 		if (!subtok)
 			return (NULL);
 		if (((start == 0) && (end == (int)ft_strlen(token) + 1)) || (ft_strchr(subtok, '$')))
-			subtok = replace_param_by_extansion(data, subtok);
+			subtok = replace_param_by_expansion(data, subtok);
 		else
 			identify_remove_quotes(&subtok);
 		temp = new_tok;
