@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_struct_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 13:34:16 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/31 16:45:32 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/31 18:28:13 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,19 +58,19 @@ int	set_command(t_data *data, int n, char **token)
 int	set_redirections(t_data *data, char **token, int n, int qualif)
 {
 	if (qualif == RED_IN)
-		add_tab(&(data->cmd[n].i_file), &(data->cmd[n].nr_in), *token);
+		add_tab(&(data->cmd[n].i), &(data->cmd[n].nr_in), *token);
 	else if (qualif == HERE_END)
 	{
 		ft_free(data, token);
-		ft_exit (1, "HERE_DOCS NON GERES pour l'instant :)\n");
+		final_exit (1, "HERE_DOCS NON GERES pour l'instant :)\n");
 	}
 	else
 	{
-		add_tab(&(data->cmd[n].o_file), &(data->cmd[n].nr_out), *token);
+		add_tab(&(data->cmd[n].o), &(data->cmd[n].nr_out), *token);
 		if (qualif == RED_OUT_S)
-			add_int(&(data->cmd[n].red_out_type), data->cmd[n].nr_out, 1);
+			add_int(&(data->cmd[n].type), data->cmd[n].nr_out, 1);
 		else
-			add_int(&(data->cmd[n].red_out_type), data->cmd[n].nr_out, 2);
+			add_int(&(data->cmd[n].type), data->cmd[n].nr_out, 2);
 	}
 	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:23:36 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/31 16:36:21 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/31 18:08:54 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	ft_error(char *str)
 	return (0);
 }
 
-void	ft_exit(int i, char *str)
+void	final_exit(int i, char *str)
 {
 	printf("%s\n", str);
 	exit (i);

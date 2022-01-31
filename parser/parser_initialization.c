@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_initialization.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 16:11:06 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/31 16:21:38 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/31 17:56:14 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,12 @@ int	initialize_cmds(t_data *data, char **token)
 			return (0);
 		data->cmd[i].param = NULL;
 		data->cmd[i].nr_param = 0;
-		data->cmd[i].i_file = NULL;
+		data->cmd[i].i = NULL;
 		data->cmd[i].nr_in = 0;
-		data->cmd[i].o_file = NULL;
+		data->cmd[i].o = NULL;
 		data->cmd[i].nr_out = 0;
-		data->cmd[i].red_out_type = NULL;
+		data->cmd[i].type = NULL;
+		data->cmd[i].id = i;
 		start++;
 	}
 	return (1);

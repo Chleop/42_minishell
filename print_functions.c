@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 16:36:55 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/31 16:38:35 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/31 17:48:42 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,10 @@ void	print_cmd_parameters(t_data *data)
 		printf("Nb param = %d\n", data->cmd[i].nr_param);
 		print_char_table("Param", data->cmd[i].param);
 		printf("Nb in files = %d\n", data->cmd[i].nr_in);
-		print_char_table("IN file", data->cmd[i].i_file);
+		print_char_table("IN file", data->cmd[i].i);
 		printf("Nb out files = %d\n", data->cmd[i].nr_out);
-		print_char_table("OUT file", data->cmd[i].o_file);
-		print_int_table(data->cmd[i].red_out_type);
+		print_char_table("OUT file", data->cmd[i].o);
+		print_int_table(data->cmd[i].type);
 		i++;
 	}
 }

@@ -3,53 +3,85 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+         #
+#    By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/12/09 12:28:36 by cproesch          #+#    #+#              #
-#    Updated: 2022/01/31 16:47:28 by cproesch         ###   ########.fr        #
+#    Created: 2021/12/14 15:32:57 by avan-bre          #+#    #+#              #
+#    Updated: 2022/01/31 18:30:54 by avan-bre         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS		= main.c utils_for_all.c free_utils.c print_functions.c \
-			lexer/lexer.c lexer/lexer_functions_1.c lexer/lexer_functions_2.c \
-			lexer/lexer_utils.c \
-			parser/parser.c parser/parser_initialization.c parser/parser_utils.c \
-			parser/parser_grammar.c parser/parser_quotes_removal.c \
-			parser/parser_struct_utils.c parser/parser_set_structure.c \
-			parser/parser_dollar_expansion.c parser/parser_command_path.c \
-			parser/parser_double_quotes_dollar_expansion.c
+################################################################################
+#                                 COMPILATION                                  #
+################################################################################
 
-OBJS		= $(SRCS:.c=.o)
+NAME	=	minishell
+B_NAME	=	
+LIBFT	=	libft/libft.a
+RM		=	@rm -rf
+CC		=	@clang
+IFLAGS	=	-I. -Ilibft
+RLFLAGS	=	-lreadline
+SFLAGS	=	#-fsanitize=address -g3 
+CFLAGS	:=	-Wall -Werror -Wextra $(IFLAGS) $(SFLAGS)
+LFLAGS	:=	-Llibft -lft
 
-NAME		= minishell
+################################################################################
+#                                    FILES                                     #
+################################################################################
 
-CC			= clang
+SRCS	=	main.c set_envp.c envp_utils.c utils_for_all.c free_utils.c \
+			print_functions.c $(addprefix $(E_DIR), $(E_SRCS)) \
+			$(addprefix $(L_DIR), $(L_SRCS)) $(addprefix $(P_DIR), $(P_SRCS))
+E_SRCS	=	redirection.c pipes.c exec.c BI_cd.c BI_cd2.c BI_env_echo_pwd.c \
+			BI_export.c BI_export2.c BI_unset.c BI_exit.c
+L_SRCS	=	lexer.c lexer_functions_1.c lexer_functions_2.c lexer_utils.c
+P_SRCS	=	parser.c parser_initialization.c parser_utils.c parser_grammar.c \
+			parser_quotes_removal.c	parser_struct_utils.c parser_set_structure.c \
+			parser_dollar_expansion.c parser_command_path.c \
+			parser_double_quotes_dollar_expansion.c
+#B_SRCS	=	
+#S_DIR	=	sources/
+#B_DIR	=	bonus_sources/
+E_DIR	=	execution/
+L_DIR	=	lexer/
+P_DIR	=	parser/
+OBJS	=	$(addprefix $(S_DIR), $(SRCS:.c=.o))
+#B_OBJS	=	$(addprefix $(B_DIR), $(B_SRCS:.c=.o))
 
-IFLAGS		= -I. -Ilibft
-
-CFLAGS		= -Wall -Wextra -Werror -fsanitize=address -g3 $(IFLAGS)
-
-LFLAGS		= -Llibft -lft 
-
-RM			= rm -rf
+################################################################################
+#                                 RULES                                        #
+################################################################################
 
 .c.o:
-		$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
-
-$(NAME):	$(OBJS)
-			make -C libft
-			$(CC) $(OBJS) $(LFLAGS) $(CFLAGS) -o $(NAME) -v -lreadline
+	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
 
 all:		$(NAME)
 
-clean:	
-			make -C libft -f Makefile clean
-			$(RM) $(OBJS) $(OBJS_B)
+$(NAME):	$(OBJS) $(LIBFT)
+	@echo "Compiling sources.."
+	$(CC) $(OBJS) $(CFLAGS) $(LFLAGS) -o $@ $(RLFLAGS)
+	@echo "Ready!"
+
+$(LIBFT):
+	@echo "Compiling libft.."
+	@make -s -C libft
+	@echo "Libft ready!"
+
+#bonus:	${B_OBJS} ${LIBFT}
+#	@echo "Compiling bonus sources.."
+#	${CC} ${B_OBJS} ${LFLAGS} -o ${B_NAME}
+#	@echo "Ready!"
+
+clean:
+	$(RM) $(OBJS) $(E_OBJS) ${B_OBJS}
+	@make $@ -s -C libft
+	@echo "Removed objects"
 
 fclean:		clean
-			make -C libft -f Makefile fclean
-			$(RM) $(NAME)
+	$(RM) $(NAME) ${B_NAME}
+	@make $@ -s -C libft
+	@echo "Removed executable files"
 
-re:			fclean all
+re:			clean all
 
-.PHONY:		all clean fclean re
+.PHONY:		re, all, clean, fclean

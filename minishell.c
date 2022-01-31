@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/31 15:22:30 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/31 18:28:20 by avan-bre         ###   ########.fr       */
+/*   Created: 2021/12/14 15:32:53 by avan-bre          #+#    #+#             */
+/*   Updated: 2022/01/31 16:58:41 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,31 +34,59 @@ void	finish_up(t_data *data)
 	}
 }
 
-int	main(int argc, char **argv, char **envp)
+int	init_commands(t_data *data, char *command_in)
 {
-	char	*input;
-	char	**token;
-	t_data	data;
-	int		ret;
-	int		status;
 	int		i;
+	char	**commands;
 
-	if ((argc > 1) || (argv[1]))
-		final_exit(127, "Error: too many arguments");
-	init_envp(&data, envp);
-	input = NULL;
-	token = NULL;
-	while (42)
+	commands = ft_split(command_in, '*');
+	i = 0;
+	while (commands[i])
+		i++;
+	data->nr_cmds = i;
+	data->cmd = malloc(sizeof(t_cmd) * data->nr_cmds);
+	if (!data->cmd)
 	{
-		input = readline("our_minishell:~$ ");
-		add_history(input);
-		if (input)
-			token = lexer(input, envp);
-		if (token)
-		{
-			ret = parse(&data, token);
-			ft_free(&data, token);
-		}
+		perror("malloc failed");
+		return (0);
+	}
+	printf("check\n");
+	i = -1;
+	while (++i < data->nr_cmds)
+	{
+		data->cmd[i].params = ft_split(commands[i], ' ');
+		data->cmd[i].o[0] = NULL;
+		data->cmd[i].i[0] = NULL;
+		data->cmd[i].out[0] = 0;
+		data->cmd[i].id = i;
+		data->cmd[i].data = data;
+		data->process_id[i] = 0;
+	}
+	return (1);
+}
+
+int	main(int argc, char *argv[], char *envp[])
+{
+	char	*command_in;
+	t_data	data;
+	int		i;
+	int		status;
+
+	init_envp(&data, envp);
+	// not sure to protect with if -1, exit
+	if (argc > 1)
+	{
+		ft_printf("Expected usage: ./minishell");
+		exit (127);
+	}
+	argv = NULL;
+	while (1)
+	{
+		command_in = readline("Our_minishell:~% ");
+		add_history(command_in);
+		// lexer + parser
+		init_commands(&data, command_in);
+		// not sure to protect with if -1, exit
 		status = 1;
 		if (data.nr_cmds > 1)
 			status = init_pipes(&data);
@@ -73,7 +101,8 @@ int	main(int argc, char **argv, char **envp)
 			}
 		}
 		finish_up(&data);
+		free(command_in);
+		command_in = NULL;
+	//	exit (0);
 	}
-	final_exit(1, NULL);
-	return (0);
 }
