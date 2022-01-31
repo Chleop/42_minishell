@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print_functions.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/31 16:36:55 by cproesch          #+#    #+#             */
+/*   Updated: 2022/01/31 16:38:35 by cproesch         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	print_char_table(char *str, char **tab)
@@ -12,7 +24,7 @@ void	print_char_table(char *str, char **tab)
 	i = 0;
 	while (tab[i])
 	{
-		printf("%s[%d] = [%s]\n",str, i, tab[i]);
+		printf("%s[%d] = [%s]\n", str, i, tab[i]);
 		i++;
 	}
 	return ;
@@ -38,7 +50,9 @@ void	print_int_table(int *tab)
 
 void	print_cmds_and_tokens(t_data *data)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (i < data->nr_cmds)
 	{
 		printf("Commande %d\n", i);
@@ -50,8 +64,10 @@ void	print_cmds_and_tokens(t_data *data)
 
 void	print_cmd_parameters(t_data *data)
 {
+	int	i;
+
 	printf("LES PARAMETRES SONT:\n");
-	int i = 0;
+	i = 0;
 	while (i < data->nr_cmds)
 	{
 		printf ("Commande %d\n", i);

@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 13:34:16 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/27 13:52:58 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/31 16:45:32 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,32 +20,32 @@ int	is_quoted(char *token)
 	while (token[i])
 	{
 		if (((token[i] == '\'') || (token[i] == '\"'))
-		&& is_paired(token[i], token, i + 1))
+			&& is_paired(token[i], token, i + 1))
 			return (token[i]);
 		i++;
 	}
 	return (0);
 }
 
-int	set_command(t_data *data, int cmd_nr, char **token)
+int	set_command(t_data *data, int n, char **token)
 {
 	int		i;
 	int		j;
-	char	*param;
+	char	*par;
 
 	i = 0;
 	j = 0;
-	param = NULL;
+	par = NULL;
 	while (1)
 	{
 		if ((((*token)[i] == ' ') || (*token)[i] == '\0'))
 		{
-			param = ft_substr(*token, j, i);
-			if (!param)
+			par = ft_substr(*token, j, i);
+			if (!par)
 				return (0);
-			if(!add_to_tab(&(data->cmd[cmd_nr].param), &(data->cmd[cmd_nr].nr_param), param))
+			if (!add_tab(&(data->cmd[n].param), &(data->cmd[n].nr_param), par))
 				return (0);
-			free (param);
+			free (par);
 			if ((*token)[i] == '\0')
 				return (1);
 			j = i + 1;
@@ -55,10 +55,10 @@ int	set_command(t_data *data, int cmd_nr, char **token)
 	return (1);
 }
 
-int	set_redirections(t_data *data, char **token, int cmd_nr, int qualif)
+int	set_redirections(t_data *data, char **token, int n, int qualif)
 {
 	if (qualif == RED_IN)
-		add_to_tab(&(data->cmd[cmd_nr].i_file), &(data->cmd[cmd_nr].nr_in), *token);
+		add_tab(&(data->cmd[n].i_file), &(data->cmd[n].nr_in), *token);
 	else if (qualif == HERE_END)
 	{
 		ft_free(data, token);
@@ -66,36 +66,36 @@ int	set_redirections(t_data *data, char **token, int cmd_nr, int qualif)
 	}
 	else
 	{
-		add_to_tab(&(data->cmd[cmd_nr].o_file), &(data->cmd[cmd_nr].nr_out), *token);
+		add_tab(&(data->cmd[n].o_file), &(data->cmd[n].nr_out), *token);
 		if (qualif == RED_OUT_S)
-			add_to_int_tab(&(data->cmd[cmd_nr].red_out_type), data->cmd[cmd_nr].nr_out, 1);
+			add_int(&(data->cmd[n].red_out_type), data->cmd[n].nr_out, 1);
 		else
-			add_to_int_tab(&(data->cmd[cmd_nr].red_out_type), data->cmd[cmd_nr].nr_out, 2);
+			add_int(&(data->cmd[n].red_out_type), data->cmd[n].nr_out, 2);
 	}
 	return (1);
 }
 
-int	classify_token(t_data *data, char **token, int cmd_nr, int tok_nr)
+int	classify_token(t_data *data, char **token, int n, int tok_nr)
 {
 	int	qualif;
-	
-	qualif = data->cmd[cmd_nr].qualif[tok_nr];
+
+	qualif = data->cmd[n].qualif[tok_nr];
 	if (qualif == CMD)
 	{
-		if (!set_command(data, cmd_nr, token))
+		if (!set_command(data, n, token))
 			return (0);
-		data->cmd[cmd_nr].qualif[tok_nr] = EMPTY;
+		data->cmd[n].qualif[tok_nr] = EMPTY;
 	}
 	else if (qualif == PARAM)
 	{
-		if(!add_to_tab(&(data->cmd[cmd_nr].param), &(data->cmd[cmd_nr].nr_param), *token))
+		if (!add_tab(&(data->cmd[n].param), &(data->cmd[n].nr_param), *token))
 			return (0);
-		data->cmd[cmd_nr].qualif[tok_nr] = EMPTY;
+		data->cmd[n].qualif[tok_nr] = EMPTY;
 	}
 	else if ((qualif != OPERATOR) && (qualif != EMPTY))
 	{
-		set_redirections(data, token, cmd_nr, qualif);
-		data->cmd[cmd_nr].qualif[tok_nr] = EMPTY;
+		set_redirections(data, token, n, qualif);
+		data->cmd[n].qualif[tok_nr] = EMPTY;
 	}
 	return (1);
 }

@@ -5,13 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/30 14:03:39 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/31 13:34:42 by cproesch         ###   ########.fr       */
+/*   Created: 2022/01/31 15:16:35 by cproesch          #+#    #+#             */
+/*   Updated: 2022/01/31 16:47:01 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
 # include "libft.h"
 # include <stdlib.h>
@@ -45,13 +45,12 @@ typedef struct s_cmd
 	int		nr_out;
 	char	**o_file;
 	int		*red_out_type;
-} t_cmd;
+}	t_cmd;
 
 typedef struct s_pars
 {
 	int	pipe[1023];
-	
-} t_pars;
+}	t_pars;
 
 typedef struct s_data
 {
@@ -78,11 +77,11 @@ void	print_cmds_and_tokens(t_data *data);
 void	print_cmd_parameters(t_data *data);
 
 //UTILS FOR ALL
-int		add_to_tab(char ***tab, int *count, char *param);
-int		add_to_int_tab(int **tab, int count, int param);
+int		add_tab(char ***tab, int *count, char *param);
+int		add_int(int **tab, int count, int param);
 void	ft_del_stringtab(char ***tab);
 int		ft_error(char *str);
-void	ft_exit(int	i, char *str);
+void	ft_exit(int i, char *str);
 void	ft_free(t_data *data, char **token);
 
 //LEXER
@@ -103,7 +102,7 @@ void	condition_7(t_lex *lex, char ***token);
 //PARSER
 int		initialize_data(t_data *data, char **token);
 int		set_end(t_data *data, int i);
-int		divide_token(t_data *data, char **token, int *start, int end, int i);
+int		divide_token(t_data *data, char **token, int *start, int i);
 int		initialize_cmds(t_data *data, char **token);
 int		grammatize_tokens(t_data *data);
 
@@ -120,7 +119,7 @@ int		remove_quotes(char **token, int firstq_i, int secondq_i);
 int		classify_others(t_data *data);
 char	*manage_expansions(t_data *data, char *token);
 int		classify_token(t_data *data, char **token, int cmd_nr, int tok_nr);
-void    expand_cmd_path(t_data *data);
+void	expand_cmd_path(t_data *data);
 char	*double_quoted_exp(t_data *data, char *param);
 char	*get_and_expand(char **env, char *token);
 

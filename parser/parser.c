@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:55:08 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/28 16:57:36 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/31 17:05:44 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,18 @@ int	review_operators(char **token)
 	i = 0;
 	while (token[i])
 	{
-		if ((token[i][0] == '|') || (token[i][0] == '>') || (token[i][0] == '<'))
+		if ((token[i][0] == '|') || (token[i][0] == '>')
+		|| (token[i][0] == '<'))
 		{
 			if (ft_strncmp(token[i], "|\0", 2) && ft_strncmp(token[i], "<\0", 2)
-			&& ft_strncmp(token[i], ">\0", 2) && ft_strncmp(token[i], ">>\0", 3)
-			&& ft_strncmp(token[i], "<<\0", 3) && ft_strncmp(token[i], ">|\0", 3))
+				&& ft_strncmp(token[i], ">\0", 2)
+				&& ft_strncmp(token[i], ">>\0", 3)
+				&& ft_strncmp(token[i], "<<\0", 3)
+				&& ft_strncmp(token[i], ">|\0", 3))
 				return (ft_error("Syntax error"));
 			else if (!token[i + 1])
 				return (ft_error("Syntax error"));
-			else if (((i - 1) > -1) && ((token[i - 1][0] == '|')
-			|| (token[i - 1][0] == '>') || (token[i - 1][0] == '<')))
+			else if (((i - 1) > -1) && ((token[i - 1][0] == '>') || (token[i - 1][0] == '<')))
 				return (ft_error("Syntax error"));
 		}
 		i++;
@@ -46,7 +48,6 @@ int	parse(t_data *data, char **token)
 		return (0);
 	if (!grammatize_tokens(data))
 		return (0);
-	// print_cmds_and_tokens(data);
 	if (!set_into_structure(data))
 		return (0);
 	print_cmd_parameters(data);

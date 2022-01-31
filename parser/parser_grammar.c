@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 18:18:18 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/21 15:11:06 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/31 16:10:36 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	qualifiy_red(t_cmd *cmd)
 		if ((*cmd).qualif[i] == EMPTY)
 		{
 			if (!ft_strncmp((*cmd).tok[i], ">\0", 2)
-			|| !ft_strncmp((*cmd).tok[i], ">|\0", 3))
+				|| !ft_strncmp((*cmd).tok[i], ">|\0", 3))
 				set_red_qualification(cmd, &i, RED_OUT_S);
 			else if (!ft_strncmp((*cmd).tok[i], ">>\0", 3))
 				set_red_qualification(cmd, &i, RED_OUT_D);
@@ -69,7 +69,7 @@ void	qualify_cmds(t_cmd *cmd)
 		if ((*cmd).qualif[i] == EMPTY)
 		{
 			(*cmd).qualif[i] = CMD;
-			break;
+			break ;
 		}
 		i++;
 	}
@@ -83,7 +83,7 @@ void	qualify_cmds(t_cmd *cmd)
 
 int	grammatize_tokens(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < data->nr_cmds)

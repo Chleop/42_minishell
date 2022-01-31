@@ -1,44 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_expansions_double_quotes.c                  :+:      :+:    :+:   */
+/*   parser_double_quotes_dollar_expansion.c            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 13:32:12 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/31 14:02:30 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/31 16:43:23 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int *get_dqe_end(char *param)
+int	*get_dqe_end(char *param)
 {
-    int		*quote_index;
+	int		*quote_i;
 
-    quote_index = ft_calloc(3, sizeof(int));
-    quote_index[0] = 0;
-	quote_index[1] = 0;
-    while ((param[quote_index[0]] != '\0') && (param[quote_index[0]] != '\n'))
+	quote_i = ft_calloc(3, sizeof(int));
+	quote_i[0] = 0;
+	quote_i[1] = 0;
+	while ((param[quote_i[0]] != '\0') && (param[quote_i[0]] != '\n'))
 	{
-		if (((param[quote_index[0]] == '\'') || (param[quote_index[0]] == '\"'))
-			&& is_paired(param[quote_index[0]], param, quote_index[0] + 1))
+		if (((param[quote_i[0]] == '\'') || (param[quote_i[0]] == '\"'))
+			&& is_paired(param[quote_i[0]], param, quote_i[0] + 1))
 		{
-			quote_index[1] = is_paired(param[quote_index[0]], param, quote_index[0] + 1);
-			break;
+			quote_i[1] = is_paired(param[quote_i[0]], param, quote_i[0] + 1);
+			break ;
 		}
-		quote_index[0]++;
+		quote_i[0]++;
 	}
-    return (quote_index);
+	return (quote_i);
 }
 
-char    *join_sub_param(char **env, char **sub_param)
+char	*join_sub_param(char **env, char **sub_param)
 {
-    int     i;
-    char	*new_param;
+	int		i;
+	char	*new_param;
 	char	*temp;
 
-    new_param = ft_strdup("\0");
+	new_param = ft_strdup("\0");
 	i = 0;
 	while (i < 5)
 	{
@@ -54,23 +54,23 @@ char    *join_sub_param(char **env, char **sub_param)
 		free (sub_param[i]);
 		i++;
 	}
-    return (new_param);
+	return (new_param);
 }
 
 char	*double_quoted_exp(t_data *data, char *param)
 {
-	int		*quote_index;
+	int		*ind;
 	char	*sub_param[5];
 	char	*quote;
 
-	quote_index = get_dqe_end(param);
+	ind = get_dqe_end(param);
 	quote = ft_calloc(2, sizeof(char));
-	quote[0] = param[quote_index[1]];
-	sub_param[0] = ft_substr(param, 0, quote_index[0]);
+	quote[0] = param[ind[1]];
+	sub_param[0] = ft_substr(param, 0, ind[0]);
 	sub_param[1] = quote;
-	sub_param[2] = ft_substr(param, quote_index[0] + 1, quote_index[1] - quote_index[0] - 1);
+	sub_param[2] = ft_substr(param, ind[0] + 1, ind[1] - ind[0] - 1);
 	sub_param[3] = ft_strdup(quote);
-	sub_param[4] = ft_substr(param, quote_index[1] + 1, ft_strlen(param) - quote_index[1] - 1);
-    free(quote_index);
+	sub_param[4] = ft_substr(param, ind[1] + 1, ft_strlen(param) - ind[1] - 1);
+	free(ind);
 	return (join_sub_param(data->envp, sub_param));
 }

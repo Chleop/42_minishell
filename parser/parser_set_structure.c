@@ -6,13 +6,13 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 17:54:01 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/28 13:09:15 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/31 16:27:45 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int expand_and_classify(t_data *data, char **token, int cmd_nr, int tok_nr)
+int	expand_and_classify(t_data *data, char **token, int cmd_nr, int tok_nr)
 {
 	char	*temp;
 
@@ -31,18 +31,18 @@ int expand_and_classify(t_data *data, char **token, int cmd_nr, int tok_nr)
 	return (1);
 }
 
-void    expand_cmd_path(t_data *data)
+void	expand_cmd_path(t_data *data)
 {
-    int     i;
-    char    *temp;
+	int		i;
+	char	*temp;
 
 	i = 0;
 	while (i < data->nr_cmds)
 	{
 		if (!data->cmd[i].param)
 			return ;
-        temp = data->cmd[i].param[0];
-        data->cmd[i].param[0] = find_path(data->envp, data->cmd[i].param[0]);
+		temp = data->cmd[i].param[0];
+		data->cmd[i].param[0] = find_path(data->envp, data->cmd[i].param[0]);
 		free (temp);
 		i++;
 	}
@@ -50,7 +50,7 @@ void    expand_cmd_path(t_data *data)
 
 int	set_into_structure(t_data *data)
 {
-	int i;
+	int	i;
 	int	j;
 
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:28:50 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/19 15:53:59 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/01/31 15:25:20 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,12 @@ void	condition_2(t_lex *lex, char ***token)
 
 void	condition_3(t_lex *lex, char ***token)
 {
-	int i = 0;
+	int	i;
 
+	i = 0;
 	add_to_token(token, lex, (lex->input)[lex->i++]);
-	while (((lex->input)[lex->i] != ' ') && ((lex->input)[lex->i] != '\n') && ((lex->input)[lex->i] != '\0'))
+	while (((lex->input)[lex->i] != ' ') && ((lex->input)[lex->i] != '\n')
+	&& ((lex->input)[lex->i] != '\0'))
 	{
 		if (((lex->input)[lex->i] == '\'') || ((lex->input)[lex->i] == '\"'))
 			condition_2(lex, token);

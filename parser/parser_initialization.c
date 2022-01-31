@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_initialization.c                                   :+:      :+:    :+:   */
+/*   parser_initialization.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/18 18:15:14 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/18 18:16:55 by cproesch         ###   ########.fr       */
+/*   Created: 2022/01/31 16:11:06 by cproesch          #+#    #+#             */
+/*   Updated: 2022/01/31 16:21:38 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ int	set_end(t_data *data, int i)
 		return (data->parser.pipe[i]);
 }
 
-int	divide_token(t_data *data, char **token, int *start, int end, int i)
+int	divide_token(t_data *data, char **token, int *start, int i)
 {
 	int	j;
 	int	len;
 
 	j = 0;
-	while (*start < end)
+	while (j < data->cmd[i].nr_tok)
 	{
 		len = ft_strlen(token[*start]);
 		data->cmd[i].tok[j] = (char *)ft_calloc(len + 1, sizeof(char));
@@ -44,16 +44,16 @@ int	initialize_cmds(t_data *data, char **token)
 	int	start;
 	int	end;
 
-	i = 0;
+	i = -1;
 	start = 0;
-	while (i < data->nr_cmds)
+	while (++i < data->nr_cmds)
 	{
 		end = set_end(data, i);
 		data->cmd[i].nr_tok = end - start;
-		data->cmd[i].tok = (char **)ft_calloc((end - start + 1), sizeof(char *));
+		data->cmd[i].tok = ft_calloc((end - start + 1), sizeof(char *));
 		if (!data->cmd[i].tok)
 			return (ft_error("Error: malloc failed"));
-		if (!divide_token(data, token, &start, end, i))
+		if (!divide_token(data, token, &start, i))
 			return (0);
 		data->cmd[i].param = NULL;
 		data->cmd[i].nr_param = 0;
@@ -62,7 +62,6 @@ int	initialize_cmds(t_data *data, char **token)
 		data->cmd[i].o_file = NULL;
 		data->cmd[i].nr_out = 0;
 		data->cmd[i].red_out_type = NULL;
-		i++;
 		start++;
 	}
 	return (1);
