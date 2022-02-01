@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 14:58:05 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/01 12:34:46 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/01 15:13:25 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ int	redirect_input(t_cmd *cmd)
 		if (cmd->fd_i[i] == -1)
 		{
 			perror("error - could not open input file");
-			return (0);
+			return (-1);
 		}
 		if (access(cmd->i[i], R_OK) != 0)
 		{
 			perror("error - can not read input file");
-			return (0);
+			return (-1);
 		}
 	}
 	if (cmd->fd_i)
@@ -44,8 +44,12 @@ int	redirect_output(t_cmd *cmd)
 	int	i;
 
 	i = -1;
+	// while (++i < cmd->nr_out)
+	// 	printf("File: %s, type: %d\n", cmd->o[i], cmd->type[i]);
+	printf("Nr out is %d\n", cmd->nr_out);
 	while (++i < cmd->nr_out)
 	{
+		printf("%s, %d\n", cmd->o[i], cmd->type[i]);
 		if (cmd->type[i] == 1)
 			cmd->fd_o[i] = open(cmd->o[i], O_CREAT | O_TRUNC | O_WRONLY, 0644);
 		else if (cmd->type[i] == 2)
@@ -81,9 +85,9 @@ int	redirect_io(t_cmd *cmd)
 
 void	reverse_redirection(t_cmd *cmd, int in, int out)
 {
-	if (cmd->i[0] != NULL)
+	if (cmd->nr_in)
 		dup2(in, STDIN_FILENO);
-	if (cmd->o[0] != NULL)
+	if (cmd->nr_out)
 		dup2(out, STDOUT_FILENO);
 	if (cmd->id == 0 & cmd->data->nr_cmds > 1)
 		dup2(out, STDOUT_FILENO);
