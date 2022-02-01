@@ -3,39 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   parser_dollar_expansion.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:56:24 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/31 16:00:14 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/01 12:42:30 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_expansion(char **env, char *token, int j)
+char	*get_expansion(t_data *data, char *token, int j)
 {
-	int		len;
-	char	*needle;
 	char	*exp;
+	t_envp	*temp;
 
-	needle = ft_strjoin(token + j + 1, "=");
-	len = (int)ft_strlen(token) - j;
 	exp = ft_strdup("\0");
-	j = 0;
-	while ((env[j]) && (ft_strlen(needle) != 1))
+	temp = data->envp;
+	while (temp && ft_strlen(token + j))
 	{
-		if (ft_strnstr(env[j], needle, ft_strlen(needle)))
+		if (!ft_strncmp(temp->name, token + j + 1, ft_strlen(temp->name) + 1))
 		{
-			exp = ft_substr(env[j], len, (ft_strlen(env[j]) - len));
+			exp = ft_strdup(temp->var);
 			break ;
 		}
-		j++;
+		temp = temp->next;
 	}
-	free (needle);
 	return (exp);
 }
 
-char	*get_and_expand(char **env, char *token)
+char	*get_and_expand(t_data *data, char *token)
 {
 	int		i;
 	char	*expanded_token;
@@ -46,7 +42,7 @@ char	*get_and_expand(char **env, char *token)
 	while (token[i] != '$')
 		i++;
 	pre_param = ft_substr(token, 0, i);
-	exp = get_expansion(env, token, i);
+	exp = get_expansion(data, token, i);
 	expanded_token = ft_strjoin(pre_param, exp);
 	free(exp);
 	free(pre_param);
@@ -70,7 +66,7 @@ char	*replace_param_by_expansion(t_data *data, char *param)
 			return (ft_strdup(param));
 		if ((quote == '\"') && is_quoted(param))
 			return (double_quoted_exp(data, param));
-		return (get_and_expand(data->envp, param));
+		return (get_and_expand(data, param));
 	}
 }
 

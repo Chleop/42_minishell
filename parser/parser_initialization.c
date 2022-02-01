@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 16:11:06 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/31 17:56:14 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/01 12:19:10 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ int	initialize_cmds(t_data *data, char **token)
 		data->cmd[i].nr_out = 0;
 		data->cmd[i].type = NULL;
 		data->cmd[i].id = i;
+		data->cmd[i].data = data;
+		data->process_id[i] = 0;
 		start++;
 	}
 	return (1);

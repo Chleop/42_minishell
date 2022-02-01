@@ -3,18 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 13:20:21 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/19 16:32:33 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/01 11:31:01 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	init_lexer(t_lex *lex, char *input, char **envpo)
+void	init_lexer(t_lex *lex, char *input)
 {
-	lex->envp = envpo;
 	lex->input = input;
 	lex->i = 0;
 	lex->tok_nb = 0;
@@ -40,7 +39,7 @@ int	condition_tree(t_lex *lex, char ***token)
 	return (7);
 }
 
-char	**lexer(char *input, char **envp)
+char	**lexer(char *input)
 {
 	t_lex		lex;
 	char		**token;
@@ -50,7 +49,7 @@ char	**lexer(char *input, char **envp)
 		condition_5, condition_6, condition_7, NULL,
 	};
 
-	init_lexer(&lex, input, envp);
+		init_lexer(&lex, input);
 	token = NULL;
 	while (((lex.input)[lex.i] != '\n') && ((lex.input)[lex.i] != '\0'))
 	{

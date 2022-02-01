@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 14:58:05 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/01/31 18:32:15 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/01 12:34:46 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	redirect_input(t_cmd *cmd)
 	int	i;
 
 	i = -1;
-	while (cmd->i[++i])
+	while (++i < cmd->nr_in)
 	{
 		cmd->fd_i[i] = open(cmd->i[i], O_RDONLY);
 		if (cmd->fd_i[i] == -1)
@@ -31,9 +31,10 @@ int	redirect_input(t_cmd *cmd)
 			return (0);
 		}
 	}
-	dup2(cmd->fd_i[i - 1], STDIN_FILENO);
+	if (cmd->fd_i)
+		dup2(cmd->fd_i[i - 1], STDIN_FILENO);
 	i = -1;
-	while (cmd->i[++i])
+	while (++i < cmd->nr_in)
 		close(cmd->fd_i[i]);
 	return (1);
 }
@@ -60,7 +61,8 @@ int	redirect_output(t_cmd *cmd)
 			return (0);
 		}
 	}
-	dup2(cmd->fd_o[i - 1], STDOUT_FILENO);
+	if (cmd->fd_o)
+		dup2(cmd->fd_o[i - 1], STDOUT_FILENO);
 	i = -1;
 	while (++i < cmd->nr_out)
 		close(cmd->fd_o[i]);
@@ -69,6 +71,7 @@ int	redirect_output(t_cmd *cmd)
 
 int	redirect_io(t_cmd *cmd)
 {
+	//printf("input %s output %s\n", cmd->i[0], cmd->o[0]);
 	if (redirect_input(cmd) == 0)
 		return (0);
 	if (redirect_output(cmd) == 0)

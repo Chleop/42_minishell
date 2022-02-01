@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 18:38:33 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/20 16:41:58 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/01 11:36:07 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	create_new_token(char ***token, t_lex *lex)
 
 	while ((lex->input)[lex->i] == ' ')
 		lex->i++;
-	if ((lex->input)[lex->i] == '\n')
+	if (((lex->input)[lex->i] == '\n') && ((lex->input)[lex->i] == '\0'))
 		return ;
 	if ((!(*token)) || (lex->char_nb != 0))
 	{

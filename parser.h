@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:16:35 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/31 18:26:16 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/01 11:14:39 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ struct	s_data;
 
 typedef struct s_lex
 {
-	char	**envp;
 	char	*input;
 	int		i;
 	int		tok_nb;
@@ -51,7 +50,7 @@ void	final_exit(int i, char *str);
 void	ft_free(t_data *data, char **token);
 
 //LEXER
-char	**lexer(char *input, char **envp);
+char	**lexer(char *input);
 void	create_new_token(char ***token, t_lex *lex);
 void	add_to_token(char ***token, t_lex *lex, char input);
 int		is_paired(char q, char *input, int i);
@@ -75,7 +74,7 @@ int		grammatize_tokens(t_data *data);
 int		count_token(char **token);
 int		localize_pipes(t_data *data, char **token);
 int		parse(t_data *data, char **token);
-char	*find_path(char **envp, char *cmd);
+char	*find_path(t_data *data, char *cmd);
 
 int		set_into_structure(t_data *data);
 int		expand_and_classify_dollars(t_data *data);
@@ -87,6 +86,6 @@ char	*manage_expansions(t_data *data, char *token);
 int		classify_token(t_data *data, char **token, int cmd_nr, int tok_nr);
 void	expand_cmd_path(t_data *data);
 char	*double_quoted_exp(t_data *data, char *param);
-char	*get_and_expand(char **env, char *token);
+char	*get_and_expand(t_data *data, char *token);
 
 #endif

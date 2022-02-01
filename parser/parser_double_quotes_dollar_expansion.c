@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_double_quotes_dollar_expansion.c            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 13:32:12 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/31 16:43:23 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/01 10:59:43 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	*get_dqe_end(char *param)
 	return (quote_i);
 }
 
-char	*join_sub_param(char **env, char **sub_param)
+char	*join_sub_param(t_data *data, char **sub_param)
 {
 	int		i;
 	char	*new_param;
@@ -45,7 +45,7 @@ char	*join_sub_param(char **env, char **sub_param)
 		if (ft_strchr(sub_param[i], '$'))
 		{
 			temp = sub_param[i];
-			sub_param[i] = get_and_expand(env, sub_param[i]);
+			sub_param[i] = get_and_expand(data, sub_param[i]);
 			free (temp);
 		}
 		temp = new_param;
@@ -72,5 +72,5 @@ char	*double_quoted_exp(t_data *data, char *param)
 	sub_param[3] = ft_strdup(quote);
 	sub_param[4] = ft_substr(param, ind[1] + 1, ft_strlen(param) - ind[1] - 1);
 	free(ind);
-	return (join_sub_param(data->envp, sub_param));
+	return (join_sub_param(data, sub_param));
 }

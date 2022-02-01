@@ -19,11 +19,11 @@ OBJS_B	= $(SRCS_B:.c=.o)
 
 NAME	= libft.a
 
-CC		= gcc -c - o
+CC		= gcc -c -o
 
 RM		= rm -rf
 
-AR		=	ar rcs
+AR		= ar rcs
 
 CFLAGS	= -Wall -Wextra -Werror -Ift_printf
 
@@ -44,6 +44,6 @@ fclean:		clean
 re:			fclean all
 
 bonus:		$(OBJS) $(OBJS_B)
-			ar rcs $(NAME) $(OBJS) $(OBJS_B)
+			$(AR) $(NAME) $(OBJS) $(OBJS_B)
 
 .PHONY:		all clean fclean re bonus
