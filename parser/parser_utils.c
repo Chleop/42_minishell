@@ -6,11 +6,30 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 14:37:25 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/20 16:56:22 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/01 18:10:06 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*get_expansion(t_data *data, char *to_be_exp)
+{
+	char	*exp;
+	t_envp	*temp;
+
+	exp = ft_strdup("\0");
+	temp = data->envp;
+	while (temp && ft_strlen(to_be_exp))
+	{
+		if (!ft_strncmp(temp->name, to_be_exp, ft_strlen(temp->name) + 1))
+		{
+			exp = ft_strdup(temp->var);
+			break ;
+		}
+		temp = temp->next;
+	}
+	return (exp);
+}
 
 int	count_token(char **token)
 {

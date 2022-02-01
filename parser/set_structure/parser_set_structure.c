@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_set_structure.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 17:54:01 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/01 11:55:11 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/01 18:12:43 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	expand_cmd_path(t_data *data)
 		if (!is_builtin(&(data->cmd[i])))
 		{
 			temp = data->cmd[i].param[0];
-			data->cmd[i].param[0] = find_path(data, data->cmd[i].param[0]);
+			data->cmd[i].param[0] = get_path(data, data->cmd[i].param[0]);
 			free (temp);
 		}
 		i++;

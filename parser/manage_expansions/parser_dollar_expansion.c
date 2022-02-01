@@ -3,33 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_dollar_expansion.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:56:24 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/01 12:42:30 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/01 18:10:08 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*get_expansion(t_data *data, char *token, int j)
-{
-	char	*exp;
-	t_envp	*temp;
-
-	exp = ft_strdup("\0");
-	temp = data->envp;
-	while (temp && ft_strlen(token + j))
-	{
-		if (!ft_strncmp(temp->name, token + j + 1, ft_strlen(temp->name) + 1))
-		{
-			exp = ft_strdup(temp->var);
-			break ;
-		}
-		temp = temp->next;
-	}
-	return (exp);
-}
 
 char	*get_and_expand(t_data *data, char *token)
 {
@@ -42,7 +23,7 @@ char	*get_and_expand(t_data *data, char *token)
 	while (token[i] != '$')
 		i++;
 	pre_param = ft_substr(token, 0, i);
-	exp = get_expansion(data, token, i);
+	exp = get_expansion(data, token + i + 1);
 	expanded_token = ft_strjoin(pre_param, exp);
 	free(exp);
 	free(pre_param);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:22:30 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/01 12:20:04 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/01 18:28:28 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,21 +56,24 @@ int	main(int argc, char **argv, char **envp)
 			token = lexer(input);
 		if (token)
 			ret = parse(&data, token);
-		status = 1;
-		if (data.nr_cmds > 1)
-			status = init_pipes(&data);
-		if (status)
+		if (ret)
 		{
-			i = -1;
-			while (++i < data.nr_cmds)
+			status = 1;
+			if (data.nr_cmds > 1)
+				status = init_pipes(&data);
+			if (status)
 			{
-				if (!exec_prefork_builtins(&(data.cmd[i])))
-					fork_function(&data.cmd[i]);
-				// not sure to protect with if -1, exit
+				i = -1;
+				while (++i < data.nr_cmds)
+				{
+					if (!exec_prefork_builtins(&(data.cmd[i])))
+						fork_function(&data.cmd[i]);
+					// not sure to protect with if -1, exit
+				}
 			}
+			finish_up(&data);
+			ft_free(&data, token);
 		}
-		finish_up(&data);
-		ft_free(&data, token);
 	}
 	final_exit(1, NULL);
 	return (0);

@@ -3,33 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_command_path.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 16:42:54 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/01 12:36:25 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/01 18:12:39 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*find_path_env(t_data *data)
-{
-	char	*path;
-	t_envp	*temp;
-
-	path = ft_strdup("\0");
-	temp = data->envp;
-	while (temp)
-	{
-		if (!ft_strncmp(temp->name, "PATH\0", 5))
-		{
-			path = ft_strdup(temp->var);
-			break;
-		}
-		temp = temp->next;
-	}
-	return (path);
-}
 
 int	join_c(char	**tab, char	*str)
 {
@@ -63,7 +44,7 @@ char	*find_accessible_path(char **tab)
 	return (NULL);
 }
 
-char	*find_path(t_data *data, char *cmd)
+char	*get_path(t_data *data, char *cmd)
 {
 	char	*str_path_env;
 	char	**tab_path_env;
@@ -71,7 +52,7 @@ char	*find_path(t_data *data, char *cmd)
 
 	if (!cmd[0])
 		return (ft_strdup(cmd));
-	str_path_env = find_path_env(data);
+	str_path_env = get_expansion(data, "PATH\0");
 	tab_path_env = ft_split(str_path_env, ':');
 	if (!tab_path_env)
 		return (NULL);

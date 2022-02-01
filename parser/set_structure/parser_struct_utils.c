@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_struct_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 13:34:16 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/31 18:28:13 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/01 18:23:06 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	set_command(t_data *data, int n, char **token)
 	{
 		if ((((*token)[i] == ' ') || (*token)[i] == '\0'))
 		{
-			par = ft_substr(*token, j, i);
+			par = ft_substr(*token, j, i - j);
 			if (!par)
 				return (0);
 			if (!add_tab(&(data->cmd[n].param), &(data->cmd[n].nr_param), par))
