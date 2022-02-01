@@ -1,46 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_exec.c                                        :+:      :+:    :+:   */
+/*   ft_printf_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/01 15:54:42 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/01 18:44:44 by avan-bre         ###   ########.fr       */
+/*   Created: 2021/08/09 14:10:39 by avan-bre          #+#    #+#             */
+/*   Updated: 2021/08/09 17:32:46 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "ft_printf.h"
 
-void	free_io(t_cmd *cmd)
+void	ft_putchar_fd(char c, int fd)
 {
-	int	i;
-
-	i = -1;
-	while (++i < cmd->nr_out)
-	{
-		close(cmd->fd_o[i]);
-		cmd->fd_o[i] = 0;
-	}
-	free(cmd->fd_o);
+	write(fd, &c, 1);
 }
 
-void	free_dir_tab(char **dir_tab)
+void	ft_putstr_fd(char *s, int fd)
 {
-	int	i;
+	if (s)
+		write(fd, s, ft_strlen(s));
+}
 
-	i = -1;
-	while (dir_tab[++i])
-	{
-		if (dir_tab[i])
-		{
-			free(dir_tab[i]);
-			dir_tab[i] = NULL;
-		}
-	}
-	if (dir_tab)
-	{
-		free(dir_tab);
-		dir_tab = NULL;
-	}
+size_t	ft_strlen(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
 }

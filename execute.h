@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 15:33:03 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/01 13:26:25 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/01 18:44:54 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ void	reverse_redirection(t_cmd *cmd, int in, int out);
 int		init_pipes(t_data *data);
 void	pipe_function(t_cmd *cmd);
 void	close_all_except_two(t_data *data, int pipe);
+void	free_io(t_cmd *cmd);
+void	free_dir_tab(char **dir_tab);
 //void	close_all_except(t_data *data, int pipe, int index);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 11:09:29 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/01/31 17:44:52 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/01 17:42:09 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,32 @@ void	free_envp(t_cmd *cmd)
 
 void	adapt_values(t_envp **envp)
 {
-	add_to_envp(*envp, "SHLVL=2");
+	t_envp	*temp;
+	char	*shlvl;
+	int		new;
+
+	shlvl = NULL;
+	temp = *envp;
+	while (temp)
+	{
+		if (!ft_strncmp("SHLVL\0", temp->name, 6))
+		{
+			printf("Old is: %s\n", temp->var);
+			shlvl = ft_strdup(temp->var);
+			break ;
+		}
+		temp = temp->next;
+	}
+	new = ft_atoi(shlvl) + 1;
+	free(shlvl);
+	shlvl = NULL;
+	shlvl = ft_strjoin("SHLVL=", ft_itoa(new));
+	add_to_envp(*envp, shlvl);
 	remove_from_envp(*envp, "OLDPWD");
 	add_to_envp(*envp, "OLDPWD");
 	remove_from_envp(*envp, "_");
+	free(shlvl);
+	shlvl = NULL;
 }
 
 int	init_empty_env(t_envp **envp)

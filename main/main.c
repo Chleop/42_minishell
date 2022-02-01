@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:22:30 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/01 13:09:00 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/01 17:39:23 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ int	main(int argc, char **argv, char **envp)
 			{
 				if (!exec_prefork_builtins(&(data.cmd[i])))
 					fork_function(&data.cmd[i]);
-				// not sure to protect with if -1, exit
 			}
 		}
 		finish_up(&data);
