@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 14:58:05 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/01 15:13:25 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/01 15:54:31 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,12 @@ int	redirect_output(t_cmd *cmd)
 	int	i;
 
 	i = -1;
-	// while (++i < cmd->nr_out)
-	// 	printf("File: %s, type: %d\n", cmd->o[i], cmd->type[i]);
-	printf("Nr out is %d\n", cmd->nr_out);
 	while (++i < cmd->nr_out)
 	{
-		printf("%s, %d\n", cmd->o[i], cmd->type[i]);
 		if (cmd->type[i] == 1)
 			cmd->fd_o[i] = open(cmd->o[i], O_CREAT | O_TRUNC | O_WRONLY, 0644);
 		else if (cmd->type[i] == 2)
-			cmd->fd_o[i] = open(cmd->o[i], O_CREAT | O_APPEND | O_WRONLY, 0644);
+		 	cmd->fd_o[i] = open(cmd->o[i], O_CREAT | O_APPEND | O_WRONLY, 0644);
 		if (cmd->fd_o[i] == -1)
 		{
 			perror ("error - could not open output file");
@@ -68,6 +64,7 @@ int	redirect_output(t_cmd *cmd)
 	if (cmd->fd_o)
 		dup2(cmd->fd_o[i - 1], STDOUT_FILENO);
 	i = -1;
+	free_io(cmd);
 	while (++i < cmd->nr_out)
 		close(cmd->fd_o[i]);
 	return (1);
@@ -75,7 +72,18 @@ int	redirect_output(t_cmd *cmd)
 
 int	redirect_io(t_cmd *cmd)
 {
-	//printf("input %s output %s\n", cmd->i[0], cmd->o[0]);
+	cmd->fd_o = malloc(sizeof(int) * cmd->nr_out);
+	if (!cmd->fd_o)
+	{
+		perror("malloc failed");
+		return (0);
+	}
+	cmd->fd_i = malloc(sizeof(int) * cmd->nr_in);
+	if (!cmd->fd_i)
+	{
+		perror("malloc failed");
+		return (0);
+	}
 	if (redirect_input(cmd) == 0)
 		return (0);
 	if (redirect_output(cmd) == 0)
