@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 10:57:26 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/01/31 17:45:03 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/02 13:07:58 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void	ft_exit(t_cmd *cmd)
 		ft_printf("%s\n", "exit: numeric argument required");
 		code = 2;
 	}
-	free_envp(cmd);
+	free_envp(cmd->data);
+	ft_free(cmd->data);
 	exit (code);
 }

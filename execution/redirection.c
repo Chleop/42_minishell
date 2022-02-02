@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 14:58:05 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/01 15:54:31 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/02 10:49:08 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,17 +72,23 @@ int	redirect_output(t_cmd *cmd)
 
 int	redirect_io(t_cmd *cmd)
 {
-	cmd->fd_o = malloc(sizeof(int) * cmd->nr_out);
-	if (!cmd->fd_o)
+	if (cmd->nr_out)
 	{
-		perror("malloc failed");
-		return (0);
+		cmd->fd_o = malloc(sizeof(int) * cmd->nr_out);
+		if (!cmd->fd_o)
+		{
+			perror("malloc failed");
+			return (0);
+		}
 	}
-	cmd->fd_i = malloc(sizeof(int) * cmd->nr_in);
-	if (!cmd->fd_i)
+	if (cmd->nr_in)
 	{
-		perror("malloc failed");
-		return (0);
+		cmd->fd_i = malloc(sizeof(int) * cmd->nr_in);
+		if (!cmd->fd_i)
+		{
+			perror("malloc failed");
+			return (0);
+		}
 	}
 	if (redirect_input(cmd) == 0)
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 16:21:43 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/01/26 16:53:49 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/02 12:51:30 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ t_envp	*new_item(char *string)
 	while (!(string[i] == '=' || string[i] == '\0'))
 		i++;
 	node->name = ft_substr(string, 0, i);
+//	printf("Mallocing %s\n", node->name);
 	if (string[i] == '=')
 	{
 		i++;
@@ -69,6 +70,7 @@ t_envp	*new_item(char *string)
 		while (string[j])
 			j++;
 		node->var = ft_substr(string, i, j - i);
+//		printf("Mallocing %s\n", node->var);
 	}
 	else
 		node->var = NULL;

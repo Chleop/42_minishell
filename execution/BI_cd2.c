@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 17:02:58 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/01 18:49:31 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/02 12:21:44 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@ void	add_dir(char **path, char *dir)
 
 	temp = *path;
 	*path = ft_strjoin(*path, "/");
+	free_string(temp);
+	temp = *path;
 	*path = ft_strjoin(*path, dir);
-	free(temp);
-	temp = NULL;
+	free_string(temp);
 }
 
 void	one_dir_up(char **path)
@@ -33,8 +34,7 @@ void	one_dir_up(char **path)
 	while (i && (*path)[i] != '/')
 		i--;
 	*path = ft_substr(*path, 0, i);
-	free(temp);
-	temp = NULL;
+	free_string(temp);
 }
 
 int	get_level(void)
@@ -51,8 +51,7 @@ int	get_level(void)
 		if (cwd[i] == '/')
 			level++;
 	}
-	free(cwd);
-	cwd = NULL;
+	free_string(cwd);
 	return (level);
 }
 
@@ -93,5 +92,6 @@ void	handle_dots(t_cmd *cmd)
 		}
 	}
 	change_dir(path, level);
-	free_dir_tab(dir_tab);
+	free_string(path);
+	ft_del_stringtab(&dir_tab);
 }

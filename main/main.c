@@ -6,33 +6,11 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:22:30 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/01 17:39:23 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/02 13:12:00 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	finish_up(t_data *data)
-{
-	int	i;
-
-	if (data->nr_cmds > 1)
-	{
-		close_all_except_two(data, -1);
-		i = -1;
-		while (++i < data->nr_cmds)
-		{
-			data->pipe_fd[i][0] = 0;
-			data->pipe_fd[i][1] = 0;
-		}
-	}
-	i = -1;
-	while ((++i < data->nr_cmds) && data->process_id[i])
-	{
-		waitpid(data->process_id[i], NULL, 0);
-		data->process_id[i] = 0;
-	}
-}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -56,6 +34,8 @@ int	main(int argc, char **argv, char **envp)
 			token = lexer(input);
 		if (token)
 			ret = parse(&data, token);
+		if (token)
+			ft_del_stringtab(&token);
 		status = 1;
 		if (data.nr_cmds > 1)
 			status = init_pipes(&data);
@@ -69,8 +49,9 @@ int	main(int argc, char **argv, char **envp)
 			}
 		}
 		finish_up(&data);
-		ft_free(&data, token);
+		ft_free(&data);
 	}
+	free_envp(&data);
 	final_exit(1, NULL);
 	return (0);
 }

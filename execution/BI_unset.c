@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 14:07:45 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/01/31 17:45:07 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/02 12:37:47 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,16 @@ void	remove_from_envp(t_envp *envp, char *name)
 {
 	while (envp)
 	{
-		if (ft_strncmp(envp->name, name, ft_strlen(envp->name) + 1) == 0)
+		if (!ft_strncmp(envp->name, name, ft_strlen(envp->name) + 1))
 		{
 			envp->previous->next = envp->next;
-			free (envp);
-			envp = NULL;
+			if (envp)
+			{
+				free_string(envp->name);
+				free_string(envp->var);
+				free(envp);
+				envp = NULL;
+			}
 			return ;
 		}
 		envp = envp->next;

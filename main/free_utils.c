@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:23:36 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/31 18:08:54 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/02 13:07:13 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,14 @@ void	ft_free_data_cmd(t_data *data)
 	data->cmd = NULL;
 }
 
-void	ft_free(t_data *data, char **token)
+void	ft_free(t_data *data)
 {
-	if (token)
-		ft_del_stringtab(&token);
+	// if (token)
+	// 	ft_del_stringtab(&token);
 	if (data)
 	{
 		if (data->cmd)
 			ft_free_data_cmd(data);
-		// if (data->envp)
-		// 	free envp avec ft_del_strintab
 		data = NULL;
 	}
 }
