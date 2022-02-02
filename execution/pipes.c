@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 10:03:37 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/01/31 16:58:36 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/01 13:24:44 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,33 +56,32 @@ void	close_all_except_two(t_data *data, int pipe)
 	}
 }
 
-int	pipe_function(t_cmd *cmd)
+void	pipe_function(t_cmd *cmd)
 {
 	if (cmd->id == 0)
 	{
 		close_all_except(cmd->data, 0, 1);
-		if (cmd->o[0] == NULL)
+		if (!cmd->nr_out)
 			dup2(cmd->data->pipe_fd[0][1], STDOUT_FILENO);
 		close(cmd->data->pipe_fd[0][1]);
 	}
 	else if (cmd->id == (cmd->data->nr_cmds - 1))
 	{
 		close_all_except(cmd->data, cmd->id - 1, 0);
-		if (cmd->i[0] == NULL)
+		if (!cmd->nr_in)
 			dup2(cmd->data->pipe_fd[cmd->id - 1][0], STDIN_FILENO);
 		close(cmd->data->pipe_fd[cmd->id - 1][0]);
 	}
 	else
 	{
 		close_all_except_two(cmd->data, cmd->id - 1);
-		if (cmd->i[0] == NULL)
+		if (!cmd->nr_in)
 			dup2(cmd->data->pipe_fd[cmd->id - 1][0], STDIN_FILENO);
-		if (cmd->o[0] == NULL)
+		if (!cmd->nr_out)
 			dup2(cmd->data->pipe_fd[cmd->id][1], STDOUT_FILENO);
 		close(cmd->data->pipe_fd[cmd->id - 1][0]);
 		close(cmd->data->pipe_fd[cmd->id][1]);
 	}
-	return (1);
 }
 
 int	init_pipes(t_data *data)

@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:16:35 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/01 11:14:39 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/02 13:07:09 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int		add_int(int **tab, int count, int param);
 void	ft_del_stringtab(char ***tab);
 int		ft_error(char *str);
 void	final_exit(int i, char *str);
-void	ft_free(t_data *data, char **token);
+void	ft_free(t_data *data);
 
 //LEXER
 char	**lexer(char *input);

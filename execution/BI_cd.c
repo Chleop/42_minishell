@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 10:17:40 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/01/31 17:44:56 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/02 12:18:55 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,24 @@
 void	finish_cd(t_data *data, char *pwd, char *oldpwd)
 {
 	size_t	i;
+	char	*temp;
 
 	i = ft_strlen(pwd);
 	if (ft_strlen(oldpwd) > i)
 		i = ft_strlen(oldpwd);
 	if (ft_strncmp(pwd, oldpwd, i) != 0)
 	{
+		temp = oldpwd;
 		oldpwd = ft_strjoin("OLDPWD=", oldpwd);
 		add_to_envp(data->envp, oldpwd);
+		free_string(temp);
+		temp = pwd;
 		pwd = ft_strjoin("PWD=", pwd);
 		add_to_envp(data->envp, pwd);
+		free_string(temp);
 	}
-	free(oldpwd);
-	free(pwd);
-	oldpwd = NULL;
-	pwd = NULL;
+	free_string(oldpwd);
+	free_string(pwd);
 }
 
 void	chdir_var(t_data *data, char *var)

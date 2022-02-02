@@ -6,51 +6,41 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 11:09:29 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/01/31 17:44:52 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/02 12:59:13 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_envp(t_cmd *cmd)
-{
-	int		i;
-	t_envp	*temp;
-
-	i = -1;
-	while (cmd->param[++i])
-	{
-		if (cmd->param[i])
-		{
-			free(cmd->param[i]);
-			cmd->param[i] = NULL;
-		}
-	}
-	while (cmd->data->envp)
-	{
-		temp = cmd->data->envp;
-		cmd->data->envp = cmd->data->envp->next;
-		if (temp->name != NULL)
-		{
-			free(temp->name);
-			temp->name = NULL;
-		}
-		if (temp->var != NULL)
-		{		
-			free(temp->var);
-			temp->var = NULL;
-		}
-		free(temp);
-		temp = NULL;
-	}
-}
-
 void	adapt_values(t_envp **envp)
 {
-	add_to_envp(*envp, "SHLVL=2");
+	t_envp	*temp;
+	char	*shlvl;
+	char	*itoa;
+	int		new;
+
+	shlvl = NULL;
+	temp = *envp;
+	while (temp)
+	{
+		if (!ft_strncmp("SHLVL\0", temp->name, 6))
+		{
+			printf("Old is: %s\n", temp->var);
+			shlvl = ft_strdup(temp->var);
+			break ;
+		}
+		temp = temp->next;
+	}
+	new = ft_atoi(shlvl) + 1;
+	free_string(shlvl);
+	itoa = ft_itoa(new);
+	shlvl = ft_strjoin("SHLVL=", itoa);
+	free_string(itoa);
+	add_to_envp(*envp, shlvl);
 	remove_from_envp(*envp, "OLDPWD");
 	add_to_envp(*envp, "OLDPWD");
 	remove_from_envp(*envp, "_");
+	free_string(shlvl);
 }
 
 int	init_empty_env(t_envp **envp)
@@ -67,8 +57,7 @@ int	init_empty_env(t_envp **envp)
 	if (new == 0)
 		return (0);
 	add_item_back(envp, new);
-	free(pwd);
-	pwd = NULL;
+	free_string(pwd);
 	return (1);
 }
 

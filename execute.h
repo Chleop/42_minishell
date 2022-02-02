@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 15:33:03 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/01/31 18:17:42 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/02 11:46:30 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct	s_envp
 }	t_envp;
 
 int		init_envp(t_data *data, char *envp[]);
-void	free_envp(t_cmd *cmd);
+void	free_envp(t_data *data);
 t_envp	*new_item(char *string);
 void	add_item_back(t_envp **list, t_envp *new);
 int		size_list(t_envp *head);
@@ -71,8 +71,11 @@ void	ft_exit(t_cmd *cmd);
 int		redirect_io(t_cmd *cmd);
 void	reverse_redirection(t_cmd *cmd, int in, int out);
 int		init_pipes(t_data *data);
-int		pipe_function(t_cmd *cmd);
+void	pipe_function(t_cmd *cmd);
 void	close_all_except_two(t_data *data, int pipe);
-//void	close_all_except(t_data *data, int pipe, int index);
+void	free_io(t_cmd *cmd);
+void	free_dir_tab(char **dir_tab);
+void	finish_up(t_data *data);
+void	free_string(char *string);
 
 #endif

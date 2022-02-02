@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 14:58:05 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/01 12:34:46 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/02 10:49:08 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ int	redirect_input(t_cmd *cmd)
 		if (cmd->fd_i[i] == -1)
 		{
 			perror("error - could not open input file");
-			return (0);
+			return (-1);
 		}
 		if (access(cmd->i[i], R_OK) != 0)
 		{
 			perror("error - can not read input file");
-			return (0);
+			return (-1);
 		}
 	}
 	if (cmd->fd_i)
@@ -49,7 +49,7 @@ int	redirect_output(t_cmd *cmd)
 		if (cmd->type[i] == 1)
 			cmd->fd_o[i] = open(cmd->o[i], O_CREAT | O_TRUNC | O_WRONLY, 0644);
 		else if (cmd->type[i] == 2)
-			cmd->fd_o[i] = open(cmd->o[i], O_CREAT | O_APPEND | O_WRONLY, 0644);
+		 	cmd->fd_o[i] = open(cmd->o[i], O_CREAT | O_APPEND | O_WRONLY, 0644);
 		if (cmd->fd_o[i] == -1)
 		{
 			perror ("error - could not open output file");
@@ -64,6 +64,7 @@ int	redirect_output(t_cmd *cmd)
 	if (cmd->fd_o)
 		dup2(cmd->fd_o[i - 1], STDOUT_FILENO);
 	i = -1;
+	free_io(cmd);
 	while (++i < cmd->nr_out)
 		close(cmd->fd_o[i]);
 	return (1);
@@ -71,7 +72,24 @@ int	redirect_output(t_cmd *cmd)
 
 int	redirect_io(t_cmd *cmd)
 {
-	//printf("input %s output %s\n", cmd->i[0], cmd->o[0]);
+	if (cmd->nr_out)
+	{
+		cmd->fd_o = malloc(sizeof(int) * cmd->nr_out);
+		if (!cmd->fd_o)
+		{
+			perror("malloc failed");
+			return (0);
+		}
+	}
+	if (cmd->nr_in)
+	{
+		cmd->fd_i = malloc(sizeof(int) * cmd->nr_in);
+		if (!cmd->fd_i)
+		{
+			perror("malloc failed");
+			return (0);
+		}
+	}
 	if (redirect_input(cmd) == 0)
 		return (0);
 	if (redirect_output(cmd) == 0)
@@ -81,9 +99,9 @@ int	redirect_io(t_cmd *cmd)
 
 void	reverse_redirection(t_cmd *cmd, int in, int out)
 {
-	if (cmd->i[0] != NULL)
+	if (cmd->nr_in)
 		dup2(in, STDIN_FILENO);
-	if (cmd->o[0] != NULL)
+	if (cmd->nr_out)
 		dup2(out, STDOUT_FILENO);
 	if (cmd->id == 0 & cmd->data->nr_cmds > 1)
 		dup2(out, STDOUT_FILENO);
