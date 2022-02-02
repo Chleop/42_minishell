@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:16:35 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/02 13:07:09 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/02 13:34:45 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ int		grammatize_tokens(t_data *data);
 int		count_token(char **token);
 int		localize_pipes(t_data *data, char **token);
 int		parse(t_data *data, char **token);
-char	*find_path(t_data *data, char *cmd);
+char	*get_expansion(t_data *data, char *to_be_exp);
+char	*get_path(t_data *data, char *cmd);
 
 int		set_into_structure(t_data *data);
 int		expand_and_classify_dollars(t_data *data);

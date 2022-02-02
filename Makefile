@@ -6,7 +6,7 @@
 #    By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/14 15:32:57 by avan-bre          #+#    #+#              #
-#    Updated: 2022/02/02 10:46:43 by avan-bre         ###   ########.fr        #
+#    Updated: 2022/02/02 13:34:01 by avan-bre         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,9 +37,12 @@ E_SRCS	=	redirection.c pipes.c exec.c BI_cd.c BI_cd2.c BI_env_echo_pwd.c \
 			BI_export.c BI_export2.c BI_unset.c BI_exit.c free_exec.c
 L_SRCS	=	lexer.c lexer_functions_1.c lexer_functions_2.c lexer_utils.c
 P_SRCS	=	parser.c parser_initialization.c parser_utils.c parser_grammar.c \
-			parser_quotes_removal.c	parser_struct_utils.c parser_set_structure.c \
-			parser_dollar_expansion.c parser_command_path.c \
-			parser_double_quotes_dollar_expansion.c
+			set_structure/parser_quotes_removal.c \
+			set_structure/parser_struct_utils.c \
+			set_structure/parser_set_structure.c \
+			manage_expansions/parser_dollar_expansion.c \
+			manage_expansions/parser_command_path.c \
+			manage_expansions/parser_double_quotes_dollar_expansion.c
 #B_SRCS	=	
 #S_DIR	=	sources/
 #B_DIR	=	bonus_sources/

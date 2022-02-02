@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:55:08 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/01 12:48:25 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/01 18:10:59 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,16 @@ int	review_operators(char **token)
 		if ((token[i][0] == '|') || (token[i][0] == '>')
 		|| (token[i][0] == '<'))
 		{
-			if (ft_strncmp(token[i], "|\0", 2) && ft_strncmp(token[i], "<\0", 2)
+			if ((ft_strncmp(token[i], "|\0", 2) 
+				&& ft_strncmp(token[i], "<\0", 2)
 				&& ft_strncmp(token[i], ">\0", 2)
 				&& ft_strncmp(token[i], ">>\0", 3)
 				&& ft_strncmp(token[i], "<<\0", 3)
 				&& ft_strncmp(token[i], ">|\0", 3))
-				return (ft_error("Syntax error"));
-			else if (!token[i + 1])
-				return (ft_error("Syntax error"));
-			else if (((i - 1) > -1) && ((token[i - 1][0] == '>') || (token[i - 1][0] == '<')))
+				|| (!token[i + 1])
+				|| (((i - 1) > -1) && ((token[i - 1][0] == '>')
+				|| (token[i - 1][0] == '<')))
+				|| ((token[i][0] == '|') && (token[i - 1][0] == '|')))
 				return (ft_error("Syntax error"));
 		}
 		i++;
@@ -40,9 +41,9 @@ int	review_operators(char **token)
 
 int	parse(t_data *data, char **token)
 {
-	if (!initialize_data(data, token))
-		return (0);
 	if (!review_operators(token))
+		return (0);
+	if (!initialize_data(data, token))
 		return (0);
 	if (!initialize_cmds(data, token))
 		return (0);
@@ -50,6 +51,6 @@ int	parse(t_data *data, char **token)
 		return (0);
 	if (!set_into_structure(data))
 		return (0);
-	//print_cmd_parameters(data);
+	// print_cmd_parameters(data);
 	return (1);
 }

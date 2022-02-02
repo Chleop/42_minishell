@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:22:30 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/02 13:12:00 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/02 13:37:32 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,27 @@ int	main(int argc, char **argv, char **envp)
 		if (input)
 			token = lexer(input);
 		if (token)
-			ret = parse(&data, token);
-		if (token)
-			ft_del_stringtab(&token);
-		status = 1;
-		if (data.nr_cmds > 1)
-			status = init_pipes(&data);
-		if (status)
 		{
-			i = -1;
-			while (++i < data.nr_cmds)
+			ret = parse(&data, token);
+			ft_del_stringtab(&token);
+		}
+		if (ret)
+		{
+			status = 1;
+			if (data.nr_cmds > 1)
+				status = init_pipes(&data);
+			if (status)
 			{
-				if (!exec_prefork_builtins(&(data.cmd[i])))
-					fork_function(&data.cmd[i]);
+				i = -1;
+				while (++i < data.nr_cmds)
+				{
+					if (!exec_prefork_builtins(&(data.cmd[i])))
+						fork_function(&data.cmd[i]);
+					// not sure to protect with if -1, exit
+				}
 			}
+			finish_up(&data);
+			ft_free(&data, token);
 		}
 		finish_up(&data);
 		ft_free(&data);

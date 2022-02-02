@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 13:34:16 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/02 13:31:36 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/02 13:40:44 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	set_command(t_data *data, int n, char **token)
 	{
 		if ((((*token)[i] == ' ') || (*token)[i] == '\0'))
 		{
-			par = ft_substr(*token, j, i);
+			par = ft_substr(*token, j, i - j);
 			if (!par)
 				return (0);
 			if (!add_tab(&(data->cmd[n].param), &(data->cmd[n].nr_param), par))
@@ -61,7 +61,7 @@ int	set_redirections(t_data *data, char **token, int n, int qualif)
 		add_tab(&(data->cmd[n].i), &(data->cmd[n].nr_in), *token);
 	else if (qualif == HERE_END)
 	{
-		ft_free(data, token);
+		ft_free(data);
 		final_exit (1, "HERE_DOCS NON GERES pour l'instant :)\n");
 	}
 	else
