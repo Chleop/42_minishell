@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 15:54:42 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/02 12:51:39 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/03 12:57:20 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,15 @@ void	free_io(t_cmd *cmd)
 		close(cmd->fd_o[i]);
 		cmd->fd_o[i] = 0;
 	}
-	free(cmd->fd_o);
+	if (cmd->fd_o)
+		free(cmd->fd_o);
+	while (++i < cmd->nr_in)
+	{
+		close(cmd->fd_i[i]);
+		cmd->fd_i[i] = 0;
+	}
+	if (cmd->fd_i)
+		free(cmd->fd_i);
 }
 
 void	free_envp(t_data *data)
@@ -35,13 +43,7 @@ void	free_envp(t_data *data)
 	{
 		temp = data->envp;
 		data->envp = data->envp->next;
-		free_string(temp->name);
-		free_string(temp->var);
-		if (temp)
-		{
-			free(temp);
-			temp = 0;
-		}
+		free_node_envp(temp);
 	}
 }
 
@@ -69,10 +71,20 @@ void	finish_up(t_data *data)
 
 void	free_string(char *string)
 {
-//	printf("freeing %s\n", string);
 	if (string)
 	{
 		free(string);
 		string = NULL;
+	}
+}
+
+void	free_node_envp(t_envp *envp)
+{
+	if (envp)
+	{
+		free_string(envp->name);
+		free_string(envp->var);
+		free(envp);
+		envp = NULL;
 	}
 }

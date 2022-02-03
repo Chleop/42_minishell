@@ -6,11 +6,35 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 16:21:43 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/02 12:51:30 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/03 13:42:39 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	**convert_envp(t_envp *envp)
+{
+	t_envp	*e_temp;
+	char	**table;
+	char	*s_temp;
+	char	*s_temp2;
+	int		size;
+	int		i;
+
+	e_temp = envp;
+	size = size_list(envp);
+	table = ft_calloc(size + 1, sizeof(char *));
+	i = -1;
+	while (++i < size)
+	{
+		s_temp = ft_strjoin(e_temp->name, "=");
+		s_temp2 = ft_strjoin(s_temp, e_temp->var);
+		free_string(s_temp);
+		table[i] = s_temp2;
+		e_temp = e_temp->next;
+	}
+	return (table);
+}
 
 int	size_list(t_envp *head)
 {

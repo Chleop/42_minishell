@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 16:43:49 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/01/31 17:45:05 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/03 12:42:38 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,14 @@ int	smaller_ascii(char *str1, char *str2)
 {
 	size_t	i;
 	size_t	size;
+	size_t	size1;
+	size_t	size2;
 
+	size1 = ft_strlen(str1);
+	size2 = ft_strlen(str2);
+	size = size1;
+	if (size2 < size)
+		size = size2;
 	i = 0;
 	size = ft_strlen(str1);
 	if (ft_strlen(str2) < size)
@@ -41,7 +48,10 @@ int	smaller_ascii(char *str1, char *str2)
 		if (str1[i] > str2[i])
 			return (0);
 	}
-	return (1);
+	if (size < size2)
+		return (1);
+	else
+		return (0);
 }
 
 t_envp	*get_smallest_unprinted(t_envp *envp, int size)

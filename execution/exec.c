@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 11:19:50 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/03 12:32:00 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/03 13:54:14 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,16 @@
 
 int	exec_nonbuiltins(t_cmd *cmd)
 {
-	if (execve(cmd->param[0], cmd->param, NULL) == -1)
+	char	**envp_tab;
+
+	envp_tab = convert_envp(cmd->data->envp);
+	if (execve(cmd->param[0], cmd->param, envp_tab) == -1)
 	{
 		ft_free_data(cmd->data, 1);
 		perror("error - execution fail");
 		exit (1);
 	}
+	ft_del_stringtab(&envp_tab);
 	ft_free_data(cmd->data, 1);
 	exit (0);
 }

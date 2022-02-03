@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:23:36 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/03 12:30:06 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/03 13:08:09 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,9 @@ int	ft_error(char *str)
 	return (0);
 }
 
-void	final_exit(int i, char *str)
+void	final_exit(t_data *data, int i, char *str)
 {
+	free_envp(data);
 	printf("%s\n", str);
 	exit (i);
 }

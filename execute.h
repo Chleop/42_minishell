@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 15:33:03 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/02 11:46:30 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/03 13:31:40 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,7 @@ void	free_io(t_cmd *cmd);
 void	free_dir_tab(char **dir_tab);
 void	finish_up(t_data *data);
 void	free_string(char *string);
+void	free_node_envp(t_envp *envp);
+char	**convert_envp(t_envp *envp);
 
 #endif

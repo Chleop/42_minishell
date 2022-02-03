@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:22:30 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/03 12:32:58 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/03 13:04:25 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int argc, char **argv, char **envp)
 	int		i;
 
 	if ((argc > 1) || (argv[1]))
-		final_exit(127, "Error: too many arguments");
+		final_exit(&data, 127, "Error: too many arguments");
 	init_envp(&data, envp);
 	input = NULL;
 	token = NULL;
@@ -47,7 +47,7 @@ int	main(int argc, char **argv, char **envp)
 				i = -1;
 				while (++i < data.nr_cmds)
 				{
-					if (!exec_prefork_builtins(&(data.cmd[i])))
+					if (exec_prefork_builtins(&(data.cmd[i])) == 0)
 						fork_function(&data.cmd[i]);
 					// not sure to protect with if -1, exit
 				}
@@ -56,7 +56,6 @@ int	main(int argc, char **argv, char **envp)
 		}
 		ft_free_data(&data, 0);
 	}
-	free_envp(&data);
-	final_exit(1, NULL);
+	final_exit(&data, 1, NULL);
 	return (0);
 }

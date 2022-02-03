@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 14:58:05 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/02 10:49:08 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/03 12:58:40 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,6 @@ int	redirect_input(t_cmd *cmd)
 	}
 	if (cmd->fd_i)
 		dup2(cmd->fd_i[i - 1], STDIN_FILENO);
-	i = -1;
-	while (++i < cmd->nr_in)
-		close(cmd->fd_i[i]);
 	return (1);
 }
 
@@ -63,10 +60,6 @@ int	redirect_output(t_cmd *cmd)
 	}
 	if (cmd->fd_o)
 		dup2(cmd->fd_o[i - 1], STDOUT_FILENO);
-	i = -1;
-	free_io(cmd);
-	while (++i < cmd->nr_out)
-		close(cmd->fd_o[i]);
 	return (1);
 }
 
@@ -94,6 +87,7 @@ int	redirect_io(t_cmd *cmd)
 		return (0);
 	if (redirect_output(cmd) == 0)
 		return (0);
+	free_io(cmd);
 	return (1);
 }
 

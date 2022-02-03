@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 17:14:38 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/02 12:59:52 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/03 12:48:39 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,7 @@ void	add_to_envp(t_envp *envp, char *var)
 				envp->previous->next = new;
 				if (envp->next)
 					envp->next->previous = new;
-				free_string(envp->name);
-				free_string(envp->var);
-				free(envp);
-				envp = NULL;
+				free_node_envp(envp);
 			}
 			return ;
 		}	
