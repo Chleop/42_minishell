@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 13:20:21 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/02 17:04:26 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/01 11:31:01 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	**lexer(char *input)
 		condition_5, condition_6, condition_7, NULL,
 	};
 
-	init_lexer(&lex, input);
+		init_lexer(&lex, input);
 	token = NULL;
 	while (((lex.input)[lex.i] != '\n') && ((lex.input)[lex.i] != '\0'))
 	{

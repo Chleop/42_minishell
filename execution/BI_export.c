@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 16:43:49 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/02 17:31:18 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/01/31 17:45:05 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,15 @@ t_envp	*get_smallest_unprinted(t_envp *envp, int size)
 {
 	t_envp	*temp;
 	t_envp	*min;
+	int		i;
 
 	temp = envp;
 	while (temp->printed)
 		temp = temp->next;
 	min = temp;
-	temp = temp->next;
-	while (temp)
+	temp = envp;
+	i = -1;
+	while (++i < size)
 	{
 		if (temp->printed == 0 && smaller_ascii(temp->name, min->name))
 			min = temp;

@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 17:18:03 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/02 16:39:33 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/03 11:30:33 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,7 @@ void	ft_echo(t_cmd *cmd)
 	if (cmd->param[1] == NULL)
 	{
 		ft_printf("\n");
-		free_envp(cmd->data);
-		ft_free(cmd->data);
-		exit (0);
+		return ;
 	}
 	else if (ft_strncmp(cmd->param[1], "-n", 2) == 0)
 		j = no_backslash(cmd);
@@ -66,7 +64,8 @@ void	ft_env(t_cmd *cmd)
 	{
 		while (cmd->data->envp)
 		{
-			if (cmd->data->envp->var)
+			if (cmd->data->envp->var
+				&& ft_strncmp("_\0", cmd->data->envp->name, 2) != 0)
 				ft_printf("%s=%s\n", cmd->data->envp->name,
 					cmd->data->envp->var);
 			cmd->data->envp = cmd->data->envp->next;

@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 17:02:58 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/02 17:17:16 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/02 12:21:44 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ void	handle_dots(t_cmd *cmd)
 		}
 	}
 	change_dir(path, level);
-	//maybe not necessary anymore
 	free_string(path);
 	ft_del_stringtab(&dir_tab);
 }
