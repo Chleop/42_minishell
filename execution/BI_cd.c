@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BI_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 10:17:40 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/03 15:42:28 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/03 16:25:33 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*chdir_var(t_data *data, char *name)
 		}
 		temp = temp->next;
 	}
-	ft_printf("%s%s%s\n", "cd: ", name, " not set");
+	ft_printf("%s%s%s\n", 2, "cd: ", var, " not set");
 	return (NULL);
 }
 

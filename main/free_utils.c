@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:23:36 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/03 13:08:09 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/03 16:34:49 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,17 +70,4 @@ void	ft_free_data(t_data *data, int code)
 		free (data->cmd);
 		data->cmd = NULL;
 	}
-}
-
-int	ft_error(char *str)
-{
-	printf("%s\n", str);
-	return (0);
-}
-
-void	final_exit(t_data *data, int i, char *str)
-{
-	free_envp(data);
-	printf("%s\n", str);
-	exit (i);
 }

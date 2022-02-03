@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BI_export2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 17:14:38 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/03 12:48:39 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/03 16:33:07 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ int	check_identifier(char *id, int code)
 	if (ft_isdigit(id[0]) || id[0] == '\0')
 	{
 		if (code == 3)
-			ft_printf("%s: '%s': %s\n", "export", id, "not a valid identifier");
+			ft_printf("%s: '%s': %s\n", 2, "export", id, "not a valid identifier");
 		if (code == 4)
-			ft_printf("%s: '%s': %s\n", "unset", id, "not a valid identifier");
+			ft_printf("%s: '%s': %s\n", 2, "unset", id, "not a valid identifier");
 		return (0);
 	}
 	i = -1;
@@ -30,10 +30,10 @@ int	check_identifier(char *id, int code)
 		if (!(ft_isalnum(id[i]) || (id[i] == '_')))
 		{
 			if (code == 3)
-				ft_printf("%s: '%s': %s\n", "export",
+				ft_printf("%s: '%s': %s\n", 2, "export",
 					id, "not a valid identifier");
 			if (code == 4)
-				ft_printf("%s: '%s': %s\n", "unset",
+				ft_printf("%s: '%s': %s\n", 2, "unset",
 					id, "not a valid identifier");
 			return (0);
 		}
