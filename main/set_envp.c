@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 11:09:29 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/02 17:04:26 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/02 12:59:13 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	init_empty_env(t_envp **envp)
 	if (new == 0)
 		return (0);
 	add_item_back(envp, new);
-	new = new_item("SHLVL=1\0");
+	new = new_item("SHLVL=2\0");
 	if (new == 0)
 		return (0);
 	add_item_back(envp, new);

@@ -73,8 +73,7 @@ int	calculate_status(char *string)
 			return (-1);
 		i++;
 	}
-	return ((code * neg) % 256);
-	//return (final_status(code, neg));
+	return (final_status(code, neg));
 }
 
 void	ft_exit(t_cmd *cmd)
