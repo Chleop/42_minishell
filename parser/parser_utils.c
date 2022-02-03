@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 14:37:25 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/03 11:42:04 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/03 16:15:29 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@ char	*get_expansion(t_data *data, char *to_be_exp)
 
 	temp = data->envp;
 	exp = NULL;
+	printf("to be expanded = %s\n", to_be_exp);
+	if (!ft_strncmp("?\0", to_be_exp, 2))
+		return (ft_strdup("$?"));
 	while (temp && ft_strlen(to_be_exp))
 	{
 		if (!ft_strncmp(temp->name, to_be_exp, ft_strlen(temp->name) + 1))

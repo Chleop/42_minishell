@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:16:35 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/03 12:32:45 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/03 15:44:45 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int		add_tab(char ***tab, int *count, char *param);
 int		add_int(int **tab, int count, int param);
 void	ft_del_stringtab(char ***tab);
 int		ft_error(char *str);
+int	ft_error2(char *str, t_data *data, int exit_code);
 void	final_exit(int i, char *str);
 void	ft_free_parser(t_data *data, char ***token);
 void	ft_free_data(t_data *data, int code);

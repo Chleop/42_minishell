@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:56:24 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/01 18:10:08 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/03 15:57:38 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ char	*get_and_expand(t_data *data, char *token)
 	expanded_token = ft_strjoin(pre_param, exp);
 	free(exp);
 	free(pre_param);
+	free(token);
 	return (expanded_token);
 }
 
@@ -86,6 +87,7 @@ char	*manage_expansions(t_data *data, char *token)
 		subtok = replace_param_by_expansion(data, subtok);
 		temp = new_tok;
 		new_tok = ft_strjoin(new_tok, subtok);
+		free(subtok);
 		if (temp)
 			free (temp);
 		if (end != (int)ft_strlen(token) + 1)

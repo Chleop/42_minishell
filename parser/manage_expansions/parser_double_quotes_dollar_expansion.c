@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_double_quotes_dollar_expansion.c            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 13:32:12 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/01 10:59:43 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/03 16:01:47 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:23:36 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/03 13:11:21 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/03 15:30:47 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,16 +70,4 @@ void	ft_free_data(t_data *data, int code)
 		free (data->cmd);
 		data->cmd = NULL;
 	}
-}
-
-int	ft_error(char *str)
-{
-	ft_printf("%s\n", 2, str);
-	return (0);
-}
-
-void	final_exit(int i, char *str)
-{
-	ft_printf("%s\n", 2, str);
-	exit (i);
 }
