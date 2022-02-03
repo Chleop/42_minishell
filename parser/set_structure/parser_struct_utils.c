@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 13:34:16 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/03 11:37:42 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/03 12:41:36 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,18 +84,13 @@ int	classify_token(t_data *data, char **token, int n, int tok_nr)
 	{
 		if (!set_command(data, n, token))
 			return (0);
-		data->cmd[n].qualif[tok_nr] = EMPTY;
 	}
 	else if (qualif == PARAM)
 	{
 		if (!add_tab(&(data->cmd[n].param), &(data->cmd[n].nr_param), *token))
 			return (0);
-		data->cmd[n].qualif[tok_nr] = EMPTY;
 	}
 	else if ((qualif != OPERATOR) && (qualif != EMPTY))
-	{
 		set_redirections(data, token, n, qualif);
-		data->cmd[n].qualif[tok_nr] = EMPTY;
-	}
 	return (1);
 }

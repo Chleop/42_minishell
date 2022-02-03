@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BI_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 16:43:49 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/01/31 17:45:05 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/03 13:11:31 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,9 @@ void	print_exported_variables(t_envp *envp)
 	{
 		min = get_smallest_unprinted(envp, size);
 		if (min->var)
-			ft_printf("%s %s=\"%s\"\n", "declare -x", min->name, min->var);
+			ft_printf("%s %s=\"%s\"\n", 1, "declare -x", min->name, min->var);
 		else
-			ft_printf("%s %s\n", "declare -x", min->name);
+			ft_printf("%s %s\n", 1, "declare -x", min->name);
 		min->printed++;
 	}
 	reset_printed(envp);

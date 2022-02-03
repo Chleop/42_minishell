@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 15:32:53 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/01/31 16:58:41 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/03 13:11:18 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int	init_commands(t_data *data, char *command_in)
 		perror("malloc failed");
 		return (0);
 	}
-	printf("check\n");
 	i = -1;
 	while (++i < data->nr_cmds)
 	{
@@ -76,7 +75,7 @@ int	main(int argc, char *argv[], char *envp[])
 	// not sure to protect with if -1, exit
 	if (argc > 1)
 	{
-		ft_printf("Expected usage: ./minishell");
+		ft_printf("Expected usage: ./minishell", 2);
 		exit (127);
 	}
 	argv = NULL;

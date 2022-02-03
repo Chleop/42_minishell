@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:23:36 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/03 12:30:06 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/03 13:11:21 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,12 @@ void	ft_free_data(t_data *data, int code)
 
 int	ft_error(char *str)
 {
-	printf("%s\n", str);
+	ft_printf("%s\n", 2, str);
 	return (0);
 }
 
 void	final_exit(int i, char *str)
 {
-	printf("%s\n", str);
+	ft_printf("%s\n", 2, str);
 	exit (i);
 }

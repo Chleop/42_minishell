@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+         #
+#    By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/14 15:32:57 by avan-bre          #+#    #+#              #
-#    Updated: 2022/02/02 13:34:01 by avan-bre         ###   ########.fr        #
+#    Updated: 2022/02/03 13:57:57 by cproesch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,6 +88,6 @@ fclean:		clean
 	@make $@ -s -C libft
 	@echo "Removed executable files"
 
-re:			clean all
+re:			fclean all
 
 .PHONY:		re, all, clean, fclean

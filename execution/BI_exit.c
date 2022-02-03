@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BI_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 10:57:26 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/03 12:31:05 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/03 13:11:35 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,25 +80,25 @@ void	ft_exit(t_cmd *cmd)
 {
 	int	code;
 
-	ft_printf("%s\n", "exit");
+	ft_printf("%s\n", 1, "exit");
 	code = 0;
 	if (cmd->param[1] == NULL)
 		code = 0;
 	else if (cmd->param[2] != NULL)
 	{
-		ft_printf("%s\n", "exit: too many argurments");
+		ft_printf("%s\n", 2, "exit: too many argurments");
 		return ;
 	}
 	else if (!numeric_string(cmd->param[1]))
 	{
-		ft_printf("%s\n", "exit: numeric argument required");
+		ft_printf("%s\n", 2, "exit: numeric argument required");
 		code = 2;
 	}
 	else
 		code = calculate_status(cmd->param[1]);
 	if (code == -1)
 	{
-		ft_printf("%s\n", "exit: numeric argument required");
+		ft_printf("%s\n", 2, "exit: numeric argument required");
 		code = 2;
 	}
 	ft_free_data(cmd->data, 1);
