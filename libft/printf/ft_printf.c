@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/06 11:08:20 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/03 13:49:53 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/03 15:18:23 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	ft_printf(const char *format, int fd, ...)
 	int		index;
 	int		count;
 
-	printf("COUCOUCOUCOUCOUCOUCOUCOU\n");
 	va_start(arg_list, fd);
 	index = 0;
 	count = 0;

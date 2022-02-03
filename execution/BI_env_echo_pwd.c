@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 17:18:03 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/03 13:15:05 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/03 15:18:15 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	ft_echo(t_cmd *cmd)
 	if (j)
 		ft_printf("%s", 1, cmd->param[i]);
 	else
-		printf("%s\n", cmd->param[i]);
+		ft_printf("%s\n", 1, cmd->param[i]);
 	ft_free_data(cmd->data, 1);
 	exit(0);
 }
