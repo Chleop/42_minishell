@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 16:11:06 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/01 12:19:10 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/02 18:05:58 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	divide_token(t_data *data, char **token, int *start, int i)
 		if (!ft_memcpy(data->cmd[i].tok[j], token[*start], len))
 			return (0);
 		j++;
-		*start = *start + 1;
+		*start += 1;
 	}
 	return (1);
 }
@@ -78,7 +78,7 @@ int	initialize_data(t_data *data, char **token)
 	data->nr_token = count_token(token);
 	nb_pipes = localize_pipes(data, token);
 	data->nr_cmds = nb_pipes + 1;
-	data->cmd = (t_cmd *)ft_calloc(data->nr_cmds + 1, sizeof(t_cmd));
+	data->cmd = (t_cmd *)ft_calloc(data->nr_cmds, sizeof(t_cmd));
 	if (!data->cmd)
 		return (ft_error("Error: malloc failed"));
 	return (1);
