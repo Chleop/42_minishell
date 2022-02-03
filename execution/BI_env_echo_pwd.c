@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 17:18:03 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/03 16:32:50 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/03 18:26:07 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	ft_echo(t_cmd *cmd)
 
 // 	i = 0;
 // 	j = 0;
+// 	// printf ("exit code= %d\n", exit_code);
 // 	if (cmd->param[1] == NULL)
 // 	{
 // 		ft_printf("\n", 1);
@@ -79,8 +80,8 @@ void	ft_echo(t_cmd *cmd)
 // 	{
 // 		if (ft_strncmp(cmd->param[i], "$?\0", 3) == 0)
 // 		{
-// 			ft_printf("%d ", 1, cmd->data->exit_code);
-// 			cmd->data->exit_code = 0;
+// 			ft_printf("%d ", 1, exit_code);
+// 			exit_code = 0;
 // 		}
 // 		else
 // 			ft_printf("%s ", 1, cmd->param[i]);
@@ -89,8 +90,8 @@ void	ft_echo(t_cmd *cmd)
 // 	{
 // 		if (ft_strncmp(cmd->param[i], "$?\0", 3) == 0)
 // 		{
-// 			ft_printf("%d", 1, cmd->data->exit_code);
-// 			cmd->data->exit_code = 0;
+// 			ft_printf("%d", 1, exit_code);
+// 			exit_code = 0;
 // 		}
 // 		else
 // 			ft_printf("%s", 1, cmd->param[i]);
@@ -99,8 +100,8 @@ void	ft_echo(t_cmd *cmd)
 // 	{
 // 		if (ft_strncmp(cmd->param[i], "$?\0", 3) == 0)
 // 		{
-// 			ft_printf("%d\n", 1, cmd->data->exit_code);
-// 			cmd->data->exit_code = 0;
+// 			ft_printf("%d\n", 1, exit_code);
+// 			exit_code = 0;
 // 		}
 // 		else
 // 			ft_printf("%s\n", 1, cmd->param[i]);

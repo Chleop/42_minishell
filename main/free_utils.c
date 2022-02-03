@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:23:36 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/03 16:34:49 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/03 18:02:27 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,12 @@ void	ft_free_data(t_data *data, int code)
 		{
 			if (data->cmd[i].param)
 				ft_del_stringtab(&(data->cmd[i].param));
+			if (data->cmd[i].i)
+				ft_del_stringtab(&(data->cmd[i].i));
+			if (data->cmd[i].o)
+				ft_del_stringtab(&(data->cmd[i].o));
+			if (data->cmd[i].type)
+				free((data->cmd[i].type));
 			i++;
 		}
 		free (data->cmd);
