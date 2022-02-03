@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:22:30 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/03 11:32:51 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/03 12:32:58 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,9 @@ int	main(int argc, char **argv, char **envp)
 			}
 			finish_up(&data);
 		}
-		ft_free_data(&data);
+		ft_free_data(&data, 0);
 	}
+	free_envp(&data);
 	final_exit(1, NULL);
 	return (0);
 }

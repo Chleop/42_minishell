@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:23:36 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/03 11:37:29 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/03 12:30:06 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,15 @@ void	ft_free_parser(t_data *data, char ***token)
 	}
 }
 
-void	ft_free_data(t_data *data)
+void	ft_free_data(t_data *data, int code)
 {
 	int	i;
 
 	i = 0;
+	if (code)
+		free_envp(data);
 	if (data->cmd)
 	{
-		free_envp(data);
 		while (i < data->nr_cmds)
 		{
 			if (data->cmd[i].param)

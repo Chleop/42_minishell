@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BI_env_echo_pwd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 17:18:03 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/03 11:30:33 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/03 12:30:58 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	ft_echo(t_cmd *cmd)
 		ft_printf("%s", cmd->param[i]);
 	else
 		ft_printf("%s\n", cmd->param[i]);
-	ft_free_data(cmd->data);
+	ft_free_data(cmd->data, 1);
 	exit(0);
 }
 
@@ -72,6 +72,6 @@ void	ft_env(t_cmd *cmd)
 		}
 		ft_printf("_=/bin/env\n");
 	}
-	ft_free_data(cmd->data);
+	ft_free_data(cmd->data, 1);
 	exit (0);
 }
