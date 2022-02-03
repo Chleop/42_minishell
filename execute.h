@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 15:33:03 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/03 13:31:40 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/03 15:43:06 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	ft_export(t_cmd *cmd);
 void	ft_unset(t_cmd *cmd);
 void	ft_pwd(void);
 void	ft_cd(t_cmd *cmd);
-void	handle_dots(t_cmd *cmd);
+char	*handle_dots(t_cmd *cmd, char *oldpwd);
 void	ft_exit(t_cmd *cmd);
 int		redirect_io(t_cmd *cmd);
 void	reverse_redirection(t_cmd *cmd, int in, int out);
