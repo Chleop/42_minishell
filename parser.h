@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:16:35 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/02 13:34:45 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/03 11:33:58 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ int		add_int(int **tab, int count, int param);
 void	ft_del_stringtab(char ***tab);
 int		ft_error(char *str);
 void	final_exit(int i, char *str);
-void	ft_free(t_data *data);
+void	ft_free_parser(t_data *data, char ***token);
+void	ft_free_data(t_data *data);
 
 //LEXER
 char	**lexer(char *input);

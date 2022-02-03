@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_initialization.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 16:11:06 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/01 12:19:10 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/03 11:27:51 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	initialize_data(t_data *data, char **token)
 	data->nr_token = count_token(token);
 	nb_pipes = localize_pipes(data, token);
 	data->nr_cmds = nb_pipes + 1;
-	data->cmd = (t_cmd *)ft_calloc(data->nr_cmds + 1, sizeof(t_cmd));
+	data->cmd = (t_cmd *)ft_calloc(data->nr_cmds, sizeof(t_cmd));
 	if (!data->cmd)
 		return (ft_error("Error: malloc failed"));
 	return (1);

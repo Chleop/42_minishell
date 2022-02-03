@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:22:30 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/02 13:37:32 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/03 11:32:51 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(int argc, char **argv, char **envp)
 		if (token)
 		{
 			ret = parse(&data, token);
-			ft_del_stringtab(&token);
+			ft_free_parser(&data, &token);
 		}
 		if (ret)
 		{
@@ -53,12 +53,9 @@ int	main(int argc, char **argv, char **envp)
 				}
 			}
 			finish_up(&data);
-			ft_free(&data, token);
 		}
-		finish_up(&data);
-		ft_free(&data);
+		ft_free_data(&data);
 	}
-	free_envp(&data);
 	final_exit(1, NULL);
 	return (0);
 }

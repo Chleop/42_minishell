@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 16:42:54 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/01 18:12:39 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/03 11:47:41 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ char	*get_path(t_data *data, char *cmd)
 		return (ft_strdup(cmd));
 	str_path_env = get_expansion(data, "PATH\0");
 	tab_path_env = ft_split(str_path_env, ':');
+	free(str_path_env);
 	if (!tab_path_env)
 		return (NULL);
 	if (!(join_c(tab_path_env, "/")) || !(join_c(tab_path_env, cmd)))
