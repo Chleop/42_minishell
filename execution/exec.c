@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 11:19:50 by avan-bre          #+#    #+#             */
 /*   Updated: 2022/02/02 17:04:26 by avan-bre         ###   ########.fr       */
@@ -16,13 +16,11 @@ int	exec_nonbuiltins(t_cmd *cmd)
 {
 	if (execve(cmd->param[0], cmd->param, NULL) == -1)
 	{
-		free_envp(cmd->data);
-		ft_free(cmd->data);
+		ft_free_data(cmd->data);
 		perror("error - execution fail");
 		exit (1);
 	}
-	free_envp(cmd->data);
-	ft_free(cmd->data);
+	ft_free_data(cmd->data);
 	exit (0);
 }
 
@@ -35,9 +33,8 @@ int	exec_builtins(t_cmd *cmd)
 	}
 	else if (ft_strncmp(cmd->param[0], "pwd\0", 4) == 0)
 	{
-		free_envp(cmd->data);
-		ft_free(cmd->data);
-		ft_pwd();
+		ft_free_data(cmd->data);
+    ft_pwd();
 		return (1);
 	}
 	else if (ft_strncmp(cmd->param[0], "env\0", 4) == 0)
@@ -85,8 +82,7 @@ int	exec_prefork_builtins2(t_cmd *cmd, enum BI funct)
 	{
 		close(current_stdin);
 		close(current_stdout);
-		ft_free(cmd->data);
-		free_envp(cmd->data);
+		ft_free_data(cmd->data);
 		return (-1);
 	}
 	if (cmd->data->nr_cmds > 1)

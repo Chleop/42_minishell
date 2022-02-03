@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:23:36 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/02 13:07:13 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/03 11:37:29 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,30 +32,42 @@ void	ft_del_stringtab(char ***tab)
 	*tab = NULL;
 }
 
-void	ft_free_data_cmd(t_data *data)
+void	ft_free_parser(t_data *data, char ***token)
 {
 	int	i;
 
 	i = 0;
-	while (i < data->nr_cmds)
+	if (*token)
+		ft_del_stringtab(token);
+	if (data->cmd)
 	{
-		if (data->cmd[i].tok)
-			ft_del_stringtab(&(data->cmd[i].tok));
-		i++;
+		while (i < data->nr_cmds)
+		{
+			if (data->cmd[i].tok)
+				ft_del_stringtab(&(data->cmd[i].tok));
+			if (data->cmd[i].qualif)
+				free(data->cmd[i].qualif);
+			i++;
+		}
 	}
-	free (data->cmd);
-	data->cmd = NULL;
 }
 
-void	ft_free(t_data *data)
+void	ft_free_data(t_data *data)
 {
-	// if (token)
-	// 	ft_del_stringtab(&token);
-	if (data)
+	int	i;
+
+	i = 0;
+	if (data->cmd)
 	{
-		if (data->cmd)
-			ft_free_data_cmd(data);
-		data = NULL;
+		free_envp(data);
+		while (i < data->nr_cmds)
+		{
+			if (data->cmd[i].param)
+				ft_del_stringtab(&(data->cmd[i].param));
+			i++;
+		}
+		free (data->cmd);
+		data->cmd = NULL;
 	}
 }
 

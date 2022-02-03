@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 17:54:01 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/01 18:12:43 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/03 11:43:54 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	expand_cmd_path(t_data *data)
 			temp = data->cmd[i].param[0];
 			data->cmd[i].param[0] = get_path(data, data->cmd[i].param[0]);
 			free (temp);
+			temp = NULL;
 		}
 		i++;
 	}
