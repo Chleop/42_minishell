@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:55:08 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/01 18:10:59 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/02 17:04:26 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	review_operators(char **token)
 				&& ft_strncmp(token[i], "<<\0", 3)
 				&& ft_strncmp(token[i], ">|\0", 3))
 				|| (!token[i + 1])
-				|| (((i - 1) > -1) && ((token[i - 1][0] == '>')
+				|| (((i - 1) > - 1) && ((token[i - 1][0] == '>')
 				|| (token[i - 1][0] == '<')))
 				|| ((token[i][0] == '|') && (token[i - 1][0] == '|')))
 				return (ft_error("Syntax error"));

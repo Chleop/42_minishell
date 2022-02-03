@@ -22,10 +22,11 @@ int	main(int argc, char **argv, char **envp)
 	int		i;
 
 	if ((argc > 1) || (argv[1]))
-		final_exit(127, "Error: too many arguments");
+		final_exit(1, "Error: too many arguments");
 	init_envp(&data, envp);
 	input = NULL;
 	token = NULL;
+	ret = 0;
 	while (42)
 	{
 		input = readline("our_minishell:~$ ");
@@ -47,7 +48,7 @@ int	main(int argc, char **argv, char **envp)
 				i = -1;
 				while (++i < data.nr_cmds)
 				{
-					if (!exec_prefork_builtins(&(data.cmd[i])))
+					if (exec_prefork_builtins(&(data.cmd[i])) == 0)
 						fork_function(&data.cmd[i]);
 					// not sure to protect with if -1, exit
 				}

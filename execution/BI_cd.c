@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 10:17:40 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/02 12:18:55 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/02 16:47:37 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	chdir_var(t_data *data, char *var)
 	temp = data->envp;
 	while (temp)
 	{
-		if (ft_strncmp(var, temp->name, 5) == 0 && temp->var != NULL)
+		if (!ft_strncmp(var, temp->name, ft_strlen(var) + 1) && temp->var != NULL)
 		{
 			if (chdir(temp->var) == -1)
 				perror("error - cd");

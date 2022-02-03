@@ -33,7 +33,7 @@ int	divide_token(t_data *data, char **token, int *start, int i)
 		if (!ft_memcpy(data->cmd[i].tok[j], token[*start], len))
 			return (0);
 		j++;
-		*start = *start + 1;
+		*start += 1;
 	}
 	return (1);
 }
