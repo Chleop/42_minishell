@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 16:11:06 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/03 15:30:40 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/04 15:37:12 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	initialize_cmds(t_data *data, char **token)
 		data->cmd[i].nr_tok = end - start;
 		data->cmd[i].tok = ft_calloc((end - start + 1), sizeof(char *));
 		if (!data->cmd[i].tok)
-			return (ft_error("Error: malloc failed"));
+			return (ft_error2("Error: malloc failed", data, 1));
 		if (!divide_token(data, token, &start, i))
 			return (0);
 		data->cmd[i].param = NULL;
@@ -80,7 +80,6 @@ int	initialize_data(t_data *data, char **token)
 	data->nr_cmds = nb_pipes + 1;
 	data->cmd = (t_cmd *)ft_calloc(data->nr_cmds, sizeof(t_cmd));
 	if (!data->cmd)
-		return (ft_error("Error: malloc failed"));
-	data->exit_code = 0;
+		return (ft_error2("Error: malloc failed", data, 1));
 	return (1);
 }

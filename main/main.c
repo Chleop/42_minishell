@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:22:30 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/03 12:32:58 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/04 12:35:24 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	main(int argc, char **argv, char **envp)
 	if ((argc > 1) || (argv[1]))
 		final_exit(127, "Error: too many arguments");
 	init_envp(&data, envp);
+	data.exit_code = 0;
 	input = NULL;
 	token = NULL;
 	while (42)

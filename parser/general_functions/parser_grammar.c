@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 18:18:18 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/31 16:10:36 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/04 15:37:57 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	initialize_grammar(t_cmd *cmd)
 
 	(*cmd).qualif = (int *)ft_calloc((*cmd).nr_tok + 1, sizeof(int));
 	if (!(*cmd).qualif)
-		return (ft_error("Error: malloc failed"));
+		return (ft_error2("Error: malloc failed", (*cmd).data, 1));
 	i = 0;
 	while (i < (*cmd).nr_tok)
 	{

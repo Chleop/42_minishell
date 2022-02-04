@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:51:50 by cproesch          #+#    #+#             */
-/*   Updated: 2022/01/31 16:26:36 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/04 15:34:10 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	remove_quotes(char **token, int firstq_i, int secondq_i)
 	temp = *token;
 	*token = ft_calloc(ft_strlen(temp) - 1, sizeof(char));
 	if (!*token)
-		return (ft_error("Error: malloc failed"));
+		return (0);
 	cpy_before_quotes(token, temp, firstq_i);
 	cpy_ins_quotes(token, temp, firstq_i, secondq_i);
 	if (temp[secondq_i + 1])

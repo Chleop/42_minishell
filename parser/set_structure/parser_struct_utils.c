@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 13:34:16 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/03 12:41:36 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/04 16:15:40 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,33 +27,33 @@ int	is_quoted(char *token)
 	return (0);
 }
 
-int	set_command(t_data *data, int n, char **token)
-{
-	int		i;
-	int		j;
-	char	*par;
+// int	set_command(t_data *data, int n, char **token)
+// {
+// 	int		i;
+// 	int		j;
+// 	char	*par;
 
-	i = 0;
-	j = 0;
-	par = NULL;
-	while (1)
-	{
-		if ((((*token)[i] == ' ') || (*token)[i] == '\0'))
-		{
-			par = ft_substr(*token, j, i - j);
-			if (!par)
-				return (0);
-			if (!add_tab(&(data->cmd[n].param), &(data->cmd[n].nr_param), par))
-				return (0);
-			free (par);
-			if ((*token)[i] == '\0')
-				return (1);
-			j = i + 1;
-		}
-		i++;
-	}
-	return (1);
-}
+// 	i = 0;
+// 	j = 0;
+// 	par = NULL;
+// 	while (1)
+// 	{
+// 		if ((((*token)[i] == ' ') || (*token)[i] == '\0'))
+// 		{
+// 			par = ft_substr(*token, j, i - j);
+// 			if (!par)
+// 				return (0);
+// 			if (!add_tab(&(data->cmd[n].param), &(data->cmd[n].nr_param), par))
+// 				return (0);
+// 			free (par);
+// 			if ((*token)[i] == '\0')
+// 				return (1);
+// 			j = i + 1;
+// 		}
+// 		i++;
+// 	}
+// 	return (1);
+// }
 
 int	set_redirections(t_data *data, char **token, int n, int qualif)
 {
@@ -80,15 +80,12 @@ int	classify_token(t_data *data, char **token, int n, int tok_nr)
 	int	qualif;
 
 	qualif = data->cmd[n].qualif[tok_nr];
-	if (qualif == CMD)
-	{
-		if (!set_command(data, n, token))
-			return (0);
-	}
-	else if (qualif == PARAM)
+	printf("token = %s\n", *token);
+	if ((qualif == CMD) || (qualif == PARAM))
 	{
 		if (!add_tab(&(data->cmd[n].param), &(data->cmd[n].nr_param), *token))
 			return (0);
+		data->cmd[n].qualif[tok_nr] = EMPTY;
 	}
 	else if ((qualif != OPERATOR) && (qualif != EMPTY))
 		set_redirections(data, token, n, qualif);

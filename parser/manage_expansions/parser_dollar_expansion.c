@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:56:24 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/03 15:57:38 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/04 15:39:03 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,28 +27,39 @@ char	*get_and_expand(t_data *data, char *token)
 	expanded_token = ft_strjoin(pre_param, exp);
 	free(exp);
 	free(pre_param);
-	free(token);
 	return (expanded_token);
 }
 
 char	*replace_param_by_expansion(t_data *data, char *param)
 {
 	int		quote;
+	char	*temp;
 
 	if (!ft_strchr(param, '$'))
 	{
-		identify_remove_quotes(&param);
+		if (!identify_remove_quotes(&param))
+		{
+			ft_error2("Error: malloc failed", data, 1);
+			return (NULL);
+		}
 		return (param);
 	}
 	else
 	{
 		quote = is_quoted(param);
-		identify_remove_quotes(&param);
+		if (!identify_remove_quotes(&param))
+		{
+			ft_error2("Error: malloc failed", data, 1);
+			return (NULL);
+		}
 		if (quote == '\'')
 			return (ft_strdup(param));
 		if ((quote == '\"') && is_quoted(param))
 			return (double_quoted_exp(data, param));
-		return (get_and_expand(data, param));
+		temp = param;
+		param = get_and_expand(data, param);
+		free (temp);
+		return (param);
 	}
 }
 
@@ -57,15 +68,12 @@ int	get_end(char *token, int i)
 	if (((token[i] == '\'') || (token[i] == '\"'))
 		&& is_paired(token[i], token, i + 1))
 		return (is_paired(token[i], token, i + 1));
-	else
-	{
+	i++;
+	while ((token[i] != '\0') && (token[i] != '\n')
+		&& (token[i] != '\'') && (token[i] != '\"')
+		&& (token[i] != '$'))
 		i++;
-		while ((token[i] != '\0') && (token[i] != '\n')
-			&& (token[i] != '\'') && (token[i] != '\"')
-			&& (token[i] != '$'))
-			i++;
-		return (i - 1);
-	}
+	return (i - 1);
 }
 
 char	*manage_expansions(t_data *data, char *token)

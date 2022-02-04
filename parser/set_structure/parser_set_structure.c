@@ -6,16 +6,40 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 17:54:01 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/03 11:43:54 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/04 16:10:23 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// int	expand_and_classify(t_data *data, char **token, int cmd_nr, int tok_nr)
+// {
+// 	char	*temp;
+
+// 	printf("token = %s\n", data->cmd[cmd_nr].tok[tok_nr]);
+// 	if (ft_strchr(data->cmd[cmd_nr].tok[tok_nr], '$'))
+// 	{
+// 		temp = *token;
+// 		*token = manage_expansions(data, temp);
+// 		if (!(*token))
+// 			return (0);
+// 		free (temp);
+// 	}
+// 	else
+// 	{
+// 		if (!identify_remove_quotes(token))
+// 			return (ft_error2("Error: malloc failed", data, 1));
+// 	}
+// 	if (!classify_token(data, token, cmd_nr, tok_nr))
+// 		return (0);
+// 	return (1);
+// }
+
 int	expand_and_classify(t_data *data, char **token, int cmd_nr, int tok_nr)
 {
 	char	*temp;
 
+	printf("token = %s\n", data->cmd[cmd_nr].tok[tok_nr]);
 	if (ft_strchr(data->cmd[cmd_nr].tok[tok_nr], '$'))
 	{
 		temp = *token;
@@ -23,13 +47,19 @@ int	expand_and_classify(t_data *data, char **token, int cmd_nr, int tok_nr)
 		if (!(*token))
 			return (0);
 		free (temp);
+		if (!classify_token(data, token, cmd_nr, tok_nr))
+			return (0);
 	}
 	else
-		identify_remove_quotes(token);
-	if (!classify_token(data, token, cmd_nr, tok_nr))
-		return (0);
+	{
+		if (!classify_token(data, token, cmd_nr, tok_nr))
+			return (0);
+		if (!identify_remove_quotes(&(data->cmd[cmd_nr].param[tok_nr])))
+			return (ft_error2("Error: malloc failed", data, 1));
+	}
 	return (1);
 }
+
 
 int	is_builtin(t_cmd *cmd)
 {
