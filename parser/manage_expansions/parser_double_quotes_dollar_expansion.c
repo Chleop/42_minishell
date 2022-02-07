@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 13:32:12 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/04 15:25:18 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/07 18:48:13 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,25 +34,29 @@ int	*get_dqe_end(char *param)
 
 char	*join_sub_param(t_data *data, char **sub_param)
 {
-	int		i;
-	char	*new_param;
-	char	*temp;
+	static int	iter;
+	char		*new_param;
+	char		*temp;
+	char		quote;
 
 	new_param = ft_strdup("\0");
-	i = 0;
-	while (i < 5)
+	while (iter < 5)
 	{
-		if (ft_strchr(sub_param[i], '$'))
+		if (ft_strchr(sub_param[iter], '$'))
 		{
-			temp = sub_param[i];
-			sub_param[i] = get_and_expand(data, sub_param[i]);
+			quote = is_quoted(sub_param[iter]);
+			temp = sub_param[iter];
+			if (quote)
+				sub_param[iter] = double_quoted_exp(data, sub_param[iter]);
+			else
+				sub_param[iter] = get_and_expand(data, sub_param[iter]);
 			free (temp);
 		}
 		temp = new_param;
-		new_param = ft_strjoin(new_param, sub_param[i]);
+		new_param = ft_strjoin(new_param, sub_param[iter]);
 		free (temp);
-		free (sub_param[i]);
-		i++;
+		free (sub_param[iter]);
+		iter++;
 	}
 	return (new_param);
 }

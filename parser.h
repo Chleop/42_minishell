@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:16:35 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/04 11:29:40 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/07 18:38:13 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int		set_into_structure(t_data *data);
 int		expand_and_classify_dollars(t_data *data);
 int		is_quoted(char *token);
 int		identify_remove_quotes(char **token);
-int		remove_quotes(char **token, int firstq_i, int secondq_i);
+int		if_remove_quotes(char ***tab, int nr_elements, t_data *data);
 int		classify_others(t_data *data);
 char	*manage_expansions(t_data *data, char *token);
 int		classify_token(t_data *data, char **token, int cmd_nr, int tok_nr);

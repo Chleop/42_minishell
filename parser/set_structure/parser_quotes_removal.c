@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:51:50 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/04 15:34:10 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/07 18:38:09 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,19 +62,28 @@ int	remove_quotes(char **token, int firstq_i, int secondq_i)
 	return (1);
 }
 
-int	identify_remove_quotes(char **token)
+int	if_remove_quotes(char ***tab, int nr_elements, t_data *data)
 {
 	int	firstq_i;
 	int	secondq_i;
 	int	quote;
+	int	j;
 
-	quote = is_quoted(*token);
-	if (quote)
+	j = 0;
+	while (j < nr_elements)
 	{
-		firstq_i = ft_strchr(*token, quote) - *token;
-		secondq_i = ft_strchr(*token + firstq_i + 1, quote) - *token;
-		if (!remove_quotes(token, firstq_i, secondq_i))
-			return (0);
+		quote = is_quoted((*tab)[j]);
+		if (quote)
+		{
+			firstq_i = ft_strchr((*tab)[j], quote) - (*tab)[j];
+			secondq_i = ft_strchr((*tab)[j] + firstq_i + 1, quote) - (*tab)[j];
+			if (!remove_quotes(*tab, firstq_i, secondq_i))
+			{
+				ft_error2("Error: malloc failed", data, 1);
+				return (0);
+			}
+		}
+		j++;
 	}
 	return (1);
 }

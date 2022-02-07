@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:56:24 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/04 15:39:03 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/07 19:24:06 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,38 +30,32 @@ char	*get_and_expand(t_data *data, char *token)
 	return (expanded_token);
 }
 
+// If a dollar is found within the subtoken and is not single quoted
+// expands it
+
 char	*replace_param_by_expansion(t_data *data, char *param)
 {
 	int		quote;
-	char	*temp;
 
 	if (!ft_strchr(param, '$'))
-	{
-		if (!identify_remove_quotes(&param))
-		{
-			ft_error2("Error: malloc failed", data, 1);
-			return (NULL);
-		}
-		return (param);
-	}
+		return (ft_strdup(param));
 	else
 	{
 		quote = is_quoted(param);
-		if (!identify_remove_quotes(&param))
-		{
-			ft_error2("Error: malloc failed", data, 1);
-			return (NULL);
-		}
 		if (quote == '\'')
 			return (ft_strdup(param));
-		if ((quote == '\"') && is_quoted(param))
+		if (quote == '\"')
 			return (double_quoted_exp(data, param));
-		temp = param;
 		param = get_and_expand(data, param);
-		free (temp);
 		return (param);
 	}
 }
+
+// Determines the end of each subtoken depending on whether there are paired
+// quotes, dollars or end of token
+// if the token[i] is a quote and is paired, the end of subtok is the paired 
+// quote otherwise the end of the subtoken is the end of the token, or before 
+// a quote, or before a $ 
 
 int	get_end(char *token, int i)
 {
@@ -71,10 +65,17 @@ int	get_end(char *token, int i)
 	i++;
 	while ((token[i] != '\0') && (token[i] != '\n')
 		&& (token[i] != '\'') && (token[i] != '\"')
-		&& (token[i] != '$'))
+		&& (token[i] != '$') && (token[i] != ' '))
 		i++;
 	return (i - 1);
 }
+
+// Browses the token char by char until its end
+// Identifies the end of each subtoken
+// Creates each subtoken
+// Expands the subtoken if needed
+// Joins the subtoken to the preceding ones
+// Sets the start of the next subtoken to the end of the preceding one + 1
 
 char	*manage_expansions(t_data *data, char *token)
 {
@@ -84,20 +85,24 @@ char	*manage_expansions(t_data *data, char *token)
 	char	*new_tok;
 	char	*temp;
 
-	new_tok = NULL;
+	new_tok = ft_strdup("\0");
 	i = 0;
+	printf("inside manage expansion, token = %s\n", token);
 	while ((token[i] != '\0') && (token[i] != '\n'))
 	{
 		end = get_end(token, i);
 		subtok = ft_substr(token, i, end - i + 1);
+		printf ("subtok before exp is : %s\n", subtok);
 		if (!subtok)
 			return (NULL);
+		temp = subtok;
 		subtok = replace_param_by_expansion(data, subtok);
+		printf ("subtok after exp is : %s\n", subtok);
+		free (temp);
 		temp = new_tok;
 		new_tok = ft_strjoin(new_tok, subtok);
 		free(subtok);
-		if (temp)
-			free (temp);
+		free(temp);
 		if (end != (int)ft_strlen(token) + 1)
 			i = end + 1;
 	}

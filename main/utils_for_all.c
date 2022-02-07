@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:26:28 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/03 15:44:58 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/07 17:20:13 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,10 @@ int	ft_error(char *str)
 
 int	ft_error2(char *str, t_data *data, int exit_code)
 {
-	ft_printf("%s\n", 2, str);
+	// if (system_error)
+		// perror(str);
+	// else
+		ft_printf("%s\n", 2, str);
 	data->exit_code = exit_code;
 	return (0);
 }
