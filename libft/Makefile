@@ -8,7 +8,7 @@ ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_strmapi.c ft_itoa.c \
 get_next_line_utils.c get_next_line.c printf/ft_printf.c \
 printf/print_char.c printf/print_hex.c \
 printf/print_int.c printf/print_hex_cap.c printf/print_ptr.c \
-printf/print_string.c printf/print_uns_int.c
+printf/print_string.c printf/print_uns_int.c $(SRCS_B)
 
 SRCS_B	= ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c \
 ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c

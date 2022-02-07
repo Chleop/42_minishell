@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BI_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 16:43:49 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/03 16:32:59 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/07 13:49:04 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,6 @@ int	smaller_ascii(char *str1, char *str2)
 	size = size1;
 	if (size2 < size)
 		size = size2;
-	i = 0;
-	size = ft_strlen(str1);
-	if (ft_strlen(str2) < size)
-		size = ft_strlen(str2);
 	i = -1;
 	while (++i < size)
 	{

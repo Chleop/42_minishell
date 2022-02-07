@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 11:09:29 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/02 12:59:13 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/07 10:14:38 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	adapt_values(t_envp **envp)
 	{
 		if (!ft_strncmp("SHLVL\0", temp->name, 6))
 		{
-			printf("Old is: %s\n", temp->var);
 			shlvl = ft_strdup(temp->var);
 			break ;
 		}

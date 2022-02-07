@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 11:19:50 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/03 13:54:14 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/07 11:40:22 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	exec_nonbuiltins(t_cmd *cmd)
 	{
 		ft_free_data(cmd->data, 1);
 		perror("error - execution fail");
-		exit (1);
+		exit (126);
 	}
 	ft_del_stringtab(&envp_tab);
 	ft_free_data(cmd->data, 1);
@@ -55,6 +55,7 @@ int	fork_function(t_cmd *cmd)
 	if (cmd->data->process_id[cmd->id] == -1)
 	{
 		perror("error - fork failed");
+		//exit_code should be 1
 		return (-1);
 	}
 	else if (cmd->data->process_id[cmd->id] == 0)
