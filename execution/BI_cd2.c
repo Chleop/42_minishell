@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   BI_cd2_new.c                                       :+:      :+:    :+:   */
+/*   BI_cd2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:47:05 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/08 16:24:29 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/08 17:33:02 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,17 +82,17 @@ void	handle_dots(t_cmd *cmd, t_cd *cd)
 {
 	char	**dir_tab;
 	int		i;
-	
+
 	set_path(cd);
 	dir_tab = ft_split(cmd->param[1], '/');
 	i = -1;
 	while (dir_tab[++i])
 	{
 		if (!ft_strncmp(dir_tab[i], "..\0",
-			ft_strlen(dir_tab[i]) + 1) && cd->level > 0)
+				ft_strlen(dir_tab[i]) + 1) && cd->level > 0)
 			one_dir_up(cd);
 		else if (ft_strncmp(dir_tab[i], ".\0",
-			ft_strlen(dir_tab[i]) + 1) != 0)
+				ft_strlen(dir_tab[i]) + 1) != 0)
 			add_dir(cd, dir_tab[i]);
 	}
 	chdir_path(cmd->data, cd);

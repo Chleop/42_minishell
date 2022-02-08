@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 11:19:50 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/07 11:40:22 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/08 18:11:20 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	exec_nonbuiltins(t_cmd *cmd)
 {
 	char	**envp_tab;
 
-	envp_tab = convert_envp(cmd->data->envp);
+	convert_envp(cmd->data->envp, &envp_tab);
 	if (execve(cmd->param[0], cmd->param, envp_tab) == -1)
 	{
 		ft_free_data(cmd->data, 1);
@@ -44,6 +44,11 @@ int	exec_builtins(t_cmd *cmd)
 	else if (ft_strncmp(cmd->param[0], "env\0", 4) == 0)
 	{
 		ft_env(cmd);
+		return (1);
+	}
+	else if (ft_strncmp(cmd->param[0], "export\0", 7) == 0)
+	{
+		ft_export_fork(cmd);
 		return (1);
 	}
 	return (0);
@@ -95,7 +100,7 @@ int	exec_prefork_builtins2(t_cmd *cmd, enum BI funct)
 	if (funct == CD)
 		ft_cd(cmd);
 	else if (funct == EXPORT)
-		ft_export(cmd);
+		ft_export_prefork(cmd);
 	else if (funct == UNSET)
 		ft_unset(cmd);
 	reverse_redirection(cmd, current_stdin, current_stdout);
@@ -109,7 +114,8 @@ int	exec_prefork_builtins(t_cmd *cmd)
 	funct = 0;
 	if (ft_strncmp(cmd->param[0], "cd\0", 3) == 0)
 		funct = CD;
-	else if (ft_strncmp(cmd->param[0], "export\0", 7) == 0)
+	else if (ft_strncmp(cmd->param[0], "export\0", 7) == 0
+			&& cmd->param[1])
 		funct = EXPORT;
 	else if (ft_strncmp(cmd->param[0], "unset\0", 6) == 0)
 		funct = UNSET;

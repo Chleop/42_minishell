@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 15:35:11 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/08 16:21:29 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/08 17:32:32 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*malloc_curpath(char *string)
 	while (string[i] != '\0')
 	{
 		if (string[i] != '/' || (string[i] == '/'
-			&& !(string[i + 1] == '/' || string[i + 1] == '\0')))
+				&& !(string[i + 1] == '/' || string[i + 1] == '\0')))
 			j++;
 		i++;
 	}
@@ -45,14 +45,35 @@ char	*set_curpath(char *string)
 	while (string[i])
 	{
 		if (string[i] != '/' || (string[i] == '/'
-			&& !(string[i + 1] == '/' || string[i + 1] == '\0')))
+				&& !(string[i + 1] == '/' || string[i + 1] == '\0')))
 		{
 			curpath[j] = string[i];
-		 	j++;
+			j++;
 		}
 		i++;
 	}
 	if (!j)
 		curpath = ft_strdup("/");
 	return (curpath);
+}
+
+int	init_cd(t_cmd *cmd, t_cd **cd)
+{
+	if (cmd->param[1] && cmd->param[2])
+	{
+		ft_printf("%s\n", 2, "cd: too many arguments");
+		//exit_code is 128
+		return (0);
+	}
+	*cd = malloc(sizeof(t_cd) * 1);
+	if (!*cd)
+	{
+		perror("malloc failed");
+		//exit code 1
+		return (0);
+	}
+	(*cd)->oldpwd = get_var(cmd->data->envp, "PWD");
+	(*cd)->current = getcwd(NULL, 0);
+	(*cd)->path = NULL;
+	return (1);
 }

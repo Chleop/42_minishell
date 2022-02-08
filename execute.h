@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 15:33:03 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/08 15:36:07 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/08 17:53:36 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	add_item_back(t_envp **list, t_envp *new);
 int		size_list(t_envp *head);
 void	add_to_envp(t_envp *envp, char *var);
 void	remove_from_envp(t_envp *envp, char *name);
-char	**convert_envp(t_envp *envp);
+void	convert_envp(t_envp *envp, char ***table);
 
 //execution functions
 int		exec_prefork_builtins(t_cmd *cmd);
@@ -69,11 +69,14 @@ void	reverse_redirection(t_cmd *cmd, int in, int out);
 //built in functions
 void	ft_echo(t_cmd *cmd);
 void	ft_env(t_cmd *cmd);
-void	ft_export(t_cmd *cmd);
+void	ft_export_prefork(t_cmd *cmd);
+void	ft_export_fork(t_cmd *cmd);
 int		check_identifier(char *id, int code);
 void	ft_unset(t_cmd *cmd);
 void	ft_pwd(void);
 void	ft_cd(t_cmd *cmd);
+int		init_cd(t_cmd *cmd, t_cd **cd);
+char	*get_var(t_envp *envp, char *name);
 void	handle_dots(t_cmd *cmd, t_cd *cd);
 void	chdir_path(t_data *data, t_cd *cd);
 char	*set_curpath(char *string);

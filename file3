@@ -65,5 +65,5 @@ declare -x XDG_SESSION_PATH="/org/freedesktop/DisplayManager/Session3"
 declare -x XDG_SESSION_TYPE="x11"
 declare -x XMODIFIERS="@im=ibus"
 declare -x ZSH="/mnt/nfs/homes/avan-bre/.oh-my-zsh"
-declare -x name="hello"
+declare -x name
 our_minishell:~$ ^C

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   BI_cd_new.c                                        :+:      :+:    :+:   */
+/*   BI_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 15:06:37 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/08 16:28:17 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/08 17:29:15 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	finish_cd(t_data *data, t_cd *cd)
 {
 	char	*temp;
 	char	*pwd;
-	
+
 	if (cd->oldpwd)
 	{
 		temp = ft_strjoin("OLDPWD=", cd->oldpwd);
@@ -89,22 +89,9 @@ void	ft_cd(t_cmd *cmd)
 {
 	t_cd	*cd;
 
-	if (cmd->param[1] && cmd->param[2])
-	{
-		ft_printf("%s\n", 2, "cd: too many arguments");
-		//exit_code is 128
+	cd = NULL;
+	if (!init_cd(cmd, &cd))
 		return ;
-	}
-	cd = malloc(sizeof(t_cd) * 1);
-	if (!cd)
-	{
-		perror("malloc failed");
-		//exit code 1
-		return ;
-	}
-	cd->oldpwd = get_var(cmd->data->envp, "PWD");
-	cd->current = getcwd(NULL, 0);
-	cd->path = NULL;
 	if (!cmd->param[1])
 		chdir_envp(cmd->data, cd, "HOME");
 	else if (cmd->param[1][0] == '-' && cmd->param[1][1] == '\0')

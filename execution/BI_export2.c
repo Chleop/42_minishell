@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 17:14:38 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/07 13:55:07 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/08 18:12:34 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ int	check_identifier2(char *id, int code)
 			//exit_code should be 128
 			return (0);
 		}
+	}
+	if (id[i] == '=' && code == 4)
+	{
+		ft_printf("%s: '%s': %s\n", 2, "unset", id, "not a valid identifier");
+		return (0);
 	}
 	return (1);
 }
@@ -75,4 +80,16 @@ void	add_to_envp(t_envp *envp, char *var)
 		envp = envp->next;
 	}
 	add_item_back(&temp, new);
+}
+
+void	ft_export_prefork(t_cmd *cmd)
+{
+	int		i;
+
+	i = 0;
+	while (cmd->param[++i])
+	{
+		if (check_identifier(cmd->param[i], EXPORT))
+			add_to_envp(cmd->data->envp, cmd->param[i]);
+	}
 }
