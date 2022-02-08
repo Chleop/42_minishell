@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 11:09:29 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/08 15:46:30 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/08 17:17:49 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	adapt_values(t_envp **envp)
 	t_envp	*temp;
 	char	*shlvl;
 	char	*itoa;
-	int		new;
 
 	shlvl = NULL;
 	temp = *envp;
@@ -30,16 +29,15 @@ void	adapt_values(t_envp **envp)
 		}
 		temp = temp->next;
 	}
-	new = ft_atoi(shlvl) + 1;
+	itoa = ft_itoa(ft_atoi(shlvl) + 1);
 	free_string(shlvl);
-	itoa = ft_itoa(new);
 	shlvl = ft_strjoin("SHLVL=", itoa);
 	free_string(itoa);
 	add_to_envp(*envp, shlvl);
+	free_string(shlvl);
 	remove_from_envp(*envp, "OLDPWD");
 	add_to_envp(*envp, "OLDPWD");
 	remove_from_envp(*envp, "_");
-	free_string(shlvl);
 }
 
 int	init_empty_env(t_envp **envp)
