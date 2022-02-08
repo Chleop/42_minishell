@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:51:50 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/08 12:17:30 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/08 15:33:38 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,69 @@
 // 	return (1);
 // }
 
+// char	*join_string_table_with_c(char **table, int **index_tab, char *c)
+// {
+// 	int		i;
+// 	int		j;
+// 	char	*new_param;
+// 	char	*temp;
+// 	char	**param;
+// 	char	quote;
+
+// 	new_param = ft_strdup("\0");
+// 	i = 0;
+// 	j = 0;
+// 	while (sub_param[i])
+// 	{
+// 		temp = new_param;
+// 		new_param = ft_strjoin(new_param, sub_param[i]);
+// 		free (temp);
+// 		if ((index_tab) && (c))
+// 		{
+// 			temp = new_param;
+// 			new_param = ft_strjoin(new_param, c);
+// 			free (temp);
+// 		}
+// 		i++;
+// 	}
+// 	return (new_param);
+// }
+
+// int	if_remove_quotes(char ***tab, int nr_elements, t_data *data)
+// {
+// 	char	quote;
+// 	int		j;
+// 	char	*temp;
+// 	char	**subtoken;
+
+// 	j = 0;
+// 	while (j < nr_elements)
+// 	{
+// 		quote = is_quoted((*tab)[j]);
+// 		if (quote)
+// 		{
+// 			printf("Dans remove quotes, (*tab)[j]   1   = %s\n", (*tab)[j]);
+// 			subtoken = ft_split((*tab)[j], quote);
+// 			if (!subtoken)
+// 				return (0);
+// 			temp = (*tab)[j];
+// 			(*tab)[j] = join_string_table_with_c(subtoken, NULL, NULL);
+// 			printf("Dans remove quotes, (*tab)[j]   2   = %s\n", (*tab)[j]);
+// 			free(temp);
+// 			ft_del_stringtab(&subtoken);
+// 			return (1);
+// 		}
+// 		j++;
+// 	}
+// 	return (1);
+// }
+
+
 int	if_remove_quotes(char ***tab, int nr_elements, t_data *data)
 {
 	char	quote;
-	int		j;
 	char	*temp;
-	char	**subtoken;
+	int		j;
 
 	j = 0;
 	while (j < nr_elements)
@@ -101,16 +158,12 @@ int	if_remove_quotes(char ***tab, int nr_elements, t_data *data)
 		quote = is_quoted((*tab)[j]);
 		if (quote)
 		{
-			printf("Dans remove quotes, (*tab)[j]   1   = %s\n", (*tab)[j]);
-			subtoken = ft_split((*tab)[j], quote);
-			if (!subtoken)
-				return (0);
 			temp = (*tab)[j];
-			(*tab)[j] = join_and_expand_subparam(data, subtoken, NULL);
-			printf("Dans remove quotes, (*tab)[j]   2   = %s\n", (*tab)[j]);
-			free(temp);
-			ft_del_stringtab(&subtoken);
-			return (1);
+			(*tab)[j] = remove_c((*tab)[j], quote);
+			if (!(*tab)[j])
+				return (ft_error2("Error: malloc failed", data, 1));
+			free (temp);
+			temp = NULL;
 		}
 		j++;
 	}

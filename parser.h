@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:16:35 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/08 10:43:02 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/08 16:44:29 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,9 @@ int		divide_token(t_data *data, char **token, int *start, int i);
 int		initialize_cmds(t_data *data, char **token);
 int		grammatize_tokens(t_data *data);
 
-int		count_token(char **token);
-int		localize_pipes(t_data *data, char **token);
+int		count_strings(char **token);
+int		*locate_c(char *token, char c);
+char	*remove_c(char *str, char c);
 int		parse(t_data *data, char **token);
 char	*get_expansion(t_data *data, char *to_be_exp);
 char	*get_path(t_data *data, char *cmd);

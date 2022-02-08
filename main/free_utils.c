@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:23:36 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/03 15:30:47 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/08 13:24:11 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	ft_free_parser(t_data *data, char ***token)
 			i++;
 		}
 	}
+	if (data->pipe_index)
+		free(data->pipe_index);
 }
 
 void	ft_free_data(t_data *data, int code)
