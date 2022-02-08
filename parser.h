@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:16:35 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/07 18:38:13 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/08 10:43:02 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ char	*manage_expansions(t_data *data, char *token);
 int		classify_token(t_data *data, char **token, int cmd_nr, int tok_nr);
 void	expand_cmd_path(t_data *data);
 char	*double_quoted_exp(t_data *data, char *param);
+char	*join_and_expand_subparam(t_data *data, char **sub_param, char *c);
 char	*get_and_expand(t_data *data, char *token);
+char	*expand(t_data *data, char *token);
 
 #endif

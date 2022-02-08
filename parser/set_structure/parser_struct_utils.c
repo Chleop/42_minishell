@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 13:34:16 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/07 19:19:00 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/08 11:26:18 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	is_quoted(char *token)
 	int	i;
 
 	i = 0;
-	while (token[i])
+	while ((token[i] != '\0') && (token[i] != '\n'))
 	{
 		if (((token[i] == '\'') || (token[i] == '\"'))
 			&& is_paired(token[i], token, i + 1))
@@ -56,6 +56,7 @@ int	increment_quoted_part(int i, char **token)
 {
 	char	quote;
 
+	printf("*token + i = %s\n", *token + i);
 	quote = is_quoted(*token + i);
 	if (quote)
 	{
@@ -72,30 +73,33 @@ int	increment_quoted_part(int i, char **token)
 
 int	set_param(t_data *data, int n, char **token)
 {
-	static int	iterate;
-	int			j;
-	char		*par;
+	int		i;
+	int		j;
+	char	*par;
 
+	i = 0;
 	j = 0;
 	par = NULL;
 	printf("before set param, token = %s\n", *token);
 	while (1)
 	{
-		iterate = increment_quoted_part(iterate, token);
-		if ((((*token)[iterate] == ' ') || (*token)[iterate] == '\0')
-			|| ((*token)[iterate] == '\n'))
+		if ((*token)[i])
+			i = increment_quoted_part(i, token);
+		printf ("(*token)[i] = %c\n", (*token)[i]);
+		if ((((*token)[i] == ' ') || (*token)[i] == '\0')
+			|| ((*token)[i] == '\n'))
 		{
-			par = ft_substr(*token, j, iterate - j);
+			par = ft_substr(*token, j, i - j);
 			if (!par)
 				return (0);
 			if (!add_tab(&(data->cmd[n].param), &(data->cmd[n].nr_param), par))
 				return (0);
 			free (par);
-			if ((*token)[iterate] == '\0')
+			if ((*token)[i] == '\0')
 				return (1);
-			j = iterate + 1;
+			j = i + 1;
 		}
-		iterate++;
+		i++;
 	}
 	return (1);
 }
@@ -109,7 +113,10 @@ int	classify_token(t_data *data, char **token, int n, int tok_nr)
 
 	qualif = data->cmd[n].qualif[tok_nr];
 	if ((qualif == CMD) || (qualif == PARAM))
+	{
 		set_param(data, n, token);
+		print_char_table("  PARAM   ", data->cmd[n].param);
+	}
 	else if ((qualif != OPERATOR) && (qualif != EMPTY))
 		set_redirections(data, token, n, qualif);
 	return (1);

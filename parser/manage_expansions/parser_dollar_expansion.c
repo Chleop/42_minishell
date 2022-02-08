@@ -6,13 +6,31 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:56:24 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/07 19:24:06 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/08 10:42:39 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_and_expand(t_data *data, char *token)
+// char	*get_and_expand(t_data *data, char *token)
+// {
+// 	int		i;
+// 	char	*expanded_token;
+// 	char	*pre_param;
+// 	char	*exp;
+
+// 	i = 0;
+// 	while (token[i] != '$')
+// 		i++;
+// 	pre_param = ft_substr(token, 0, i);
+// 	exp = get_expansion(data, token + i + 1);
+// 	expanded_token = ft_strjoin(pre_param, exp);
+// 	free(exp);
+// 	free(pre_param);
+// 	return (expanded_token);
+// }
+
+char	*expand(t_data *data, char *token)
 {
 	int		i;
 	char	*expanded_token;
@@ -28,6 +46,22 @@ char	*get_and_expand(t_data *data, char *token)
 	free(exp);
 	free(pre_param);
 	return (expanded_token);
+}
+
+char	*get_and_expand(t_data *data, char *token)
+{
+	char	**sub_param;
+	char	*param;
+
+	sub_param = NULL;
+	if (ft_strchr(token, ' '))
+	{
+		sub_param = ft_split(token, ' ');
+		param = join_and_expand_subparam(data, sub_param, " ");
+	}
+	else
+		param = expand(data, token);
+	return (param);
 }
 
 // If a dollar is found within the subtoken and is not single quoted
