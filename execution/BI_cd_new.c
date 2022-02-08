@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 15:06:37 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/07 18:40:50 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/08 10:32:07 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,12 @@ void	ft_cd(t_cmd *cmd)
 	if (!cd)
 	{
 		perror("malloc failed");
-		//exit code weet ik niet
+		//exit code 1
 		return ;
 	}
 	cd->oldpwd = get_var(cmd->data->envp, "PWD");
+	if (cd->oldpwd == NULL)
+		cd->oldpwd = getcwd(NULL, 0);
 	cd->path = NULL;
 	if (!cmd->param[1])
 		chdir_envp(cmd->data, cd, "HOME");
