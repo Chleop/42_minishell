@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 11:09:29 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/07 10:14:38 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/08 15:46:30 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,11 @@ int	init_empty_env(t_envp **envp)
 {
 	t_envp	*new;
 	char	*pwd;
+	char	*temp;
 
-	pwd = ft_strjoin("PWD=", getcwd(NULL, 0));
+	temp = getcwd(NULL, 0);
+	pwd = ft_strjoin("PWD=", temp);
+	free_string(temp);
 	new = new_item(pwd);
 	if (new == 0)
 		return (0);

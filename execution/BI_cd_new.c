@@ -6,29 +6,45 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 15:06:37 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/08 10:32:07 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/08 16:28:17 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+char	*get_var(t_envp *envp, char *name)
+{
+	t_envp	*temp;
+
+	temp = envp;
+	while (temp)
+	{
+		if (!ft_strncmp(name, temp->name, ft_strlen(temp->name)))
+			return (ft_strdup(temp->var));
+		temp = temp->next;
+	}
+	return (NULL);
+}
+
 void	finish_cd(t_data *data, t_cd *cd)
 {
-	size_t	i;
 	char	*temp;
+	char	*pwd;
 	
-	i = ft_strlen(cd->path);
-	if (ft_strlen(cd->oldpwd) > i)
-		i = ft_strlen(cd->oldpwd);
-	if (ft_strncmp(cd->path, cd->oldpwd, i) != 0)
+	if (cd->oldpwd)
 	{
 		temp = ft_strjoin("OLDPWD=", cd->oldpwd);
 		add_to_envp(data->envp, temp);
 		free_string(temp);
 	}
-	temp = ft_strjoin("PWD=", cd->path);
-	add_to_envp(data->envp, temp);
-	free_string(temp);
+	pwd = get_var(data->envp, "PWD");
+	if (pwd)
+	{
+		temp = ft_strjoin("PWD=", cd->path);
+		add_to_envp(data->envp, temp);
+		free_string(temp);
+		free_string(pwd);
+	}
 }
 
 void	chdir_path(t_data *data, t_cd *cd)
@@ -42,6 +58,7 @@ void	chdir_path(t_data *data, t_cd *cd)
 		finish_cd(data, cd);
 	free_string(cd->oldpwd);
 	free_string(cd->path);
+	free_string(cd->current);
 	free(cd);
 	cd = NULL;
 }
@@ -68,20 +85,6 @@ void	chdir_envp(t_data *data, t_cd *cd, char *name)
 	cd = NULL;
 }
 
-char	*get_var(t_envp *envp, char *name)
-{
-	t_envp	*temp;
-
-	temp = envp;
-	while (temp)
-	{
-		if (!ft_strncmp(name, temp->name, ft_strlen(temp->name)))
-			return (ft_strdup(temp->var));
-		temp = temp->next;
-	}
-	return (NULL);
-}
-
 void	ft_cd(t_cmd *cmd)
 {
 	t_cd	*cd;
@@ -100,8 +103,7 @@ void	ft_cd(t_cmd *cmd)
 		return ;
 	}
 	cd->oldpwd = get_var(cmd->data->envp, "PWD");
-	if (cd->oldpwd == NULL)
-		cd->oldpwd = getcwd(NULL, 0);
+	cd->current = getcwd(NULL, 0);
 	cd->path = NULL;
 	if (!cmd->param[1])
 		chdir_envp(cmd->data, cd, "HOME");
@@ -109,7 +111,7 @@ void	ft_cd(t_cmd *cmd)
 		chdir_envp(cmd->data, cd, "OLDPWD");
 	else if (cmd->param[1][0] == '/')
 	{
-		cd->path = ft_strdup(cmd->param[1]);
+		cd->path = set_curpath(cmd->param[1]);
 		chdir_path(cmd->data, cd);
 	}
 	else

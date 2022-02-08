@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:47:05 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/07 18:24:07 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/08 16:24:29 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,31 @@ int	get_level(char *oldpwd)
 	return (level);
 }
 
+void	set_path(t_cd *cd)
+{
+	if (cd->oldpwd)
+	{
+		cd->path = ft_strdup(cd->oldpwd);
+		cd->level = get_level(cd->oldpwd);
+	}
+	else if (cd->current)
+	{
+		cd->path = ft_strdup(cd->current);
+		cd->level = get_level(cd->current);
+	}
+	else
+	{
+		cd->path = ft_strdup("/");
+		cd->level = 0;
+	}
+}
+
 void	handle_dots(t_cmd *cmd, t_cd *cd)
 {
 	char	**dir_tab;
 	int		i;
 	
-	cd->level = get_level(cd->oldpwd);
-	cd->path = ft_strdup(cd->oldpwd);
+	set_path(cd);
 	dir_tab = ft_split(cmd->param[1], '/');
 	i = -1;
 	while (dir_tab[++i])
