@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:22:30 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/08 18:10:43 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/09 13:34:51 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ void	loop_through_commands(t_data *data)
 		{
 			current_stdin = dup(STDIN_FILENO);
 			current_stdout = dup(STDOUT_FILENO);
-			redirect_io(&data->cmd[i]);
-			reverse_redirection(&data->cmd[i],
-				current_stdin, current_stdout);
+			if (redirect_io(&data->cmd[i]))
+				reverse_redirection(&data->cmd[i],
+					current_stdin, current_stdout);
 		}
 		else if (exec_prefork_builtins(&(data->cmd[i])) == 0)
 			fork_function(&data->cmd[i]);

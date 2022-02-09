@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BI_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 10:57:26 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/03 13:11:35 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/09 12:22:17 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	ft_exit(t_cmd *cmd)
 	code = 0;
 	if (cmd->param[1] == NULL)
 		code = 0;
+	//code = exit_code?
 	else if (cmd->param[2] != NULL)
 	{
 		ft_printf("%s\n", 2, "exit: too many argurments");

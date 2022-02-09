@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 17:14:38 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/08 18:12:34 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/09 12:22:16 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	check_identifier2(char *id, int code)
 			if (code == 4)
 				ft_printf("%s: '%s': %s\n", 2, "unset",
 					id, "not a valid identifier");
-			//exit_code should be 128
+			//exit_code should be 1
 			return (0);
 		}
 	}
@@ -49,7 +49,7 @@ int	check_identifier(char *id, int code)
 		if (code == 4)
 			ft_printf("%s: '%s': %s\n", 2, "unset", id,
 				"not a valid identifier");
-		//exit_code should be 128
+		//exit_code should be 1
 		return (0);
 	}
 	return (check_identifier2(id, code));

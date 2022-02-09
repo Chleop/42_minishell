@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_for_all.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:26:28 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/03 18:23:25 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/09 13:34:53 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,14 @@ void	final_exit(t_data *data, char *str)
 	free_envp(data);
 	exit (1);
 	// exit (exit_code);
+}
+
+int	ft_error2(char *string, char *name, int code)
+{
+	if (name)
+		ft_printf("%s: %s\n", 2, string, name);
+	else
+		ft_printf("%s\n", 2, string);
+	printf("exit code: %d\n", code);
+	return (-1);
 }

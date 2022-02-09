@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 10:03:37 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/08 18:13:38 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/09 13:42:09 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,7 @@ int	init_pipes(t_data *data)
 
 	i = -1;
 	while (++i < (data->nr_cmds - 1))
-	{
 		if (pipe(data->pipe_fd[i]) == -1)
-		{
-			perror("error - pipe failed");
-			//exit_code should be 1
-			return (-1);
-		}
-	}
+			return (ft_error2(strerror(errno), NULL, 1));
 	return (1);
 }

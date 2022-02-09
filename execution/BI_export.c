@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 16:43:49 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/08 18:13:09 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/09 10:58:55 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,6 @@ void	print_exported_variables(t_envp *envp)
 void	ft_export_fork(t_cmd *cmd)
 {
 	print_exported_variables(cmd->data->envp);
-	ft_free_data(cmd->data, 1);
-	exit (0);
+	// ft_free_data(cmd->data, 1);
+	// exit (0);
 }

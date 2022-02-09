@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 17:18:03 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/07 13:55:54 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/09 11:00:22 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	ft_pwd(void)
 	pwd = getcwd(NULL, 0);
 	ft_printf("%s\n", 1, pwd);
 	free_string(pwd);
-	exit(0);
 }
 
 int	no_backslash(t_cmd *cmd)
@@ -56,59 +55,7 @@ void	ft_echo(t_cmd *cmd)
 		ft_printf("%s", 1, cmd->param[i]);
 	else
 		ft_printf("%s\n", 1, cmd->param[i]);
-	ft_free_data(cmd->data, 1);
-	exit(0);
 }
-
-// void	ft_echo(t_cmd *cmd)
-// {
-// 	int	i;
-// 	int	j;
-
-// 	i = 0;
-// 	j = 0;
-// 	// printf ("exit code= %d\n", exit_code);
-// 	if (cmd->param[1] == NULL)
-// 	{
-// 		ft_printf("\n", 1);
-// 		return ;
-// 	}
-// 	else if (ft_strncmp(cmd->param[1], "-n", 2) == 0)
-// 		j = no_backslash(cmd);
-// 	i = j;
-// 	while (cmd->param[++i] && cmd->param[i + 1])
-// 	{
-// 		if (ft_strncmp(cmd->param[i], "$?\0", 3) == 0)
-// 		{
-// 			ft_printf("%d ", 1, exit_code);
-// 			exit_code = 0;
-// 		}
-// 		else
-// 			ft_printf("%s ", 1, cmd->param[i]);
-// 	}
-// 	if (j)
-// 	{
-// 		if (ft_strncmp(cmd->param[i], "$?\0", 3) == 0)
-// 		{
-// 			ft_printf("%d", 1, exit_code);
-// 			exit_code = 0;
-// 		}
-// 		else
-// 			ft_printf("%s", 1, cmd->param[i]);
-// 	}	
-// 	else
-// 	{
-// 		if (ft_strncmp(cmd->param[i], "$?\0", 3) == 0)
-// 		{
-// 			ft_printf("%d\n", 1, exit_code);
-// 			exit_code = 0;
-// 		}
-// 		else
-// 			ft_printf("%s\n", 1, cmd->param[i]);
-// 	}
-// 	ft_free_data(cmd->data, 1);
-// 	exit(0);
-// }
 
 void	ft_env(t_cmd *cmd)
 {
@@ -131,7 +78,5 @@ void	ft_env(t_cmd *cmd)
 	}
 	else
 		ft_printf("%s\n", 2, "command not found: env");
-	ft_free_data(cmd->data, 1);
 	free_string(path);
-	exit (0);
 }

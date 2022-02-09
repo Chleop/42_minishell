@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 15:06:37 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/08 17:29:15 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/09 13:28:26 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,7 @@ void	finish_cd(t_data *data, t_cd *cd)
 void	chdir_path(t_data *data, t_cd *cd)
 {
 	if (chdir(cd->path) == -1)
-	{
-		perror("error - cd");
-		//exit code should be 128
-	}
+		ft_error2(strerror(errno), cd->path, 128);
 	else
 		finish_cd(data, cd);
 	free_string(cd->oldpwd);
@@ -90,7 +87,7 @@ void	ft_cd(t_cmd *cmd)
 	t_cd	*cd;
 
 	cd = NULL;
-	if (!init_cd(cmd, &cd))
+	if (init_cd(cmd, &cd) == -1)
 		return ;
 	if (!cmd->param[1])
 		chdir_envp(cmd->data, cd, "HOME");

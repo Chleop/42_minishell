@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 14:58:05 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/08 17:38:15 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/09 13:45:14 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,9 @@ int	redirect_input(t_cmd *cmd)
 	{
 		cmd->fd_i[i] = open(cmd->i[i], O_RDONLY);
 		if (cmd->fd_i[i] == -1)
-		{
-			perror("error - could not open input file");
-			//exit_code should be 126
-			return (-1);
-		}
+			return (ft_error2(strerror(errno), cmd->i[i], 1));
 		if (access(cmd->i[i], R_OK) != 0)
-		{
-			perror("error - can not read input file");
-			//exit_code should be 126
-			return (-1);
-		}
+			return (ft_error2(strerror(errno), cmd->i[i], 1));
 	}
 	if (cmd->fd_i)
 		dup2(cmd->fd_i[i - 1], STDIN_FILENO);
@@ -50,17 +42,9 @@ int	redirect_output(t_cmd *cmd)
 		else if (cmd->type[i] == 2)
 			cmd->fd_o[i] = open(cmd->o[i], O_CREAT | O_APPEND | O_WRONLY, 0644);
 		if (cmd->fd_o[i] == -1)
-		{
-			perror ("error - could not open output file");
-			//exit_code should be 126
-			return (0);
-		}
+			return (ft_error2(strerror(errno), cmd->o[i], 1));
 		if (access(cmd->o[i], W_OK) != 0)
-		{
-			perror("error - can not write to output file");
-			//exit_code should be 126
-			return (0);
-		}
+			return (ft_error2(strerror(errno), cmd->o[i], 1));
 	}
 	if (cmd->fd_o)
 		dup2(cmd->fd_o[i - 1], STDOUT_FILENO);
@@ -70,19 +54,21 @@ int	redirect_output(t_cmd *cmd)
 int	redirect_io(t_cmd *cmd)
 {
 	if (cmd->nr_out)
-		cmd->fd_o = malloc(sizeof(int) * cmd->nr_out);
-	if (cmd->nr_in)
-		cmd->fd_i = malloc(sizeof(int) * cmd->nr_in);
-	if ((cmd->nr_in && !cmd->fd_i) || (cmd->nr_out && !cmd->fd_o))
 	{
-		perror("malloc failed");
-		//exit_code should be 1
-		return (0);
+		cmd->fd_o = malloc(sizeof(int) * cmd->nr_out);
+		if (!cmd->fd_o)
+			return (ft_error2(strerror(errno), "outfile table", 1));
 	}
-	if (redirect_input(cmd) == 0)
-		return (0);
-	if (redirect_output(cmd) == 0)
-		return (0);
+	if (cmd->nr_in)
+	{
+		cmd->fd_i = malloc(sizeof(int) * cmd->nr_in);
+		if (!cmd->fd_i)
+			return (ft_error2(strerror(errno), "infile table", 1));
+	}
+	if (redirect_input(cmd) == -1)
+		return (-1);
+	if (redirect_output(cmd) == -1)
+		return (-1);
 	free_io(cmd);
 	return (1);
 }

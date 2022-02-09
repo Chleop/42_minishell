@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 15:35:11 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/08 17:32:32 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/09 13:42:55 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,14 @@ int	init_cd(t_cmd *cmd, t_cd **cd)
 {
 	if (cmd->param[1] && cmd->param[2])
 	{
-		ft_printf("%s\n", 2, "cd: too many arguments");
-		//exit_code is 128
-		return (0);
+		return (ft_error2("cd: too many arguments", NULL, 1));
+		// ft_printf("%s\n", 2, "cd: too many arguments");
+		// //exit_code is 1
+		// return (0);
 	}
 	*cd = malloc(sizeof(t_cd) * 1);
 	if (!*cd)
-	{
-		perror("malloc failed");
-		//exit code 1
-		return (0);
-	}
+		return (ft_error2(strerror(errno), "cd structure", 1));
 	(*cd)->oldpwd = get_var(cmd->data->envp, "PWD");
 	(*cd)->current = getcwd(NULL, 0);
 	(*cd)->path = NULL;
