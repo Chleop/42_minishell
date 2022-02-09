@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 17:38:24 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/09 13:04:12 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/09 19:29:04 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,13 @@ typedef struct s_cmd
 	struct s_data	*data;
 }	t_cmd;
 
-typedef struct s_pars
-{
-	int	pipe[1023];
-}	t_pars;
-
 typedef struct	s_data
 {
 	struct s_envp	*envp;
 	int				nr_token;
 	int				nr_cmds;
 	t_cmd			*cmd;
-	t_pars			parser;
+	int				*pipe_index;
 	int				pipe[2];
 	int				pipe_fd[1023][2];
 	int				process_id[1024];

@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:55:08 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/03 18:24:47 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/09 19:39:07 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,17 @@ int	review_operators(char **token)
 		if ((token[i][0] == '|') || (token[i][0] == '>')
 		|| (token[i][0] == '<'))
 		{
-			if ((ft_strncmp(token[i], "|\0", 2) 
-				&& ft_strncmp(token[i], "<\0", 2)
-				&& ft_strncmp(token[i], ">\0", 2)
-				&& ft_strncmp(token[i], ">>\0", 3)
-				&& ft_strncmp(token[i], "<<\0", 3)
-				&& ft_strncmp(token[i], ">|\0", 3))
+			if ((ft_strncmp(token[i], "|\0", 2)
+					&& ft_strncmp(token[i], "<\0", 2)
+					&& ft_strncmp(token[i], ">\0", 2)
+					&& ft_strncmp(token[i], ">>\0", 3)
+					&& ft_strncmp(token[i], "<<\0", 3)
+					&& ft_strncmp(token[i], ">|\0", 3))
 				|| (!token[i + 1])
 				|| (((i - 1) > -1) && ((token[i - 1][0] == '>')
-				|| (token[i - 1][0] == '<')))
-				|| ((token[i][0] == '|') && (token[i - 1][0] == '|')))
-				return (ft_error("Syntax error"));
-				// return (ft_error2("Syntax error", 2));
+					|| (token[i - 1][0] == '<')))
+					|| ((token[i][0] == '|') && (token[i - 1][0] == '|')))
+				return (ft_error2("Syntax error", 2));
 		}
 		i++;
 	}

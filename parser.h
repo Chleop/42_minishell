@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:16:35 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/09 13:34:54 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/09 19:30:49 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,22 +73,24 @@ int		divide_token(t_data *data, char **token, int *start, int i);
 int		initialize_cmds(t_data *data, char **token);
 int		grammatize_tokens(t_data *data);
 
-int		count_token(char **token);
-int		localize_pipes(t_data *data, char **token);
+int		count_strings(char **token);
+int		*locate_c(char *token, char c);
+char	*remove_c(char *str, char c);
 int		parse(t_data *data, char **token);
 char	*get_expansion(t_data *data, char *to_be_exp);
 char	*get_path(t_data *data, char *cmd);
 
 int		set_into_structure(t_data *data);
-int		expand_and_classify_dollars(t_data *data);
 int		is_quoted(char *token);
-int		identify_remove_quotes(char **token);
-int		remove_quotes(char **token, int firstq_i, int secondq_i);
-int		classify_others(t_data *data);
+
+int		remove_quotes_inside_struct(t_data *data);
+int		if_remove_quotes(char ***tab, int nr_elements, t_data *data);
+
 char	*manage_expansions(t_data *data, char *token);
 int		classify_token(t_data *data, char **token, int cmd_nr, int tok_nr);
 void	expand_cmd_path(t_data *data);
 char	*double_quoted_exp(t_data *data, char *param);
-char	*get_and_expand(t_data *data, char *token);
+char	*expand(t_data *data, char *token);
+char	*expand_s_in_d(t_data *data, char **sub_param, int *index_tab);
 
 #endif

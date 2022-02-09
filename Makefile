@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+         #
+#    By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/14 15:32:57 by avan-bre          #+#    #+#              #
-#    Updated: 2022/02/09 12:42:42 by avan-bre         ###   ########.fr        #
+#    Updated: 2022/02/09 19:28:37 by cproesch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,8 @@ M_SRCS	=	main.c set_envp.c envp_utils.c utils_for_all.c free_utils.c \
 E_SRCS	=	redirection.c pipes.c exec.c BI_cd.c BI_cd2.c BI_cd3.c BI_env_echo_pwd.c \
 			BI_export.c BI_export2.c BI_unset.c BI_exit.c free_exec.c
 L_SRCS	=	lexer.c lexer_functions_1.c lexer_functions_2.c lexer_utils.c
-P_SRCS	=	parser.c parser_initialization.c parser_utils.c parser_grammar.c \
+P_SRCS	=	general_functions/parser.c general_functions/parser_initialization.c \
+			general_functions/parser_utils.c general_functions/parser_grammar.c \
 			set_structure/parser_quotes_removal.c \
 			set_structure/parser_struct_utils.c \
 			set_structure/parser_set_structure.c \

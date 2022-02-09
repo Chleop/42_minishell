@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 13:34:16 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/03 18:02:59 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/09 19:40:46 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	is_quoted(char *token)
 	int	i;
 
 	i = 0;
-	while (token[i])
+	while ((token[i] != '\0') && (token[i] != '\n'))
 	{
 		if (((token[i] == '\'') || (token[i] == '\"'))
 			&& is_paired(token[i], token, i + 1))
@@ -27,34 +27,6 @@ int	is_quoted(char *token)
 	return (0);
 }
 
-int	set_command(t_data *data, int n, char **token)
-{
-	int		i;
-	int		j;
-	char	*par;
-
-	i = 0;
-	j = 0;
-	par = NULL;
-	while (1)
-	{
-		if ((((*token)[i] == ' ') || (*token)[i] == '\0'))
-		{
-			par = ft_substr(*token, j, i - j);
-			if (!par)
-				return (0);
-			if (!add_tab(&(data->cmd[n].param), &(data->cmd[n].nr_param), par))
-				return (0);
-			free (par);
-			if ((*token)[i] == '\0')
-				return (1);
-			j = i + 1;
-		}
-		i++;
-	}
-	return (1);
-}
-
 int	set_redirections(t_data *data, char **token, int n, int qualif)
 {
 	if (qualif == RED_IN)
@@ -62,7 +34,7 @@ int	set_redirections(t_data *data, char **token, int n, int qualif)
 	else if (qualif == HERE_END)
 	{
 		ft_free_parser(data, &token);
-		final_exit(data, "HERE_DOCS NON GERES pour l'instant :)\n");
+		final_exit (1, "HERE_DOCS NON GERES pour l'instant :)\n");
 	}
 	else
 	{
@@ -75,21 +47,68 @@ int	set_redirections(t_data *data, char **token, int n, int qualif)
 	return (1);
 }
 
+// Browse the token, if there is a space that is not quoted, put 
+// the chars before the space in one param and continue browsing
+// i is the current char number
+// j is the param starting char
+
+int	increment_quoted_part(int i, char **token)
+{
+	char	quote;
+
+	quote = is_quoted(*token + i);
+	if (quote)
+	{
+		while ((*token)[i] != quote)
+			i++;
+		i = is_paired(quote, *token + i, i + 1) + i;
+	}
+	return (i);
+}
+
+// if the token contains non quoted spaces, then it seperates the token into 
+// several parameters
+// and adds each parameter to the parameter structure
+
+int	set_param(t_cmd *cmd, char **token)
+{
+	int		i;
+	int		j;
+	char	*par;
+
+	i = 0;
+	j = 0;
+	par = NULL;
+	while (1)
+	{
+		if ((*token)[i])
+			i = increment_quoted_part(i, token);
+		if ((((*token)[i] == ' ') || (*token)[i] == '\0')
+			|| ((*token)[i] == '\n'))
+		{
+			par = ft_substr(*token, j, i - j);
+			if (!par || !add_tab(&((*cmd).param), &((*cmd).nr_param), par))
+				return (0);
+			free (par);
+			if ((*token)[i] == '\0')
+				return (1);
+			j = i + 1;
+		}
+		i++;
+	}
+	return (1);
+}
+
+// if the token is a command or a param, set into param table
+// otherwise set into redirections tables
+
 int	classify_token(t_data *data, char **token, int n, int tok_nr)
 {
 	int	qualif;
 
 	qualif = data->cmd[n].qualif[tok_nr];
-	if (qualif == CMD)
-	{
-		if (!set_command(data, n, token))
-			return (0);
-	}
-	else if (qualif == PARAM)
-	{
-		if (!add_tab(&(data->cmd[n].param), &(data->cmd[n].nr_param), *token))
-			return (0);
-	}
+	if ((qualif == CMD) || (qualif == PARAM))
+		set_param(&(data->cmd[n]), token);
 	else if ((qualif != OPERATOR) && (qualif != EMPTY))
 		set_redirections(data, token, n, qualif);
 	return (1);

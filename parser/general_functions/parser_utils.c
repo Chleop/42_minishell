@@ -6,11 +6,25 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 14:37:25 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/03 18:27:35 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/09 19:38:06 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*exit_code_expansion(t_data *data, char *to_be_exp)
+{
+	char	*exp;
+	char	*exit_char;
+	char	*post;
+
+	exit_char = ft_itoa(data->exit_code);
+	post = ft_strdup(to_be_exp + 1);
+	exp = ft_strjoin(exit_char, post);
+	free(exit_char);
+	free(post);
+	return (exp);
+}
 
 char	*get_expansion(t_data *data, char *to_be_exp)
 {
@@ -19,9 +33,8 @@ char	*get_expansion(t_data *data, char *to_be_exp)
 
 	temp = data->envp;
 	exp = NULL;
-	// printf("to be expanded = %s\n", to_be_exp);
-	if (!ft_strncmp("?\0", to_be_exp, 2))
-		return (ft_strdup("$?"));
+	if (to_be_exp[0] == '?')
+		return (exit_code_expansion(data, to_be_exp));
 	while (temp && ft_strlen(to_be_exp))
 	{
 		if (!ft_strncmp(temp->name, to_be_exp, ft_strlen(temp->name) + 1))
@@ -38,7 +51,7 @@ char	*get_expansion(t_data *data, char *to_be_exp)
 	return (exp);
 }
 
-int	count_token(char **token)
+int	count_strings(char **token)
 {
 	int	i;
 
@@ -46,23 +59,4 @@ int	count_token(char **token)
 	while (token[i])
 		i++;
 	return (i);
-}
-
-int	localize_pipes(t_data *data, char **token)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (token[i])
-	{
-		if (token[i][0] == '|')
-		{
-			data->parser.pipe[j] = i;
-			j++;
-		}
-		i++;
-	}
-	return (j);
 }
