@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 13:34:16 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/08 15:08:37 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/09 19:25:09 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ int	increment_quoted_part(int i, char **token)
 {
 	char	quote;
 
-	printf("*token + i = %s\n", *token + i);
 	quote = is_quoted(*token + i);
 	if (quote)
 	{
@@ -71,7 +70,7 @@ int	increment_quoted_part(int i, char **token)
 // several parameters
 // and adds each parameter to the parameter structure
 
-int	set_param(t_data *data, int n, char **token)
+int	set_param(t_cmd *cmd, char **token)
 {
 	int		i;
 	int		j;
@@ -80,19 +79,15 @@ int	set_param(t_data *data, int n, char **token)
 	i = 0;
 	j = 0;
 	par = NULL;
-	printf("before set param, token = %s\n", *token);
 	while (1)
 	{
 		if ((*token)[i])
 			i = increment_quoted_part(i, token);
-		printf ("(*token)[i] = %c\n", (*token)[i]);
 		if ((((*token)[i] == ' ') || (*token)[i] == '\0')
 			|| ((*token)[i] == '\n'))
 		{
 			par = ft_substr(*token, j, i - j);
-			if (!par)
-				return (0);
-			if (!add_tab(&(data->cmd[n].param), &(data->cmd[n].nr_param), par))
+			if (!par || !add_tab(&((*cmd).param), &((*cmd).nr_param), par))
 				return (0);
 			free (par);
 			if ((*token)[i] == '\0')
@@ -113,10 +108,7 @@ int	classify_token(t_data *data, char **token, int n, int tok_nr)
 
 	qualif = data->cmd[n].qualif[tok_nr];
 	if ((qualif == CMD) || (qualif == PARAM))
-	{
-		set_param(data, n, token);
-		print_char_table("  PARAM   ", data->cmd[n].param);
-	}
+		set_param(&(data->cmd[n]), token);
 	else if ((qualif != OPERATOR) && (qualif != EMPTY))
 		set_redirections(data, token, n, qualif);
 	return (1);

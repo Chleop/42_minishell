@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:16:35 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/08 16:44:29 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/09 18:28:09 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,17 +81,16 @@ char	*get_expansion(t_data *data, char *to_be_exp);
 char	*get_path(t_data *data, char *cmd);
 
 int		set_into_structure(t_data *data);
-int		expand_and_classify_dollars(t_data *data);
 int		is_quoted(char *token);
-int		identify_remove_quotes(char **token);
+
+int		remove_quotes_inside_struct(t_data *data);
 int		if_remove_quotes(char ***tab, int nr_elements, t_data *data);
-int		classify_others(t_data *data);
+
 char	*manage_expansions(t_data *data, char *token);
 int		classify_token(t_data *data, char **token, int cmd_nr, int tok_nr);
 void	expand_cmd_path(t_data *data);
 char	*double_quoted_exp(t_data *data, char *param);
-char	*join_and_expand_subparam(t_data *data, char **sub_param, char *c);
-char	*get_and_expand(t_data *data, char *token);
 char	*expand(t_data *data, char *token);
+char	*expand_s_in_d(t_data *data, char **sub_param, int *index_tab);
 
 #endif

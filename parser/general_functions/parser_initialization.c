@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 16:11:06 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/08 15:42:24 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/09 19:09:23 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ int	initialize_data(t_data *data, char **token)
 {
 	int	nb_pip;
 
-	// data->pipe_index[0] = 0;
 	data->nr_token = count_strings(token);
 	data->pipe_index = locate_c(*token, '|');
 	nb_pip = 0;

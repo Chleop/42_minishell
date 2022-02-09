@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 14:37:25 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/08 15:42:24 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/09 18:39:24 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,65 +57,4 @@ int	count_strings(char **token)
 	while (token[i])
 		i++;
 	return (i);
-}
-
-int	*locate_c(char *token, char c)
-{
-	int	i;
-	int	j;
-	int	*index_tab;
-
-	i = 0;
-	j = 0;
-	while ((token[i]) && c)
-	{
-		if (token[i] == c)
-			j++;
-		i++;
-	}
-	index_tab = ft_calloc(j + 1, sizeof(int));
-	i = 0;
-	j = 0;
-	while (token[i] && c)
-	{
-		if (token[i] == c)
-		{
-			index_tab[j] = i;
-			j++;
-		}
-		i++;
-	}
-	return (index_tab);
-}
-
-char	*remove_c(char *str, char c)
-{
-	int		i;
-	int		j;
-	int 	*index_tab;
-	int		nb_index;
-	char	*new_str;
-
-	i = 0;
-	j = 0;
-	index_tab = locate_c(str, c);
-	nb_index = 0;
-	while (index_tab[nb_index])
-		nb_index++;
-	new_str = ft_calloc(ft_strlen(str) - nb_index + 1, sizeof(char));
-	while (str[i])
-	{
-		if (i == index_tab[j])
-		{
-			i++;
-			j++;
-		}
-		if (str[i])
-		{
-			new_str[i - j] = str[i];
-			i++;
-		}
-	}
-	free (index_tab);
-	return (new_str);
 }

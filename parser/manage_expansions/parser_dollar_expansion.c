@@ -6,29 +6,11 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:56:24 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/08 10:42:39 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/09 19:14:29 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// char	*get_and_expand(t_data *data, char *token)
-// {
-// 	int		i;
-// 	char	*expanded_token;
-// 	char	*pre_param;
-// 	char	*exp;
-
-// 	i = 0;
-// 	while (token[i] != '$')
-// 		i++;
-// 	pre_param = ft_substr(token, 0, i);
-// 	exp = get_expansion(data, token + i + 1);
-// 	expanded_token = ft_strjoin(pre_param, exp);
-// 	free(exp);
-// 	free(pre_param);
-// 	return (expanded_token);
-// }
 
 char	*expand(t_data *data, char *token)
 {
@@ -48,41 +30,30 @@ char	*expand(t_data *data, char *token)
 	return (expanded_token);
 }
 
-char	*get_and_expand(t_data *data, char *token)
-{
-	char	**sub_param;
-	char	*param;
+// If the token cotaining a $ is single quoted, returns the token unchanged
+// Ifit is doubled quoted, applies the double_quoted_expansion function
+// Else, expands the token (using the expand function directly, considering
+// that if there are no quotes, then there are no spaces either)
 
-	sub_param = NULL;
-	if (ft_strchr(token, ' '))
-	{
-		sub_param = ft_split(token, ' ');
-		param = join_and_expand_subparam(data, sub_param, " ");
-	}
-	else
-		param = expand(data, token);
-	return (param);
-}
-
-// If a dollar is found within the subtoken and is not single quoted
-// expands it
-
-char	*replace_param_by_expansion(t_data *data, char *param)
+char	*replace_subtok_by_expansion(t_data *data, char *param)
 {
 	int		quote;
+	char	*new_param;
 
-	if (!ft_strchr(param, '$'))
-		return (ft_strdup(param));
-	else
+	if (ft_strchr(param, '$'))
 	{
 		quote = is_quoted(param);
 		if (quote == '\'')
-			return (ft_strdup(param));
-		if (quote == '\"')
-			return (double_quoted_exp(data, param));
-		param = get_and_expand(data, param);
-		return (param);
+			new_param = ft_strdup(param);
+		else if (quote == '\"')
+			new_param = double_quoted_exp(data, param);
+		else
+			new_param = expand(data, param);
+		free(param);
+		return (new_param);
 	}
+	else
+		return (param);
 }
 
 // Determines the end of each subtoken depending on whether there are paired
@@ -121,18 +92,13 @@ char	*manage_expansions(t_data *data, char *token)
 
 	new_tok = ft_strdup("\0");
 	i = 0;
-	printf("inside manage expansion, token = %s\n", token);
 	while ((token[i] != '\0') && (token[i] != '\n'))
 	{
 		end = get_end(token, i);
 		subtok = ft_substr(token, i, end - i + 1);
-		printf ("subtok before exp is : %s\n", subtok);
 		if (!subtok)
 			return (NULL);
-		temp = subtok;
-		subtok = replace_param_by_expansion(data, subtok);
-		printf ("subtok after exp is : %s\n", subtok);
-		free (temp);
+		subtok = replace_subtok_by_expansion(data, subtok);
 		temp = new_tok;
 		new_tok = ft_strjoin(new_tok, subtok);
 		free(subtok);

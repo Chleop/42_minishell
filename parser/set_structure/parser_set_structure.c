@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 17:54:01 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/07 18:54:07 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/09 18:26:11 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,21 +63,6 @@ void	expand_cmd_path(t_data *data)
 		}
 		i++;
 	}
-}
-
-int	remove_quotes_inside_struct(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->nr_cmds)
-	{
-		if_remove_quotes(&(data->cmd[i].param), data->cmd[i].nr_param, data);
-		if_remove_quotes(&(data->cmd[i].i), data->cmd[i].nr_in, data);
-		if_remove_quotes(&(data->cmd[i].o), data->cmd[i].nr_out, data);
-		i++;
-	}
-	return (1);
 }
 
 // In each command, takes each token and classifies it in the param 
