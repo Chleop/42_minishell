@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:22:30 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/09 13:34:51 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/09 14:56:18 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int	main(int argc, char **argv, char **envp)
 
 	if ((argc > 1) || (argv[1]))
 		final_exit(&data, "Error: too many arguments");
+	data.envp = NULL;
 	init_envp(&data, envp);
 	while (42)
 	{
