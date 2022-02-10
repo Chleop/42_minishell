@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 11:19:50 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/10 14:11:14 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/10 18:59:03 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	exec_nonbuiltins(t_cmd *cmd)
 {
 	char	**envp_tab;
 
+	envp_tab = NULL;
 	if (access(cmd->param[0], F_OK))
 		ft_error2("command not found", cmd->param[0], cmd->data, 126);
 	else
@@ -23,8 +24,8 @@ void	exec_nonbuiltins(t_cmd *cmd)
 		convert_envp(cmd->data->envp, &envp_tab);
 		if (execve(cmd->param[0], cmd->param, envp_tab) == -1)
 			ft_error2(strerror(errno), cmd->param[0], cmd->data, 126);
+		ft_del_stringtab(&envp_tab);
 	}
-	ft_del_stringtab(&envp_tab);
 	final_exit(cmd->data);
 }
 
@@ -56,6 +57,7 @@ int	fork_function(t_cmd *cmd)
 			pipe_function(cmd);
 		if (!exec_builtins(cmd))
 			exec_nonbuiltins(cmd);
+		final_exit(cmd->data);
 		return (1);
 	}
 	return (0);

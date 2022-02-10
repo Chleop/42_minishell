@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:16:35 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/10 12:35:45 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/10 17:53:18 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,7 @@ void	expand_cmd_path(t_data *data);
 char	*double_quoted_exp(t_data *data, char *param);
 char	*expand(t_data *data, char *token);
 char	*expand_s_in_d(t_data *data, char **sub_param, int *index_tab);
+
+char	*get_here_file(t_data *data, char **token);
 
 #endif

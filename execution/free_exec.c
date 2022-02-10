@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 15:54:42 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/03 12:57:20 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/10 18:48:38 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,11 @@ void	free_io(t_cmd *cmd)
 		close(cmd->fd_o[i]);
 		cmd->fd_o[i] = 0;
 	}
-	if (cmd->fd_o)
-		free(cmd->fd_o);
 	while (++i < cmd->nr_in)
 	{
 		close(cmd->fd_i[i]);
 		cmd->fd_i[i] = 0;
 	}
-	if (cmd->fd_i)
-		free(cmd->fd_i);
 }
 
 void	free_envp(t_data *data)
