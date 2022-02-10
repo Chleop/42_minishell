@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:51:50 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/10 11:35:08 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/10 13:04:17 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,26 +84,27 @@ void	copy_without_tabs(char **new_str, int *index_tab, char *str)
 			i++;
 			j++;
 		}
-		(*new_str)[i - j] = str[i];
 		if (str[i])
+		{
+			(*new_str)[i - j] = str[i];
 			i++;
+		}
 	}
 }
 
 char	*remove_c(char *str, char c)
 {
 	int		*index_tab;
-	int		nb_index;
 	char	*new_str;
 
+	if (ft_strlen(str) < 2)
+		return (NULL);
 	index_tab = locate_c_in_string(str, c);
-	nb_index = 0;
-	while (index_tab[nb_index])
-		nb_index++;
-	new_str = ft_calloc(ft_strlen(str) - nb_index + 1, sizeof(char));
+	new_str = ft_calloc(ft_strlen(str) - 1, sizeof(char));
 	if (!new_str)
 		return (NULL);
-	copy_without_tabs(&new_str, index_tab, str);
+	if (ft_strlen(str) > 2)
+		copy_without_tabs(&new_str, index_tab, str);
 	free (index_tab);
 	return (new_str);
 }
