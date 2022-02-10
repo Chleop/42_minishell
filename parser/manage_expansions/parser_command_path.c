@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_command_path.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 16:42:54 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/03 11:47:41 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/10 14:05:29 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ char	*get_path(t_data *data, char *cmd)
 	char	**tab_path_env;
 	char	*path;
 
+	path = NULL;
 	if (!cmd[0])
 		return (ft_strdup(cmd));
 	str_path_env = get_expansion(data, "PATH\0");
@@ -61,7 +62,10 @@ char	*get_path(t_data *data, char *cmd)
 		return (NULL);
 	path = ft_strdup(find_accessible_path(tab_path_env));
 	ft_del_stringtab(&tab_path_env);
-	if ((!path) || (access(cmd, 1) == 0))
+	if ((!path) || (access(cmd, F_OK) == 0))
+	{
+		free_string(path);
 		return (ft_strdup(cmd));
+	}
 	return (path);
 }

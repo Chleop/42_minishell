@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BI_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 15:06:37 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/10 10:41:56 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/10 13:08:52 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	chdir_envp(t_data *data, t_cd *cd, char *name)
 		}
 		temp = temp->next;
 	}
-	ft_printf("%s%s%s\n", 2, "cd: ", name, " not set");
+	ft_error2("cd: variable not set:", name, data, 1);
 	free_string(cd->oldpwd);
 	free(cd);
 	cd = NULL;
@@ -87,7 +87,7 @@ void	ft_cd(t_cmd *cmd)
 	t_cd	*cd;
 
 	cd = NULL;
-	if (init_cd(cmd, &cd) == -1)
+	if (!init_cd(cmd, &cd))
 		return ;
 	if (!cmd->param[1])
 		chdir_envp(cmd->data, cd, "HOME");
@@ -95,7 +95,7 @@ void	ft_cd(t_cmd *cmd)
 		chdir_envp(cmd->data, cd, "OLDPWD");
 	else if (cmd->param[1][0] == '/')
 	{
-		cd->path = set_curpath(cmd->param[1]);
+		cd->path = set_curpath(cmd->data, cmd->param[1]);
 		chdir_path(cmd->data, cd);
 	}
 	else

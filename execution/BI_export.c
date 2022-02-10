@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 16:43:49 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/09 10:58:55 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/10 13:15:09 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,31 +71,24 @@ t_envp	*get_smallest_unprinted(t_envp *envp, int size)
 	return (min);
 }
 
-void	print_exported_variables(t_envp *envp)
+void	ft_export_fork(t_cmd *cmd)
 {
 	t_envp	*temp;
 	t_envp	*min;
 	int		size;
 	int		i;
 
-	size = size_list(envp);
-	temp = envp;
+	size = size_list(cmd->data->envp);
+	temp = cmd->data->envp;
 	i = -1;
 	while (++i < size)
 	{
-		min = get_smallest_unprinted(envp, size);
+		min = get_smallest_unprinted(temp, size);
 		if (min->var)
 			ft_printf("%s %s=\"%s\"\n", 1, "declare -x", min->name, min->var);
 		else
 			ft_printf("%s %s\n", 1, "declare -x", min->name);
 		min->printed++;
 	}
-	reset_printed(envp);
-}
-
-void	ft_export_fork(t_cmd *cmd)
-{
-	print_exported_variables(cmd->data->envp);
-	// ft_free_data(cmd->data, 1);
-	// exit (0);
+	reset_printed(temp);
 }

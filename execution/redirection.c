@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 14:58:05 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/10 10:44:22 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/10 12:21:21 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,18 @@ int	redirect_io(t_cmd *cmd)
 	{
 		cmd->fd_o = malloc(sizeof(int) * cmd->nr_out);
 		if (!cmd->fd_o)
-			return (ft_error2(strerror(errno), "outfile table", cmd->data, 1));
+			return (ft_error2(strerror(errno), NULL, cmd->data, 1));
 	}
 	if (cmd->nr_in)
 	{
 		cmd->fd_i = malloc(sizeof(int) * cmd->nr_in);
 		if (!cmd->fd_i)
-			return (ft_error2(strerror(errno), "infile table", cmd->data, 1));
+			return (ft_error2(strerror(errno), NULL, cmd->data, 1));
 	}
-	if (redirect_input(cmd) == -1)
-		return (-1);
-	if (redirect_output(cmd) == -1)
-		return (-1);
+	if (!redirect_input(cmd))
+		return (0);
+	if (!redirect_output(cmd))
+		return (0);
 	free_io(cmd);
 	return (1);
 }

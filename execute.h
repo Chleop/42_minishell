@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 15:33:03 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/10 10:41:26 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/10 13:15:38 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	ft_echo(t_cmd *cmd);
 void	ft_env(t_cmd *cmd);
 void	ft_export_prefork(t_cmd *cmd);
 void	ft_export_fork(t_cmd *cmd);
-int		check_identifier(char *id, int code);
+int		check_identifier(t_data *data, char *id, int code);
 void	ft_unset(t_cmd *cmd);
 void	ft_pwd(void);
 void	ft_cd(t_cmd *cmd);
@@ -79,7 +79,7 @@ int		init_cd(t_cmd *cmd, t_cd **cd);
 char	*get_var(t_envp *envp, char *name);
 void	handle_dots(t_cmd *cmd, t_cd *cd);
 void	chdir_path(t_data *data, t_cd *cd);
-char	*set_curpath(char *string);
+char	*set_curpath(t_data *data, char *string);
 void	exit_error_cd(char **dir_tab, char *string1, char *string2);
 void	ft_exit(t_cmd *cmd);
 
