@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 13:34:16 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/09 19:40:46 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/10 11:15:41 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	set_redirections(t_data *data, char **token, int n, int qualif)
 	else if (qualif == HERE_END)
 	{
 		ft_free_parser(data, &token);
-		final_exit (1, "HERE_DOCS NON GERES pour l'instant :)\n");
+		final_exit (data, "HERE_DOCS NON GERES pour l'instant :)\n");
 	}
 	else
 	{

@@ -6,13 +6,13 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:51:50 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/09 18:48:20 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/10 11:35:08 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	*locate_c(char *token, char c)
+int	*locate_c_in_string(char *token, char c)
 {
 	int	i;
 	int	j;
@@ -32,6 +32,35 @@ int	*locate_c(char *token, char c)
 	while (token[i] && c)
 	{
 		if (token[i] == c)
+		{
+			index_tab[j] = i;
+			j++;
+		}
+		i++;
+	}
+	return (index_tab);
+}
+
+int	*locate_pipes(char **token)
+{
+	int	i;
+	int	j;
+	int	*index_tab;
+
+	i = 0;
+	j = 0;
+	while (token[i])
+	{
+		if (token[i][0] == '|')
+			j++;
+		i++;
+	}
+	index_tab = ft_calloc(j + 1, sizeof(int));
+	i = 0;
+	j = 0;
+	while (token[i])
+	{
+		if (token[i][0] == '|')
 		{
 			index_tab[j] = i;
 			j++;
@@ -67,7 +96,7 @@ char	*remove_c(char *str, char c)
 	int		nb_index;
 	char	*new_str;
 
-	index_tab = locate_c(str, c);
+	index_tab = locate_c_in_string(str, c);
 	nb_index = 0;
 	while (index_tab[nb_index])
 		nb_index++;
@@ -94,7 +123,7 @@ int	if_remove_quotes(char ***tab, int nr_elements, t_data *data)
 			temp = (*tab)[j];
 			(*tab)[j] = remove_c((*tab)[j], quote);
 			if (!(*tab)[j])
-				return (ft_error2("Error: malloc failed", data, 1));
+				return (ft_error2("Error: malloc failed", NULL, data, 1));
 			free (temp);
 			temp = NULL;
 		}

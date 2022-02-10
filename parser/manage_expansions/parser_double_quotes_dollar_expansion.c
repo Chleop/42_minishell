@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 13:32:12 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/09 19:16:44 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/10 11:09:27 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*seperate_s_in_d_quotes(t_data *data, char *token, char c)
 	int		*index_tab;
 	char	*new_token;
 
-	index_tab = locate_c(token, c);
+	index_tab = locate_c_in_string(token, c);
 	sub_param = ft_split(token, c);
 	new_token = expand_s_in_d(data, sub_param, index_tab);
 	ft_del_stringtab(&sub_param);

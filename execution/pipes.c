@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 10:03:37 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/09 13:42:09 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/10 10:43:45 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,6 @@ int	init_pipes(t_data *data)
 	i = -1;
 	while (++i < (data->nr_cmds - 1))
 		if (pipe(data->pipe_fd[i]) == -1)
-			return (ft_error2(strerror(errno), NULL, 1));
+			return (ft_error2(strerror(errno), NULL, data, 1));
 	return (1);
 }

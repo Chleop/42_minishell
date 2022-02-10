@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BI_cd3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 15:35:11 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/09 13:42:55 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/10 10:42:41 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,10 @@ char	*set_curpath(char *string)
 int	init_cd(t_cmd *cmd, t_cd **cd)
 {
 	if (cmd->param[1] && cmd->param[2])
-	{
-		return (ft_error2("cd: too many arguments", NULL, 1));
-		// ft_printf("%s\n", 2, "cd: too many arguments");
-		// //exit_code is 1
-		// return (0);
-	}
+		return (ft_error2("cd: too many arguments", NULL, cmd->data, 1));
 	*cd = malloc(sizeof(t_cd) * 1);
 	if (!*cd)
-		return (ft_error2(strerror(errno), "cd structure", 1));
+		return (ft_error2(strerror(errno), "cd structure", cmd->data, 1));
 	(*cd)->oldpwd = get_var(cmd->data->envp, "PWD");
 	(*cd)->current = getcwd(NULL, 0);
 	(*cd)->path = NULL;

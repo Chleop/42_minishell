@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BI_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 15:06:37 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/09 13:28:26 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/10 10:41:56 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	finish_cd(t_data *data, t_cd *cd)
 void	chdir_path(t_data *data, t_cd *cd)
 {
 	if (chdir(cd->path) == -1)
-		ft_error2(strerror(errno), cd->path, 128);
+		ft_error2(strerror(errno), cd->path, data, 128);
 	else
 		finish_cd(data, cd);
 	free_string(cd->oldpwd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 15:33:03 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/09 13:35:41 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/10 10:41:26 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,5 @@ void	free_dir_tab(char **dir_tab);
 void	finish_up(t_data *data);
 void	free_string(char *string);
 void	free_node_envp(t_envp *envp);
-int		ft_error2(char *string, char *name, int code);
 
 #endif
