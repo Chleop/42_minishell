@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:26:28 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/10 12:13:03 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/10 18:32:02 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,8 @@ int	ft_error(char *str)
 	return (0);
 }
 
-void	final_exit(t_data *data, char *str)
+void	final_exit(t_data *data)
 {
-	ft_printf("%s\n", 2, str);
 	ft_free_data(data, 1);
 	exit (data->exit_code);
 }
@@ -88,6 +87,5 @@ int	ft_error2(char *string, char *name, t_data *data, int code)
 	else
 		ft_printf("%s\n", 2, string);
 	data->exit_code = code;
-	printf("exit code: %d\n", data->exit_code);
-	return (-1);
+	return (0);
 }

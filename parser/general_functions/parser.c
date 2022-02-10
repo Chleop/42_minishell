@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:55:08 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/10 13:07:51 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/10 19:27:22 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,6 @@ int	parse(t_data *data, char **token)
 		return (0);
 	if (!set_into_structure(data))
 		return (0);
-	// print_cmd_parameters(data);
+	//print_cmd_parameters(data);
 	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BI_env_echo_pwd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 17:18:03 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/09 19:32:31 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/10 13:12:45 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	ft_env(t_cmd *cmd)
 
 	path = get_expansion(cmd->data, "PATH");
 	if (cmd->param[1] != NULL)
-		ft_printf("env: too many arguments\n", 2);
+		ft_error2("env: too many arguments", NULL, cmd->data, 1);
 	else if (ft_strncmp("PATH\0", path, 5))
 	{
 		while (cmd->data->envp)
@@ -77,6 +77,6 @@ void	ft_env(t_cmd *cmd)
 		ft_printf("_=/bin/env\n", 1);
 	}
 	else
-		ft_printf("%s\n", 2, "command not found: env");
+		ft_error2("command not found", "env", cmd->data, 1);
 	free_string(path);
 }

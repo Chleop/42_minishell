@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 10:57:26 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/09 12:22:17 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/10 14:08:41 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,30 +78,24 @@ int	calculate_status(char *string)
 
 void	ft_exit(t_cmd *cmd)
 {
-	int	code;
+	int	code;	
 
-	ft_printf("%s\n", 1, "exit");
 	code = 0;
-	if (cmd->param[1] == NULL)
-		code = 0;
-	//code = exit_code?
-	else if (cmd->param[2] != NULL)
+	ft_printf("%s\n", 1, "exit");
+	if (!cmd->param[1])
+		final_exit(cmd->data);
+	else if (cmd->param[1] && cmd->param[2])
 	{
-		ft_printf("%s\n", 2, "exit: too many argurments");
+		ft_error2("exit: too many arguments", NULL, cmd->data, 2);
 		return ;
 	}
 	else if (!numeric_string(cmd->param[1]))
-	{
-		ft_printf("%s\n", 2, "exit: numeric argument required");
-		code = 2;
-	}
+		ft_error2("exit: numeric argument required", NULL, cmd->data, 2);
 	else
 		code = calculate_status(cmd->param[1]);
 	if (code == -1)
-	{
-		ft_printf("%s\n", 2, "exit: numeric argument required");
-		code = 2;
-	}
-	ft_free_data(cmd->data, 1);
-	exit (code);
+		ft_error2("exit: numeric argument required", NULL, cmd->data, 2);
+	else
+		cmd->data->exit_code = code;
+	final_exit(cmd->data);
 }

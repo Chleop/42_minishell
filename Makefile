@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+         #
+#    By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/14 15:32:57 by avan-bre          #+#    #+#              #
-#    Updated: 2022/02/09 19:28:37 by cproesch         ###   ########.fr        #
+#    Updated: 2022/02/10 17:53:51 by avan-bre         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ P_SRCS	=	general_functions/parser.c general_functions/parser_initialization.c \
 			set_structure/parser_quotes_removal.c \
 			set_structure/parser_struct_utils.c \
 			set_structure/parser_set_structure.c \
+			set_structure/here_doc.c \
 			manage_expansions/parser_dollar_expansion.c \
 			manage_expansions/parser_command_path.c \
 			manage_expansions/parser_double_quotes_dollar_expansion.c

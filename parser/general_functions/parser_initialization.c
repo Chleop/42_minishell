@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_initialization.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 16:11:06 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/10 11:34:55 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/10 18:28:00 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ int	initialize_data(t_data *data, char **token)
 {
 	int	nb_pip;
 
+	data->exit_code = 0;
+	data->here_doc = NULL;
 	data->nr_token = count_strings(token);
 	data->pipe_index = locate_pipes(token);
 	nb_pip = 0;

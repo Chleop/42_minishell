@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_struct_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 13:34:16 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/10 11:15:41 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/10 17:52:52 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,16 @@ int	is_quoted(char *token)
 
 int	set_redirections(t_data *data, char **token, int n, int qualif)
 {
-	if (qualif == RED_IN)
-		add_tab(&(data->cmd[n].i), &(data->cmd[n].nr_in), *token);
-	else if (qualif == HERE_END)
+	char	*here_file;
+	
+	here_file = NULL;
+	if (qualif == HERE_END)
 	{
-		ft_free_parser(data, &token);
-		final_exit (data, "HERE_DOCS NON GERES pour l'instant :)\n");
+		here_file = get_here_file(data, token);
+		add_tab(&(data->cmd[n].i), &(data->cmd[n].nr_in), here_file);
 	}
+	else if (qualif == RED_IN)
+		add_tab(&(data->cmd[n].i), &(data->cmd[n].nr_in), *token);
 	else
 	{
 		add_tab(&(data->cmd[n].o), &(data->cmd[n].nr_out), *token);
