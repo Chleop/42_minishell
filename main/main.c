@@ -6,7 +6,11 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:22:30 by cproesch          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/02/09 19:33:28 by cproesch         ###   ########.fr       */
+=======
+/*   Updated: 2022/02/09 14:56:18 by avan-bre         ###   ########.fr       */
+>>>>>>> amber
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +80,7 @@ int	main(int argc, char **argv, char **envp)
 
 	if ((argc > 1) || (argv[1]))
 		final_exit(&data, "Error: too many arguments");
+	data.envp = NULL;
 	init_envp(&data, envp);
 	while (42)
 	{
