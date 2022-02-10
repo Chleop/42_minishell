@@ -22,3 +22,6 @@ Ok, ce que j'ai fait:
 
 Il y a encore des soucis:
 - Le delimiter n'est pas bon. Si je met 'eof' il arrete aussi avec 'eo' ou eog'.... 
+- Et le ^#%&*#%#% input veut pas ajouter a Here_Doc_x.... il expand bien. Je comprends pas :'(
+
+OKKKKKKKK BYE BYE bon courage demain et BON WEEKEND
