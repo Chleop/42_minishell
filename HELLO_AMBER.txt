@@ -1,7 +1,39 @@
 Helloooo Amber!
 
-Ok le Here_doc a l'air de tres bien fonctionne!
+Ok le Here_doc a l'air de tres bien fonctionner!
 
 J'ai ajoute une condition pour ne pas interpreter le $ quand le token est un here_end
 (si tu fais cat << $PWD, le here_end sera $PWD et non son expansion), et ca marche bien!
 
+J'ai change le code de command not found en 127
+
+Et j'ai utilise le retour de waitpid pour recuperer l'exit_code des children processes
+Donc maintenant le echo $? fonctionne aussi pour les forks!
+
+Et en creusant le man de waitpid j'ai recupere les signals pour si on exit avec CTRL+C etc,
+Je n'ai pas encore tout compris mais we are on the road to finishing signals as well!
+
+Et ensuite ce sera: testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest
+testtesttesttesttesttesttest
+testtesttesttesttesttesttest
+testtesttesttesttesttesttest
+testtesttesttesttesttesttest
+testtesttesttesttesttesttest
+
+testtesttesttesttesttesttesttesttesttesttesttesttesttest
+
+testtesttesttesttesttesttest
+testtesttesttesttesttesttest
+testtesttesttesttesttesttest
+testtesttesttesttesttesttest
+testtesttesttesttesttesttest
+testtesttesttesttesttesttest
+testtesttesttesttesttesttest
+testtesttesttesttesttesttest
+testtesttesttesttesttesttest
+
+Et corrections pour toutes les deux pour recuperer des points!
+
+Nota: j'ai fait deux tests avant de partir qui ne rendent pas la meme chose que le shell:
+> export = (le shell renvoi une erreur et un code 1)    - peut-etre mieux de le gerer
+> . (le shell renvoi une erreur et un code 2)           - je ne sais pas s'il faut gerer
