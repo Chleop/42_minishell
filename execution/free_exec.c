@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 15:54:42 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/11 15:42:17 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/11 16:40:31 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,32 @@ void	free_envp(t_data *data)
 	}
 }
 
+// void	finish_up(t_data *data)
+// {
+// 	int	i;
+
+// 	if (data->nr_cmds > 1)
+// 	{
+// 		close_all_except_two(data, -1);
+// 		i = -1;
+// 		while (++i < data->nr_cmds)
+// 		{
+// 			data->pipe_fd[i][0] = 0;
+// 			data->pipe_fd[i][1] = 0;
+// 		}
+// 	}
+// 	i = -1;
+// 	while ((++i < data->nr_cmds) && data->process_id[i])
+// 	{
+// 		waitpid(data->process_id[i], NULL, 0);
+// 		data->process_id[i] = 0;
+// 	}
+// }
+
 void	finish_up(t_data *data)
 {
 	int	i;
+	int	ret;
 
 	if (data->nr_cmds > 1)
 	{
@@ -60,7 +83,13 @@ void	finish_up(t_data *data)
 	i = -1;
 	while ((++i < data->nr_cmds) && data->process_id[i])
 	{
-		waitpid(data->process_id[i], NULL, 0);
+		waitpid(data->process_id[i], &ret, 0);
+		if (WIFEXITED(ret))
+			data->exit_code = WEXITSTATUS(ret);
+		// else if (WIFSIGNALED(ret))
+		// 	printf("killed by signal %d\n", WTERMSIG(ret));
+        // else if (WIFSTOPPED(ret)) {
+        //     printf("stopped by signal %d\n", WSTOPSIG(ret));
 		data->process_id[i] = 0;
 	}
 }
