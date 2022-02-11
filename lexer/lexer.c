@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 13:20:21 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/01 11:31:01 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/11 13:26:36 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ char	**lexer(char *input)
 		condition_5, condition_6, condition_7, NULL,
 	};
 
-		init_lexer(&lex, input);
+	init_lexer(&lex, input);
 	token = NULL;
 	while (((lex.input)[lex.i] != '\n') && ((lex.input)[lex.i] != '\0'))
 	{
 		met_condition = condition_tree(&lex, &token);
 		function_table[met_condition](&lex, &token);
 	}
-	free (lex.input);
+	free_string(lex.input);
 	return (token);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:23:36 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/10 18:54:40 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/11 13:27:04 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	delete_here_file(t_data *data)
 	cmd->param[0] = ft_strdup("/bin/rm");
 	cmd->param[1] = ft_strdup("-rf");
 	cmd->param[2] = ft_strdup(data->here_doc);
+	free(data->here_doc);
 	cmd->param[3] = NULL;
 	cmd->id = 0;
 	cmd->data = data;
@@ -77,22 +78,10 @@ void	delete_here_file(t_data *data)
 	data->process_id[0] = 0;
 	fork_function(cmd);
 	waitpid(data->process_id[0], NULL, 0);
-
-	// char	**rm;
-	// char	**envp_tab;
-
-	// rm = ft_calloc(4, sizeof(char *));
-	// rm[0] = ft_strdup("/bin/rm");
-	// rm[1] = ft_strdup("-rf");
-	// rm[2] = data->here_doc;
-	// rm[3] = NULL;
-	// convert_envp(data->envp, &envp_tab);
-	// if (execve(rm[0], rm, envp_tab) == -1)
-	// 	ft_error2(strerror(errno), "rm", data, 126);
-	// ft_del_stringtab(&envp_tab);
-	// ft_del_stringtab(&rm);
+	ft_del_stringtab(&cmd->param);
+	free (cmd);
+	cmd = NULL;
 }
-
 
 void	ft_free_data(t_data *data, int code)
 {

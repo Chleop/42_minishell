@@ -6,45 +6,41 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 17:46:43 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/11 11:55:22 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/11 13:45:27 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*open_here_file(t_data *data, int *fd)
+void	open_here_file(t_data *data, int *fd)
 {
-	char	*here_file;
 	char	*itoa;
 	char	*temp;
 	char	*nr;
 	int		i;
 
-	here_file = ft_strdup("Here_Doc_1");
-	while (access(here_file, F_OK) == 0)
+	data->here_doc = ft_strdup("Here_Doc_1");
+	while (access(data->here_doc, F_OK) == 0)
 	{
-		temp = here_file;
+		temp = data->here_doc;
 		i = 0;
-		while (!ft_isdigit(here_file[i]))
+		while (!ft_isdigit(data->here_doc[i]))
 			i++;
-		nr = ft_substr(here_file, i, ft_strlen(here_file) + 1 - i);
+		nr = ft_substr(data->here_doc, i, ft_strlen(data->here_doc) + 1 - i);
 		itoa = ft_itoa(ft_atoi(nr) + 1);
 		free_string(nr);
-		here_file = ft_strjoin("Here_Doc_", itoa);
+		data->here_doc = ft_strjoin("Here_Doc_", itoa);
 		free_string(itoa);
 		free_string(temp);
 	}
-	*fd = open(here_file, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+	*fd = open(data->here_doc, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	if (!fd)
-		ft_error2(strerror(errno), here_file, data, 1);
-	data->here_doc = ft_strdup(here_file);
-	return (here_file);
+		ft_error2(strerror(errno), data->here_doc, data, 1);
 }
 
 void	read_here_doc(t_data *data, char **token, int fd)
 {
 	char	*input;
-	char	*temp;
 	
 	input = NULL;
 	while (1)
@@ -52,25 +48,19 @@ void	read_here_doc(t_data *data, char **token, int fd)
 		input = readline("heredoc> ");
 		if (!ft_strncmp(input, *token, ft_strlen(*token) + 1))
 			return ;
-		printf("input: %s\n", input);	
 		if (ft_strchr(input, '$'))
-		{
-			temp = input;
-		 	input = manage_expansions(data, input, HERE_END);
-		 	printf("input: %s\n", input);
-			free_string(temp);
-		}
+			input = manage_expansions(data, input, HERE_END);
 		ft_putstr_fd(input, fd);
 		ft_putstr_fd("\n", fd);
+		free_string(input);
 	}
 }
 
-char	*get_here_file(t_data *data, char **token)
+void	get_here_file(t_data *data, char **token)
 {
 	char	*temp;
 	int		fd;
 	int		quoted;
-	char	*here_file;
 
 	quoted = is_quoted(*token);
 	if (quoted)
@@ -79,8 +69,7 @@ char	*get_here_file(t_data *data, char **token)
 		*token = remove_c(*token, quoted);
 		free_string(temp);
 	}
-	here_file = open_here_file(data, &fd);
+	open_here_file(data, &fd);
 	read_here_doc(data, token, fd);
 	close (fd);
-	return (here_file);
 }

@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 17:54:01 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/11 11:56:10 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/11 12:16:50 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int	expand_and_classify(t_data *data, char **token, int cmd_nr, int tok_nr)
 {
 	char	*temp;
 
-	if (ft_strchr(data->cmd[cmd_nr].tok[tok_nr], '$'))
+	if (ft_strchr(data->cmd[cmd_nr].tok[tok_nr], '$') 
+		&& data->cmd[cmd_nr].qualif[tok_nr] != HERE_END)
 	{
 		temp = *token;
 		*token = manage_expansions(data, temp, 0);

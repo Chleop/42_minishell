@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:16:35 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/11 11:55:38 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/11 13:41:16 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,6 @@ char	*double_quoted_exp(t_data *data, char *param);
 char	*expand(t_data *data, char *token);
 char	*expand_s_in_d(t_data *data, char **sub_param, int *index_tab);
 
-char	*get_here_file(t_data *data, char **token);
+void	get_here_file(t_data *data, char **token);
 
 #endif
