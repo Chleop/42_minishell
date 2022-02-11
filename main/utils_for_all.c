@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_for_all.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:26:28 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/10 18:32:02 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/11 15:34:50 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,12 @@ int	ft_error(char *str)
 
 void	final_exit(t_data *data)
 {
+	int	ex_code;
+	
 	ft_free_data(data, 1);
-	exit (data->exit_code);
+	ex_code = data->exit_code;
+	data->exit_code = 0;
+	exit (ex_code);
 }
 
 int	ft_error2(char *string, char *name, t_data *data, int code)

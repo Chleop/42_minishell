@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 11:19:50 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/10 18:59:03 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/11 15:27:28 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	exec_nonbuiltins(t_cmd *cmd)
 
 	envp_tab = NULL;
 	if (access(cmd->param[0], F_OK))
-		ft_error2("command not found", cmd->param[0], cmd->data, 126);
+		ft_error2("command not found", cmd->param[0], cmd->data, 127);
 	else
 	{
 		convert_envp(cmd->data->envp, &envp_tab);

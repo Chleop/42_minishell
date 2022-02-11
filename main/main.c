@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:22:30 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/11 13:09:31 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/11 15:23:32 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	lexer_parser(t_data *data, int *ret)
 	{
 		*ret = parse(data, token);
 		ft_free_parser(data, &token);
-		// printf ("after syntax error, exit code= %d\n", exit_code);
 	}
 }
 
@@ -57,9 +56,8 @@ void	execute_commands(t_data *data, int *ret)
 {
 	int		status;
 
-	if (ret)
+	if (*ret)
 	{
-		// printf ("in main process, exit code= %d\n", exit_code);
 		status = 1;
 		if (data->nr_cmds > 1)
 			status = init_pipes(data);
@@ -74,6 +72,8 @@ int	main(int argc, char **argv, char **envp)
 	t_data	data;
 	int		ret;
 
+	data.exit_code = 0;
+	data.here_doc = NULL;
 	if ((argc > 1) || (argv[1]))
 	{
 		ft_error2("Error: too many arguments", NULL, &data, 127);

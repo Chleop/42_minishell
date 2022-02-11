@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:23:36 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/11 13:27:04 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/11 15:30:04 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ void	ft_free_parser(t_data *data, char ***token)
 		}
 	}
 	if (data->pipe_index)
+	{
 		free(data->pipe_index);
+		data->pipe_index = NULL;
+	}
 }
 
 void	delete_here_file(t_data *data)
@@ -68,7 +71,7 @@ void	delete_here_file(t_data *data)
 	cmd->param[0] = ft_strdup("/bin/rm");
 	cmd->param[1] = ft_strdup("-rf");
 	cmd->param[2] = ft_strdup(data->here_doc);
-	free(data->here_doc);
+	free_string(data->here_doc);
 	cmd->param[3] = NULL;
 	cmd->id = 0;
 	cmd->data = data;
@@ -79,7 +82,7 @@ void	delete_here_file(t_data *data)
 	fork_function(cmd);
 	waitpid(data->process_id[0], NULL, 0);
 	ft_del_stringtab(&cmd->param);
-	free (cmd);
+	free(cmd);
 	cmd = NULL;
 }
 

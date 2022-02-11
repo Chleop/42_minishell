@@ -1,0 +1,7 @@
+Helloooo Amber!
+
+Ok le Here_doc a l'air de tres bien fonctionne!
+
+J'ai ajoute une condition pour ne pas interpreter le $ quand le token est un here_end
+(si tu fais cat << $PWD, le here_end sera $PWD et non son expansion), et ca marche bien!
+
