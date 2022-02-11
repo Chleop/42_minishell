@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 17:46:43 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/10 19:24:39 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/11 11:55:22 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*open_here_file(t_data *data, int *fd)
 	return (here_file);
 }
 
-void	read_here_doc(t_data *data, char **token, int quoted, int fd)
+void	read_here_doc(t_data *data, char **token, int fd)
 {
 	char	*input;
 	char	*temp;
@@ -50,13 +50,13 @@ void	read_here_doc(t_data *data, char **token, int quoted, int fd)
 	while (1)
 	{
 		input = readline("heredoc> ");
-		if (!ft_strncmp(input, *token, ft_strlen((*token) + 1)))
+		if (!ft_strncmp(input, *token, ft_strlen(*token) + 1))
 			return ;
 		printf("input: %s\n", input);	
-		if (quoted)
+		if (ft_strchr(input, '$'))
 		{
 			temp = input;
-		 	input = expand(data, *token);
+		 	input = manage_expansions(data, input, HERE_END);
 		 	printf("input: %s\n", input);
 			free_string(temp);
 		}
@@ -80,7 +80,7 @@ char	*get_here_file(t_data *data, char **token)
 		free_string(temp);
 	}
 	here_file = open_here_file(data, &fd);
-	read_here_doc(data, token, quoted, fd);
+	read_here_doc(data, token, fd);
 	close (fd);
 	return (here_file);
 }

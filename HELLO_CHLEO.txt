@@ -2,26 +2,44 @@ Saluuuut Chleo.
 
 Ok, ce que j'ai fait:
 - J'ai cree un nouveau fichier here_doc.c avec tout nos here_doc fonctions
+Yes!
+
 - J'ai utilise le parser pour voir si le delimiter est quoted ou pas
+Yes!
+
 - J'ai utilise remove_c pour enlever les quotes
+Yes!
+
 - Apres j'ai utilise le fonction expand avec chaque ligne pour expand tous les $$$$$$,
   ca marchai au debut, mais la ca plante et je sai pas pourquoi
   -> tu peut regarder questce que je fais pas bien?
+Ca maaaaarche ! J'ai customise un peu la fonction manage expansion :D
+
 - J'ai fait un fonction open_here_file qui est vraiment beaucoup trop complique et ca a pris du temp, 
   dsl :D:D..... Mais il fonctionne et il creee un fichier "Here_Doc_x" - x commence a 1 
   et increment si le file existe deja.
+Yes!
+
 - Puis il faut aussi bien effacer ce document apres, pour ca je l'ai mis dans la structure (data->here_doc),
   et j'ai creee un fonction qui initialise un command et fait un fork avec,
   le command c'est 'rm -rf here_doc'.
+Yes!
+
 - Ca marche, mais apres on vois toujours le here_doc dans VSCode, meme si il existe plus,
   je sais pas pourquoi. Mais si tu click desus tu vois que il est plus la. 
+Yes ca marche!
+
 - Ce fonction la j'ai ajoute a ft_free_data, du coup il lance apres chaque command
   si il y a un here_doc dans la structure.
+Oui parfait!
 
 
 
 Il y a encore des soucis:
 - Le delimiter n'est pas bon. Si je met 'eof' il arrete aussi avec 'eo' ou eog'.... 
+C'est regle c'etait une petite erreur de +1 a la mauvaise place.
+
 - Et le ^#%&*#%#% input veut pas ajouter a Here_Doc_x.... il expand bien. Je comprends pas :'(
+Ca maaaaarche !
 
 OKKKKKKKK BYE BYE bon courage demain et BON WEEKEND

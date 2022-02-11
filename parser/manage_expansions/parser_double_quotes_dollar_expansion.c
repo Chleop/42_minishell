@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 13:32:12 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/10 13:04:58 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/11 11:55:58 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*expand_s_in_d(t_data *data, char **sub_param, int *index_tab)
 		if (ft_strchr(sub_param[i], '$'))
 		{
 			temp = sub_param[i];
-			sub_param[i] = manage_expansions(data, sub_param[i]);
+			sub_param[i] = manage_expansions(data, sub_param[i], 0);
 			free (temp);
 		}
 		temp = new_param;
@@ -91,7 +91,7 @@ char	*double_quoted_exp(t_data *data, char *param)
 	if (quote)
 		param_no_q = seperate_s_in_d_quotes(data, param_no_q, '\'');
 	else
-		param_no_q = manage_expansions(data, param_no_q);
+		param_no_q = manage_expansions(data, param_no_q, 0);
 	free (temp);
 	newparam = ft_strjoin("\"", param_no_q);
 	temp = newparam;

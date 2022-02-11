@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:16:35 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/10 17:53:18 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/11 11:55:38 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int		is_quoted(char *token);
 int		remove_quotes_inside_struct(t_data *data);
 int		if_remove_quotes(char ***tab, int nr_elements, t_data *data);
 
-char	*manage_expansions(t_data *data, char *token);
+char	*manage_expansions(t_data *data, char *token, int here_doc);
 int		classify_token(t_data *data, char **token, int cmd_nr, int tok_nr);
 void	expand_cmd_path(t_data *data);
 char	*double_quoted_exp(t_data *data, char *param);
