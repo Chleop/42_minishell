@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:22:30 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/11 15:23:32 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/14 13:32:34 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@ void	lexer_parser(t_data *data, int *ret)
 	input = NULL;
 	token = NULL;
 	input = readline("our_minishell:~$ ");
+	if (!input)
+	{
+		data->eof = 1;
+		return ;
+	}
 	add_history(input);
 	if (input)
 		token = lexer(input);
@@ -56,7 +61,7 @@ void	execute_commands(t_data *data, int *ret)
 {
 	int		status;
 
-	if (*ret)
+	if (!data->eof && *ret)
 	{
 		status = 1;
 		if (data->nr_cmds > 1)
@@ -73,15 +78,17 @@ int	main(int argc, char **argv, char **envp)
 	int		ret;
 
 	data.exit_code = 0;
+	data.eof = 0;
 	data.here_doc = NULL;
 	if ((argc > 1) || (argv[1]))
 	{
 		ft_error2("Error: too many arguments", NULL, &data, 127);
 		final_exit(&data);
 	}
+	signal_handler(&data);
 	data.envp = NULL;
 	init_envp(&data, envp);
-	while (42)
+	while (!data.eof)
 	{
 		lexer_parser(&data, &ret);
 		execute_commands(&data, &ret);

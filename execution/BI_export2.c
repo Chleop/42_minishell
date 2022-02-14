@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 17:14:38 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/10 13:16:20 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/14 11:22:16 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	check_identifier(t_data *data, char *id, int code)
 {
 	int	i;
 	
-	if (ft_isdigit(id[0]))
+	if (ft_isdigit(id[0]) || id[0] == '=')
 	{
 		if (code == 3)
 			return(ft_error2("export: not a valid identifier", id, data, 1));

@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 17:38:24 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/10 18:27:37 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/14 13:28:31 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <signal.h>
 # include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -59,11 +60,13 @@ typedef struct	s_data
 	int				process_id[1024];
 	int				exit_code;
 	char			*here_doc;
+	int				eof;
 }	t_data;
 
 # include "parser.h"
 # include "execute.h"
 
-int	ft_error2(char *string, char *name, t_data *data, int code);
+int		ft_error2(char *string, char *name, t_data *data, int code);
+void	signal_handler(t_data *data);
 
 #endif

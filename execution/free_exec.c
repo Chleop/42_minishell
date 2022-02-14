@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 15:54:42 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/11 16:40:31 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/14 12:39:52 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,16 @@ void	free_io(t_cmd *cmd)
 		close(cmd->fd_o[i]);
 		cmd->fd_o[i] = 0;
 	}
+	if (cmd->fd_o)
+		free(cmd->fd_o);
+	i = -1;
 	while (++i < cmd->nr_in)
 	{
 		close(cmd->fd_i[i]);
 		cmd->fd_i[i] = 0;
 	}
+	if (cmd->fd_i)
+		free(cmd->fd_i);
 }
 
 void	free_envp(t_data *data)
@@ -42,28 +47,6 @@ void	free_envp(t_data *data)
 		free_node_envp(temp);
 	}
 }
-
-// void	finish_up(t_data *data)
-// {
-// 	int	i;
-
-// 	if (data->nr_cmds > 1)
-// 	{
-// 		close_all_except_two(data, -1);
-// 		i = -1;
-// 		while (++i < data->nr_cmds)
-// 		{
-// 			data->pipe_fd[i][0] = 0;
-// 			data->pipe_fd[i][1] = 0;
-// 		}
-// 	}
-// 	i = -1;
-// 	while ((++i < data->nr_cmds) && data->process_id[i])
-// 	{
-// 		waitpid(data->process_id[i], NULL, 0);
-// 		data->process_id[i] = 0;
-// 	}
-// }
 
 void	finish_up(t_data *data)
 {
@@ -86,8 +69,8 @@ void	finish_up(t_data *data)
 		waitpid(data->process_id[i], &ret, 0);
 		if (WIFEXITED(ret))
 			data->exit_code = WEXITSTATUS(ret);
-		// else if (WIFSIGNALED(ret))
-		// 	printf("killed by signal %d\n", WTERMSIG(ret));
+		else if (WIFSIGNALED(ret))
+		 	printf("killed by signal %d\n", WTERMSIG(ret));
         // else if (WIFSTOPPED(ret)) {
         //     printf("stopped by signal %d\n", WSTOPSIG(ret));
 		data->process_id[i] = 0;
