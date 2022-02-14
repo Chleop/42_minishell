@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 15:54:42 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/14 12:39:52 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/14 15:07:21 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,11 @@ void	finish_up(t_data *data)
 	while ((++i < data->nr_cmds) && data->process_id[i])
 	{
 		waitpid(data->process_id[i], &ret, 0);
+		data->process_id[i] = 0;
 		if (WIFEXITED(ret))
 			data->exit_code = WEXITSTATUS(ret);
-		else if (WIFSIGNALED(ret))
-		 	printf("killed by signal %d\n", WTERMSIG(ret));
+		// else if (WIFSIGNALED(ret))
+		//  	printf("killed by signal %d\n", WTERMSIG(ret));
         // else if (WIFSTOPPED(ret)) {
         //     printf("stopped by signal %d\n", WSTOPSIG(ret));
 		data->process_id[i] = 0;

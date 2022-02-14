@@ -6,32 +6,30 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 12:53:55 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/14 13:41:17 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/14 17:10:44 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handle_sgkill(int sig)
+void	handle_signals(int sig)
 {
 	if (sig == SIGQUIT)
 		return ;
-}
-
-void	handle_sgint(int sig)
-{
-	printf("Sig is: %d\n", sig);
+	else if (sig == SIGINT)
+	{
+		printf("Sigint\n");
+		return ;
+	}
 }
 
 void	signal_handler(t_data *data)
 {
 	struct sigaction	sa;
-	struct sigaction	sb;
 	
-
-	sa.sa_handler = &handle_sgkill;
-	sb.sa_handler = &handle_sgint;
-//	sigaction(SIGQUIT, &sa, NULL);
-	sigaction(SIGINT, &sb, NULL);
+	sa.sa_flags = SA_RESTART;
+	sa.sa_handler = &handle_signals;
+	sigaction(SIGQUIT, &sa, NULL);
+	sigaction(SIGINT, &sa, NULL);
 	printf("%d\n", data->exit_code);
 }
