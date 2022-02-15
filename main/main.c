@@ -19,7 +19,7 @@ void	lexer_parser(t_data *data, int *ret)
 
 	input = NULL;
 	token = NULL;
-	signal_handler(data, 1);
+	//signal_handler(data, 1);
 	//my idea was to catch ctrl-c with this, saying we are in the parent (1),
 	//so we want to display '^C' and then a new prompt
 	input = readline("our_minishell:~$ ");

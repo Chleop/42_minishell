@@ -60,19 +60,21 @@ void	ft_echo(t_cmd *cmd)
 void	ft_env(t_cmd *cmd)
 {
 	char	*path;
+	t_envp	*temp;
 
+	temp = cmd->data->envp;
 	path = get_expansion(cmd->data, "PATH");
 	if (cmd->param[1] != NULL)
 		ft_error2("env: too many arguments", NULL, cmd->data, 1);
 	else if (ft_strncmp("PATH\0", path, 5))
 	{
-		while (cmd->data->envp)
+		while (temp)
 		{
-			if (cmd->data->envp->var
-				&& ft_strncmp("_\0", cmd->data->envp->name, 2) != 0)
-				ft_printf("%s=%s\n", 1, cmd->data->envp->name,
-					cmd->data->envp->var);
-			cmd->data->envp = cmd->data->envp->next;
+			if (temp->var
+				&& ft_strncmp("_\0", temp->name, 2) != 0)
+				ft_printf("%s=%s\n", 1, temp->name,
+					temp->var);
+			temp = temp->next;
 		}
 		ft_printf("_=/bin/env\n", 1);
 	}
