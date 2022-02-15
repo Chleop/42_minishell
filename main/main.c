@@ -19,6 +19,9 @@ void	lexer_parser(t_data *data, int *ret)
 
 	input = NULL;
 	token = NULL;
+	signal_handler(data, 1);
+	//my idea was to catch ctrl-c with this, saying we are in the parent (1),
+	//so we want to display '^C' and then a new prompt
 	input = readline("our_minishell:~$ ");
 	if (!input)
 	{
@@ -85,7 +88,6 @@ int	main(int argc, char **argv, char **envp)
 		ft_error2("Error: too many arguments", NULL, &data, 127);
 		final_exit(&data);
 	}
-	signal_handler(1);
 	data.envp = NULL;
 	init_envp(&data, envp);
 	while (!data.eof)

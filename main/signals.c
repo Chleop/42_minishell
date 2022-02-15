@@ -12,31 +12,53 @@
 
 #include "minishell.h"
 
-void	handle_signals(int sig)
+void	catch_signal(int sig)
 {
-	if (sig)
-		exit (130);
-}
-
-void	ignore_signals(int sig)
-{
-	signal(sig, SIG_IGN);
-}
-
-void	signal_handler(int parent)
-{
-	struct sigaction	sa;
-	
-	if (parent)
+	//with this I wanted to display a new prompt, but I have no clue how. 
+	//I think the problem is that I don't put the right function
+	//at the right place in the code....
+	if (sig == SIGINT)
 	{
-		sa.sa_handler = &ignore_signals;
-		sigaction(SIGQUIT, &sa, NULL);
-		sigaction(SIGINT, &sa, NULL);
+		printf(" We want a new prompt!\n");
+		rl_redisplay();
 	}
 	else
 	{
-		sa.sa_handler = &handle_signals;
-		sigaction(SIGQUIT, &sa, NULL);
-		sigaction(SIGINT, &sa, NULL);
+		signal(sig, SIG_IGN);
+		printf(" WHYYY does it still print the signal?\n");
 	}
+}
+
+void	handle_signals(int sig)
+{
+	//At one point this worked, but not anymore....	
+	if (sig == SIGQUIT)
+		exit (130);
+	else
+		signal(sig, SIG_IGN);
+}
+
+void	signal_handler(t_data *data, int parent)
+{
+	//I've tried this function with sigaction, signal,
+	//sigemptyset + sigaddset and combinations of those. Nothing works. 
+	//Even the child/parent thing doesn't work, because apparently
+	//when we are in the child (in a infinite command), the
+	//program is still executing catch_signal in stead of handle_signals.
+	
+	//sigset_t			set;
+	struct sigaction	sa;
+	//this sets the struct for sigaction
+
+	sa.sa_flags = 0;
+	if (parent)
+		sa.sa_handler = &catch_signal;
+	else
+		sa.sa_handler = &handle_signals;
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
+	//after you have to set every key you want handled with the handler
+	if (parent)
+		printf("Exit code: %d\n", data->exit_code);
+	//This was just to silence the 'unused variable data' error
 }

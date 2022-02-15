@@ -51,7 +51,10 @@ int	fork_function(t_cmd *cmd)
 		return (ft_error2(strerror(errno), NULL, cmd->data, 1));
 	else if (cmd->data->process_id[cmd->id] == 0)
 	{
-		signal_handler(0);
+		signal_handler(cmd->data, 0);
+		//here we are in the child, my idea is to execute the signal handler
+		//with 0, so the program knows to not ignore signals and kill
+		//a process with ctrl-c and do nothing with other signals.
 		if (!redirect_io(cmd))
 			final_exit(cmd->data);
 		if (cmd->data->nr_cmds > 1)
