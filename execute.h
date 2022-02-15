@@ -77,17 +77,17 @@ void	ft_pwd(void);
 void	ft_cd(t_cmd *cmd);
 int		init_cd(t_cmd *cmd, t_cd **cd);
 char	*get_var(t_envp *envp, char *name);
-void	handle_dots(t_cmd *cmd, t_cd *cd);
+void	set_path_dots(t_cmd *cmd, t_cd *cd);
 void	chdir_path(t_data *data, t_cd *cd);
-char	*set_curpath(t_data *data, char *string);
-void	exit_error_cd(char **dir_tab, char *string1, char *string2);
+void	set_curpath(t_data *data, t_cd *cd, char *string);
+void	free_cd(t_cd **cd);
 void	ft_exit(t_cmd *cmd);
 
 //exit functions
 void	free_io(t_cmd *cmd);
 void	free_dir_tab(char **dir_tab);
 void	finish_up(t_data *data);
-void	free_string(char *string);
+void	free_string(char **string);
 void	free_node_envp(t_envp *envp);
 
 #endif

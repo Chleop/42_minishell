@@ -30,11 +30,11 @@ void	adapt_values(t_envp **envp)
 		temp = temp->next;
 	}
 	itoa = ft_itoa(ft_atoi(shlvl) + 1);
-	free_string(shlvl);
+	free_string(&shlvl);
 	shlvl = ft_strjoin("SHLVL=", itoa);
-	free_string(itoa);
+	free_string(&itoa);
 	add_to_envp(*envp, shlvl);
-	free_string(shlvl);
+	free_string(&shlvl);
 	remove_from_envp(*envp, "OLDPWD");
 	add_to_envp(*envp, "OLDPWD");
 	remove_from_envp(*envp, "_");
@@ -48,7 +48,7 @@ int	init_empty_env(t_envp **envp)
 
 	temp = getcwd(NULL, 0);
 	pwd = ft_strjoin("PWD=", temp);
-	free_string(temp);
+	free_string(&temp);
 	new = new_item(pwd);
 	if (new == 0)
 		return (0);
@@ -57,7 +57,7 @@ int	init_empty_env(t_envp **envp)
 	if (new == 0)
 		return (0);
 	add_item_back(envp, new);
-	free_string(pwd);
+	free_string(&pwd);
 	return (1);
 }
 

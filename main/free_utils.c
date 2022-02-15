@@ -71,7 +71,7 @@ void	delete_here_file(t_data *data)
 	cmd->param[0] = ft_strdup("/bin/rm");
 	cmd->param[1] = ft_strdup("-rf");
 	cmd->param[2] = ft_strdup(data->here_doc);
-	free_string(data->here_doc);
+	free_string(&data->here_doc);
 	cmd->param[3] = NULL;
 	cmd->id = 0;
 	cmd->data = data;

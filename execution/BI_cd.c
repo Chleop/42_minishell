@@ -35,15 +35,15 @@ void	finish_cd(t_data *data, t_cd *cd)
 	{
 		temp = ft_strjoin("OLDPWD=", cd->oldpwd);
 		add_to_envp(data->envp, temp);
-		free_string(temp);
+		free_string(&temp);
 	}
 	pwd = get_var(data->envp, "PWD");
 	if (pwd)
 	{
 		temp = ft_strjoin("PWD=", cd->path);
 		add_to_envp(data->envp, temp);
-		free_string(temp);
-		free_string(pwd);
+		free_string(&temp);
+		free_string(&pwd);
 	}
 }
 
@@ -53,14 +53,10 @@ void	chdir_path(t_data *data, t_cd *cd)
 		ft_error2(strerror(errno), cd->path, data, 128);
 	else
 		finish_cd(data, cd);
-	free_string(cd->oldpwd);
-	free_string(cd->path);
-	free_string(cd->current);
-	free(cd);
-	cd = NULL;
+	free_cd(&cd);
 }
 
-void	chdir_envp(t_data *data, t_cd *cd, char *name)
+void	set_path_envp(t_data *data, t_cd *cd, char *name)
 {
 	t_envp	*temp;
 
@@ -71,15 +67,13 @@ void	chdir_envp(t_data *data, t_cd *cd, char *name)
 			&& temp->var)
 		{
 			cd->path = ft_strdup(temp->var);
-			chdir_path(data, cd);
+			//chdir_path(data, cd);
 			return ;
 		}
 		temp = temp->next;
 	}
 	ft_error2("cd: variable not set:", name, data, 1);
-	free_string(cd->oldpwd);
-	free(cd);
-	cd = NULL;
+	//free_cd(&cd);
 }
 
 void	ft_cd(t_cmd *cmd)
@@ -90,14 +84,13 @@ void	ft_cd(t_cmd *cmd)
 	if (!init_cd(cmd, &cd))
 		return ;
 	if (!cmd->param[1])
-		chdir_envp(cmd->data, cd, "HOME");
+		set_path_envp(cmd->data, cd, "HOME");
 	else if (cmd->param[1][0] == '-' && cmd->param[1][1] == '\0')
-		chdir_envp(cmd->data, cd, "OLDPWD");
+		set_path_envp(cmd->data, cd, "OLDPWD");
 	else if (cmd->param[1][0] == '/')
-	{
-		cd->path = set_curpath(cmd->data, cmd->param[1]);
-		chdir_path(cmd->data, cd);
-	}
+		set_curpath(cmd->data, cd, cmd->param[1]);
+		//chdir_path(cmd->data, cd);
 	else
-		handle_dots(cmd, cd);
+		set_path_dots(cmd, cd);
+	chdir_path(cmd->data, cd);
 }

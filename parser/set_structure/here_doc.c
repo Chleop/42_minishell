@@ -28,10 +28,10 @@ void	open_here_file(t_data *data, int *fd)
 			i++;
 		nr = ft_substr(data->here_doc, i, ft_strlen(data->here_doc) + 1 - i);
 		itoa = ft_itoa(ft_atoi(nr) + 1);
-		free_string(nr);
+		free_string(&nr);
 		data->here_doc = ft_strjoin("Here_Doc_", itoa);
-		free_string(itoa);
-		free_string(temp);
+		free_string(&itoa);
+		free_string(&temp);
 	}
 	*fd = open(data->here_doc, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	if (!fd)
@@ -40,19 +40,24 @@ void	open_here_file(t_data *data, int *fd)
 
 void	read_here_doc(t_data *data, char **token, int fd)
 {
+	#define	color "\001\e[0;32m\002"
+	#define reset "\001\e[0m\002"
 	char	*input;
 	
 	input = NULL;
 	while (1)
 	{
-		input = readline("heredoc> ");
+		input = readline(color "heredoc> " reset);
 		if (!ft_strncmp(input, *token, ft_strlen(*token) + 1))
+		{
+			free_string(&input);
 			return ;
+		}
 		if (ft_strchr(input, '$'))
 			input = manage_expansions(data, input, HERE_END);
 		ft_putstr_fd(input, fd);
 		ft_putstr_fd("\n", fd);
-		free_string(input);
+		free_string(&input);
 	}
 }
 
@@ -67,7 +72,7 @@ void	get_here_file(t_data *data, char **token)
 	{
 		temp = *token;
 		*token = remove_c(*token, quoted);
-		free_string(temp);
+		free_string(&temp);
 	}
 	open_here_file(data, &fd);
 	read_here_doc(data, token, fd);

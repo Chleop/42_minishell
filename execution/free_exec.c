@@ -78,12 +78,12 @@ void	finish_up(t_data *data)
 	}
 }
 
-void	free_string(char *string)
+void	free_string(char **string)
 {
-	if (string)
+	if (*string)
 	{
-		free(string);
-		string = NULL;
+		free(*string);
+		*string = NULL;
 	}
 }
 
@@ -91,8 +91,8 @@ void	free_node_envp(t_envp *envp)
 {
 	if (envp)
 	{
-		free_string(envp->name);
-		free_string(envp->var);
+		free_string(&envp->name);
+		free_string(&envp->var);
 		free(envp);
 		envp = NULL;
 	}

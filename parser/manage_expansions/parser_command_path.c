@@ -64,7 +64,7 @@ char	*get_path(t_data *data, char *cmd)
 	ft_del_stringtab(&tab_path_env);
 	if ((!path) || (access(cmd, F_OK) == 0))
 	{
-		free_string(path);
+		free_string(&path);
 		return (ft_strdup(cmd));
 	}
 	return (path);

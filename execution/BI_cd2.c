@@ -18,10 +18,10 @@ void	add_dir(t_cd *cd, char *dir)
 
 	temp = cd->path;
 	cd->path = ft_strjoin(cd->path, "/");
-	free_string(temp);
+	free_string(&temp);
 	temp = cd->path;
 	cd->path = ft_strjoin(cd->path, dir);
-	free_string(temp);
+	free_string(&temp);
 	cd->level++;
 }
 
@@ -40,7 +40,7 @@ void	one_dir_up(t_cd *cd)
 	}
 	else
 		cd->path = ft_substr(cd->path, 0, 1);
-	free_string(temp);
+	free_string(&temp);
 	cd->level--;
 }
 
@@ -59,7 +59,7 @@ int	get_level(char *oldpwd)
 	return (level);
 }
 
-void	set_path(t_cd *cd)
+void	set_old_path(t_cd *cd)
 {
 	if (cd->oldpwd)
 	{
@@ -78,12 +78,12 @@ void	set_path(t_cd *cd)
 	}
 }
 
-void	handle_dots(t_cmd *cmd, t_cd *cd)
+void	set_path_dots(t_cmd *cmd, t_cd *cd)
 {
 	char	**dir_tab;
 	int		i;
 
-	set_path(cd);
+	set_old_path(cd);
 	dir_tab = ft_split(cmd->param[1], '/');
 	i = -1;
 	while (dir_tab[++i])
@@ -95,6 +95,6 @@ void	handle_dots(t_cmd *cmd, t_cd *cd)
 				ft_strlen(dir_tab[i]) + 1) != 0)
 			add_dir(cd, dir_tab[i]);
 	}
-	chdir_path(cmd->data, cd);
+	//chdir_path(cmd->data, cd);
 	ft_del_stringtab(&dir_tab);
 }

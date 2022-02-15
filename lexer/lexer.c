@@ -56,6 +56,6 @@ char	**lexer(char *input)
 		met_condition = condition_tree(&lex, &token);
 		function_table[met_condition](&lex, &token);
 	}
-	free_string(lex.input);
+	free_string(&lex.input);
 	return (token);
 }

@@ -18,7 +18,7 @@ void	ft_pwd(void)
 
 	pwd = getcwd(NULL, 0);
 	ft_printf("%s\n", 1, pwd);
-	free_string(pwd);
+	free_string(&pwd);
 }
 
 int	no_backslash(t_cmd *cmd)
@@ -51,8 +51,10 @@ void	ft_echo(t_cmd *cmd)
 	i = j;
 	while (cmd->param[++i] && cmd->param[i + 1])
 		ft_printf("%s ", 1, cmd->param[i]);
-	if (j)
+	if (j && cmd->param[i])
 		ft_printf("%s", 1, cmd->param[i]);
+	else if (j)
+		printf("");
 	else
 		ft_printf("%s\n", 1, cmd->param[i]);
 }
@@ -80,5 +82,5 @@ void	ft_env(t_cmd *cmd)
 	}
 	else
 		ft_error2("command not found", "env", cmd->data, 1);
-	free_string(path);
+	free_string(&path);
 }

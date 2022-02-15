@@ -29,13 +29,15 @@ char	*malloc_curpath(t_data *data, char *string)
 		i++;
 	}
 	if (j)
+	{
 		curpath = ft_calloc(j + 1, sizeof(char));
-	if (!curpath)
-		ft_error2("malloc failed", NULL, data, 1);
+		if (!curpath)
+			ft_error2("malloc failed", NULL, data, 1);
+	}
 	return (curpath);
 }
 
-char	*set_curpath(t_data *data, char *string)
+void	set_curpath(t_data *data, t_cd *cd, char *string)
 {
 	int		i;
 	int		j;
@@ -43,9 +45,7 @@ char	*set_curpath(t_data *data, char *string)
 
 	i = 0;
 	j = 0;
-	curpath = NULL;
-	if (malloc_curpath(data, string))
-		return (NULL);
+	curpath = malloc_curpath(data, string);
 	while (string[i])
 	{
 		if (string[i] != '/' || (string[i] == '/'
@@ -57,8 +57,11 @@ char	*set_curpath(t_data *data, char *string)
 		i++;
 	}
 	if (!j)
+	{
+		free_string(&curpath);
 		curpath = ft_strdup("/");
-	return (curpath);
+	}
+	cd->path = curpath;
 }
 
 int	init_cd(t_cmd *cmd, t_cd **cd)
@@ -72,4 +75,16 @@ int	init_cd(t_cmd *cmd, t_cd **cd)
 	(*cd)->current = getcwd(NULL, 0);
 	(*cd)->path = NULL;
 	return (1);
+}
+
+void	free_cd(t_cd **cd)
+{
+	free_string(&(*cd)->oldpwd);
+	free_string(&(*cd)->current);
+	free_string(&(*cd)->path);
+	if (*cd)
+	{
+		free(*cd);
+		*cd = NULL;
+	}
 }

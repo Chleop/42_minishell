@@ -28,7 +28,7 @@ void	convert_envp(t_envp *envp, char ***table)
 	{
 		s_temp = ft_strjoin(e_temp->name, "=");
 		s_temp2 = ft_strjoin(s_temp, e_temp->var);
-		free_string(s_temp);
+		free_string(&s_temp);
 		(*table)[i] = s_temp2;
 		e_temp = e_temp->next;
 	}

@@ -14,6 +14,8 @@
 
 void	lexer_parser(t_data *data, int *ret)
 {
+	#define	color "\001\e[0;35m\002"
+	#define reset "\001\e[0m\002"
 	char	*input;
 	char	**token;
 
@@ -22,7 +24,7 @@ void	lexer_parser(t_data *data, int *ret)
 	//signal_handler(data, 1);
 	//my idea was to catch ctrl-c with this, saying we are in the parent (1),
 	//so we want to display '^C' and then a new prompt
-	input = readline("our_minishell:~$ ");
+	input = readline(color "our_minishell:~$ " reset);
 	if (!input)
 	{
 		data->eof = 1;

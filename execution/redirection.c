@@ -21,9 +21,15 @@ int	redirect_input(t_cmd *cmd)
 	{
 		cmd->fd_i[i] = open(cmd->i[i], O_RDONLY);
 		if (cmd->fd_i[i] == -1)
+		{
+			free(cmd->fd_i);
 			return (ft_error2(strerror(errno), cmd->i[i], cmd->data, 1));
+		}
 		if (access(cmd->i[i], R_OK) != 0)
+		{
+			free(cmd->fd_i);
 			return (ft_error2(strerror(errno), cmd->i[i], cmd->data, 1));
+		}
 	}
 	if (cmd->fd_i)
 		dup2(cmd->fd_i[i - 1], STDIN_FILENO);
@@ -42,9 +48,15 @@ int	redirect_output(t_cmd *cmd)
 		else if (cmd->type[i] == 2)
 			cmd->fd_o[i] = open(cmd->o[i], O_CREAT | O_APPEND | O_WRONLY, 0644);
 		if (cmd->fd_o[i] == -1)
+		{
+			free(cmd->fd_o);
 			return (ft_error2(strerror(errno), cmd->o[i], cmd->data, 1));
+		}
 		if (access(cmd->o[i], W_OK) != 0)
+		{
+			free(cmd->fd_o);
 			return (ft_error2(strerror(errno), cmd->o[i], cmd->data, 1));
+		}
 	}
 	if (cmd->fd_o)
 		dup2(cmd->fd_o[i - 1], STDOUT_FILENO);
