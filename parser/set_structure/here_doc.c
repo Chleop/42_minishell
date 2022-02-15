@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 17:46:43 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/11 13:45:27 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/15 18:31:02 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	read_here_doc(t_data *data, char **token, int fd)
 		if (!ft_strncmp(input, *token, ft_strlen(*token) + 1))
 			return ;
 		if (ft_strchr(input, '$'))
-			input = manage_expansions(data, input, HERE_END);
+			manage_expansions(data, &input, HERE_END);
 		ft_putstr_fd(input, fd);
 		ft_putstr_fd("\n", fd);
 		free_string(input);
