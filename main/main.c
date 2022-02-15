@@ -85,11 +85,11 @@ int	main(int argc, char **argv, char **envp)
 		ft_error2("Error: too many arguments", NULL, &data, 127);
 		final_exit(&data);
 	}
-	signal_handler(&data);
+	signal_handler(1);
 	data.envp = NULL;
 	init_envp(&data, envp);
 	while (!data.eof)
-	{
+	{	
 		lexer_parser(&data, &ret);
 		execute_commands(&data, &ret);
 		ft_free_data(&data, 0);

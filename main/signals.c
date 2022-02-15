@@ -14,22 +14,29 @@
 
 void	handle_signals(int sig)
 {
-	if (sig == SIGQUIT)
-		return ;
-	else if (sig == SIGINT)
-	{
-		printf("Sigint\n");
-		return ;
-	}
+	if (sig)
+		exit (130);
 }
 
-void	signal_handler(t_data *data)
+void	ignore_signals(int sig)
+{
+	signal(sig, SIG_IGN);
+}
+
+void	signal_handler(int parent)
 {
 	struct sigaction	sa;
 	
-	sa.sa_flags = SA_RESTART;
-	sa.sa_handler = &handle_signals;
-	sigaction(SIGQUIT, &sa, NULL);
-	sigaction(SIGINT, &sa, NULL);
-	printf("%d\n", data->exit_code);
+	if (parent)
+	{
+		sa.sa_handler = &ignore_signals;
+		sigaction(SIGQUIT, &sa, NULL);
+		sigaction(SIGINT, &sa, NULL);
+	}
+	else
+	{
+		sa.sa_handler = &handle_signals;
+		sigaction(SIGQUIT, &sa, NULL);
+		sigaction(SIGINT, &sa, NULL);
+	}
 }

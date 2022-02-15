@@ -70,8 +70,8 @@ void	finish_up(t_data *data)
 		data->process_id[i] = 0;
 		if (WIFEXITED(ret))
 			data->exit_code = WEXITSTATUS(ret);
-		// else if (WIFSIGNALED(ret))
-		//  	printf("killed by signal %d\n", WTERMSIG(ret));
+		else if (WIFSIGNALED(ret))
+			data->exit_code = 130;
         // else if (WIFSTOPPED(ret)) {
         //     printf("stopped by signal %d\n", WSTOPSIG(ret));
 		data->process_id[i] = 0;

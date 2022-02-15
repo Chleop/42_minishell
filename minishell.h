@@ -67,6 +67,6 @@ typedef struct	s_data
 # include "execute.h"
 
 int		ft_error2(char *string, char *name, t_data *data, int code);
-void	signal_handler(t_data *data);
+void	signal_handler(int parent);
 
 #endif
