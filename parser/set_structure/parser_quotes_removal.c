@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_quotes_removal.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:51:50 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/10 19:27:22 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/15 15:40:18 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,18 @@ void	copy_without_tabs(char **new_str, int *index_tab, char *str)
 	}
 }
 
+void	add_quotes(char **param, char *quote)
+{
+	char	*temp;
+
+	temp = *param;
+	*param = ft_strjoin(quote, *param);
+	free(temp);
+	temp = *param;
+	*param = ft_strjoin(*param, quote);
+	free(temp);
+}
+
 char	*remove_c(char *str, char c)
 {
 	int		*index_tab;
@@ -109,41 +121,21 @@ char	*remove_c(char *str, char c)
 	return (new_str);
 }
 
-int	if_remove_quotes(char ***tab, int nr_elements, t_data *data)
+int	remove_quotes(char **token, t_data *data)
 {
 	char	quote;
 	char	*temp;
-	int		j;
 
-	j = 0;
-	while (j < nr_elements)
+	quote = is_quoted(*token);
+	if (quote)
 	{
-		quote = is_quoted((*tab)[j]);
-		if (quote)
-		{
-			temp = (*tab)[j];
-			(*tab)[j] = remove_c((*tab)[j], quote);
-			if (!(*tab)[j])
-				return (ft_error2("Error: malloc failed", NULL, data, 1));
-			free (temp);
-			temp = NULL;
-		}
-		j++;
+		temp = *token;
+		*token = remove_c(*token, quote);
+		if (!*token)
+			return (ft_error2("Error: malloc failed", NULL, data, 1));
+		free (temp);
+		temp = NULL;
 	}
 	return (1);
 }
 
-int	remove_quotes_inside_struct(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->nr_cmds)
-	{
-		if_remove_quotes(&(data->cmd[i].param), data->cmd[i].nr_param, data);
-		if_remove_quotes(&(data->cmd[i].i), data->cmd[i].nr_in, data);
-		if_remove_quotes(&(data->cmd[i].o), data->cmd[i].nr_out, data);
-		i++;
-	}
-	return (1);
-}
