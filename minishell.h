@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 17:38:24 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/14 13:28:31 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/16 10:33:35 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 # define MINISHELL_H
 
 # define _POSIX_SOURCE
+# define PURPLE "\001\e[0;35m\002"
+# define GREEN "\001\e[0;32m\002"
+# define RESET "\001\e[0m\002"
+
 # include "libft.h"
 # include <errno.h>
 # include <stdlib.h>

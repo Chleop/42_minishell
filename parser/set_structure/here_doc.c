@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 17:46:43 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/11 13:45:27 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/16 10:32:08 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,12 @@ void	open_here_file(t_data *data, int *fd)
 
 void	read_here_doc(t_data *data, char **token, int fd)
 {
-	#define	color "\001\e[0;32m\002"
-	#define reset "\001\e[0m\002"
 	char	*input;
 	
 	input = NULL;
 	while (1)
 	{
-		input = readline(color "heredoc> " reset);
+		input = readline(GREEN "heredoc> " RESET);
 		if (!ft_strncmp(input, *token, ft_strlen(*token) + 1))
 		{
 			free_string(&input);

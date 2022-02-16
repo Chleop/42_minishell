@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:22:30 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/14 13:32:34 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/16 11:01:26 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	lexer_parser(t_data *data, int *ret)
 {
-	#define	color "\001\e[0;35m\002"
-	#define reset "\001\e[0m\002"
 	char	*input;
 	char	**token;
 
@@ -24,7 +22,7 @@ void	lexer_parser(t_data *data, int *ret)
 	//signal_handler(data, 1);
 	//my idea was to catch ctrl-c with this, saying we are in the parent (1),
 	//so we want to display '^C' and then a new prompt
-	input = readline(color "our_minishell:~$ " reset);
+	input = readline(PURPLE "our_minishell:~$ " RESET);
 	if (!input)
 	{
 		data->eof = 1;
@@ -94,6 +92,7 @@ int	main(int argc, char **argv, char **envp)
 	init_envp(&data, envp);
 	while (!data.eof)
 	{	
+		ret = 0;
 		lexer_parser(&data, &ret);
 		execute_commands(&data, &ret);
 		ft_free_data(&data, 0);
