@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 13:32:12 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/15 19:25:29 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/16 12:11:42 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,28 +18,24 @@ int	get_end2(char *token, int i, int j)
 	{
 		while (token[i] != '$')
 			i++;
+		return (i);
 	}
-	else if (j == 1)
+	if (ft_strchr(token + i, '$'))
 	{
-		if ((token[i] == '$') || (token[i] == '\''))
+		if ((token[i] == '\'') || (token[i] == '$')
+			|| (token[i] == ' '))
 			i++;
-		while ((token[i] != '\0') && (token[i] != '\n')
-			&& (token[i] != '\'') && (token[i] != '$')
-			&& (token[i] != ' '))
+		while ((token[i] != '\'') && (token[i] != '$')
+			&& (token[i] != ' ') && (token[i] != '\0') && (token[i] != '\n'))
 			i++;
 	}
 	else
-	{
-		while ((token[i] != '\0') && (token[i] != '\n')
-			&& (token[i] != '$'))
-			i++;
-	}
+		return(ft_strlen(token) + 1);
 	return (i);
 }
 
 char	*double_quoted_exp(t_data *data, char *param)
 {
-	char	quote;
 	char	*new_param;
 	int		i;
 	int		j;
@@ -48,34 +44,24 @@ char	*double_quoted_exp(t_data *data, char *param)
 	char	*temp;
 
 	j = 0;
-	quote = is_quoted(param);
-	if (quote)
+	new_param = ft_strdup("\0");
+	i = 0;
+	while ((param[i] != '\0') && (param[i] != '\n'))
 	{
-		new_param = ft_strdup("\0");
-		i = 0;
-		while ((param[i] != '\0') && (param[i] != '\n'))
+		end = get_end2(param, i, j);
+		j++;
+		subtok = ft_substr(param, i, end - i);
+		if (ft_strchr(subtok, '$'))
 		{
-			end = get_end2(param, i, j);
-			j++;
-			subtok = ft_substr(param, i, end - i);
-			if (ft_strchr(subtok, '$'))
-			{
-				temp = subtok;
-				subtok = expand(data, subtok);
-				free(temp);
-			}
-			temp = new_param;
-			new_param = ft_strjoin(new_param, subtok);
-			free(subtok);
+			temp = subtok;
+			subtok = expand(data, subtok);
 			free(temp);
-			if (end != (int)ft_strlen(param) + 1)
-				i = end;
 		}
-	}
-	else
-	{
-		manage_expansions(data, &param, 0);
-		return (param);
+		temp = new_param;
+		new_param = ft_strjoin(new_param, subtok);
+		free(subtok);
+		free(temp);
+		i = end;
 	}
 	return (new_param);
 }

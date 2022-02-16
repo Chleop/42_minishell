@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:22:30 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/14 13:32:34 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/16 10:43:01 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	main(int argc, char **argv, char **envp)
 		ft_error2("Error: too many arguments", NULL, &data, 127);
 		final_exit(&data);
 	}
-	signal_handler(1);
+	//signal_handler(1);
 	data.envp = NULL;
 	init_envp(&data, envp);
 	while (!data.eof)
