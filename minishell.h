@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 17:38:24 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/16 10:33:35 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/16 15:05:30 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,6 @@ typedef struct	s_data
 # include "execute.h"
 
 int		ft_error2(char *string, char *name, t_data *data, int code);
-void	signal_handler(t_data *data, int parent);
+void	signal_handler(int parent);
 
 #endif

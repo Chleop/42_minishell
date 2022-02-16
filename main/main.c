@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:22:30 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/16 12:35:39 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/16 16:35:40 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	lexer_parser(t_data *data, int *ret)
 	//my idea was to catch ctrl-c with this, saying we are in the parent (1),
 	//so we want to display '^C' and then a new prompt
 	input = readline(PURPLE "our_minishell:~$ " RESET);
+	printf("input = %s\n", input);
 	if (!input)
 	{
 		data->eof = 1;
@@ -88,7 +89,7 @@ int	main(int argc, char **argv, char **envp)
 		ft_error2("Error: too many arguments", NULL, &data, 127);
 		final_exit(&data);
 	}
-	//signal_handler(1);
+	signal_handler(1);
 	data.envp = NULL;
 	init_envp(&data, envp);
 	while (!data.eof)

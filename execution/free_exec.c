@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 15:54:42 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/14 15:07:21 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/16 16:42:55 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ void	finish_up(t_data *data)
 		if (WIFEXITED(ret))
 			data->exit_code = WEXITSTATUS(ret);
 		else if (WIFSIGNALED(ret))
-			data->exit_code = 130;
+			// data->exit_code = 130;
+			data->exit_code = WTERMSIG(ret) + 128;
         // else if (WIFSTOPPED(ret)) {
         //     printf("stopped by signal %d\n", WSTOPSIG(ret));
 		data->process_id[i] = 0;
