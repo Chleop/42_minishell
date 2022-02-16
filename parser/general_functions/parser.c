@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:55:08 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/16 17:37:43 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/16 18:43:48 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ int	review_operators(char **token, t_data *data)
 				|| (!token[i + 1])
 				|| (((i - 1) > -1) && ((token[i - 1][0] == '>')
 					|| (token[i - 1][0] == '<')))
-					|| ((token[i][0] == '|') && (token[i - 1][0] == '|')))
-				return (ft_error2("Syntax error", token[i], data, 2));
+					|| (((i - 1) > -1) && (token[i][0] == '|')
+					&& (token[i - 1][0] == '|')))
+					return (ft_error2("Syntax error", token[i], data, 2));
 		}
 		i++;
 	}
@@ -47,10 +48,11 @@ int	parse(t_data *data, char **token)
 		return (0);
 	if (!initialize_cmds(data, token))
 		return (0);
+	// print_char_table("token", token);
 	if (!grammatize_tokens(data))
 		return (0);
 	if (!set_into_structure(data))
 		return (0);
-	//print_cmd_parameters(data);
+	// print_cmd_parameters(data);
 	return (1);
 }

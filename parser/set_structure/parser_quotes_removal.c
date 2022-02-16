@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:51:50 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/15 15:40:18 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/16 18:27:44 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	copy_without_tabs(char **new_str, int *index_tab, char *str)
 	j = 0;
 	while (str[i])
 	{
-		if (i == index_tab[j])
+		while (i == index_tab[j])
 		{
 			i++;
 			j++;
@@ -112,6 +112,7 @@ char	*remove_c(char *str, char c)
 	if (ft_strlen(str) < 2)
 		return (NULL);
 	index_tab = locate_c_in_string(str, c);
+	printf("indextab[0] = %d, indextab[1] = %d\n", index_tab[0], index_tab[1]);
 	new_str = ft_calloc(ft_strlen(str) - 1, sizeof(char));
 	if (!new_str)
 		return (NULL);
@@ -127,7 +128,7 @@ int	remove_quotes(char **token, t_data *data)
 	char	*temp;
 
 	quote = is_quoted(*token);
-	if (quote)
+	while (quote)
 	{
 		temp = *token;
 		*token = remove_c(*token, quote);
@@ -135,6 +136,7 @@ int	remove_quotes(char **token, t_data *data)
 			return (ft_error2("Error: malloc failed", NULL, data, 1));
 		free (temp);
 		temp = NULL;
+		quote = is_quoted(*token);
 	}
 	return (1);
 }
