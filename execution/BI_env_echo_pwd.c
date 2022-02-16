@@ -6,32 +6,34 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 17:18:03 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/10 13:12:45 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/16 18:14:08 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_pwd(void)
+void	ft_pwd(t_cmd *cmd)
 {
 	char	*pwd;
 
-	pwd = getcwd(NULL, 0);
+	pwd = get_var(cmd->data->envp, "PWD");
+	if (!pwd)
+		pwd = getcwd(NULL, 0);
 	ft_printf("%s\n", 1, pwd);
 	free_string(&pwd);
 }
 
-int	no_backslash(t_cmd *cmd)
+void	no_backslash(char *param, int *j)
 {
 	int	i;
 
 	i = 1;
-	while (cmd->param[1][i] == 'n')
+	while (param[i] == 'n')
 		i++;
-	if (cmd->param[1][i] != '\0')
-		return (0);
+	if (param[i] != '\0')
+		return ;
 	else
-		return (1);
+		(*j)++;
 }
 
 void	ft_echo(t_cmd *cmd)
@@ -39,15 +41,15 @@ void	ft_echo(t_cmd *cmd)
 	int	i;
 	int	j;
 
-	i = 0;
-	j = 0;
 	if (cmd->param[1] == NULL)
 	{
 		ft_printf("\n", 1);
 		return ;
 	}
-	else if (ft_strncmp(cmd->param[1], "-n", 2) == 0)
-		j = no_backslash(cmd);
+	i = 0;
+	j = 0;
+	while (cmd->param[++i] && !(ft_strncmp(cmd->param[i], "-n", 2)))
+		no_backslash(cmd->param[i], &j);
 	i = j;
 	while (cmd->param[++i] && cmd->param[i + 1])
 		ft_printf("%s ", 1, cmd->param[i]);

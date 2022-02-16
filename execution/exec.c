@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 11:19:50 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/16 16:31:21 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/16 18:13:57 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	exec_builtins(t_cmd *cmd)
 	if (ft_strncmp(cmd->param[0], "echo\0", 5) == 0)
 		ft_echo(cmd);
 	else if (ft_strncmp(cmd->param[0], "pwd\0", 4) == 0)
-		ft_pwd();
+		ft_pwd(cmd);
 	else if (ft_strncmp(cmd->param[0], "env\0", 4) == 0)
 		ft_env(cmd);
 	else if (ft_strncmp(cmd->param[0], "export\0", 7) == 0)

@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 15:33:03 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/16 15:42:48 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/16 18:14:29 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	ft_export_prefork(t_cmd *cmd);
 void	ft_export_fork(t_cmd *cmd);
 int		check_identifier(t_data *data, char *id, int code);
 void	ft_unset(t_cmd *cmd);
-void	ft_pwd(void);
+void	ft_pwd(t_cmd *cmd);
 void	ft_cd(t_cmd *cmd);
 int		init_cd(t_cmd *cmd, t_cd **cd);
 char	*get_var(t_envp *envp, char *name);
