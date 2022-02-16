@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:16:35 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/11 13:41:16 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/15 17:00:35 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,16 @@ char	*get_path(t_data *data, char *cmd);
 int		set_into_structure(t_data *data);
 int		is_quoted(char *token);
 
-int		remove_quotes_inside_struct(t_data *data);
-int		if_remove_quotes(char ***tab, int nr_elements, t_data *data);
+int		remove_quotes(char **token, t_data *data);
+void	add_quotes(char **param, char *quote);
 
-char	*manage_expansions(t_data *data, char *token, int here_doc);
+int		manage_expansions(t_data *data, char **token, int here_doc);
+int		seperate_subtoken_and_expand(t_data *data, char **token, int here_doc, int type);
 int		classify_token(t_data *data, char **token, int cmd_nr, int tok_nr);
 void	expand_cmd_path(t_data *data);
 char	*double_quoted_exp(t_data *data, char *param);
 char	*expand(t_data *data, char *token);
+int		get_end(char *token, int i);
 char	*expand_s_in_d(t_data *data, char **sub_param, int *index_tab);
 
 void	get_here_file(t_data *data, char **token);
