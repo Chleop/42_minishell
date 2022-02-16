@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 10:57:26 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/16 16:19:45 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/16 16:25:58 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	numeric_string(char *string)
 	int	i;
 
 	i = 0;
+	while (ft_isspace(string[i]))
+		i++;
 	if (string[i] == '-' || string[i] == '+')
 		i++;
 	while (string[i])

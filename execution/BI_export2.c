@@ -6,40 +6,49 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 17:14:38 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/16 16:11:54 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/16 16:38:11 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_identifier(t_data *data, char *id, int code)
+int	check_first_char(t_data *data, char *id, int code)
 {
-	int	i;
-	
 	if (ft_isdigit(id[0]) || id[0] == '=' || id[0] == '\0')
 	{
 		if (code == 3)
-			return(ft_error2("export: not a valid identifier", id, data, 1));
+			return (ft_error2("export: not a valid identifier", id, data, 1));
 		else if (code == 4)
-			return(ft_error2("unset: not a valid identifier", id, data, 1));
+			return (ft_error2("unset: not a valid identifier", id, data, 1));
 		else
 			return (0);
 	}
+	return (1);
+}
+
+int	check_identifier(t_data *data, char *id, int code)
+{
+	int	i;
+
+	if (!check_first_char(data, id, code))
+		return (0);
 	i = -1;
 	while (id[++i] != '=' && id[i] != '\0')
 	{
 		if (!(ft_isalnum(id[i]) || (id[i] == '_')))
 		{
 			if (code == 3)
-				return(ft_error2("export: not a valid identifier", id, data, 1));
+				return (ft_error2("export: not a valid identifier",
+						id, data, 1));
 			else if (code == 4)
-				return(ft_error2("unset: not a valid identifier", id, data, 1));
+				return (ft_error2("unset: not a valid identifier",
+						id, data, 1));
 			else
 				return (0);
 		}
 	}
 	if (id[i] == '=' && code == 4)
-		return(ft_error2("unset: not a valid identifier", id, data, 1));
+		return (ft_error2("unset: not a valid identifier", id, data, 1));
 	return (1);
 }
 
