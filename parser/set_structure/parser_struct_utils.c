@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 13:34:16 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/11 13:41:45 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/16 15:31:10 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,14 @@ int	increment_quoted_part(int i, char **token)
 // several parameters
 // and adds each parameter to the parameter structure
 
-int	set_param(t_cmd *cmd, char **token)
+int	set_param1(t_cmd *cmd, char **token)
+{
+	if (!add_tab(&((*cmd).param), &((*cmd).nr_param), *token))
+		return (0);
+	return (1);
+}
+
+int	set_param2(t_cmd *cmd, char **token)
 {
 	int		i;
 	int		j;
@@ -102,13 +109,25 @@ int	set_param(t_cmd *cmd, char **token)
 // if the token is a command or a param, set into param table
 // otherwise set into redirections tables
 
-int	classify_token(t_data *data, char **token, int n, int tok_nr)
+int	classify_token1(t_data *data, char **token, int n, int tok_nr)
 {
 	int	qualif;
 
 	qualif = data->cmd[n].qualif[tok_nr];
 	if ((qualif == CMD) || (qualif == PARAM))
-		set_param(&(data->cmd[n]), token);
+		set_param1(&(data->cmd[n]), token);
+	else if ((qualif != OPERATOR) && (qualif != EMPTY))
+		set_redirections(data, token, n, qualif);
+	return (1);
+}
+
+int	classify_token2(t_data *data, char **token, int n, int tok_nr)
+{
+	int	qualif;
+
+	qualif = data->cmd[n].qualif[tok_nr];
+	if ((qualif == CMD) || (qualif == PARAM))
+		set_param2(&(data->cmd[n]), token);
 	else if ((qualif != OPERATOR) && (qualif != EMPTY))
 		set_redirections(data, token, n, qualif);
 	return (1);
