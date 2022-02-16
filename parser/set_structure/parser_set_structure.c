@@ -6,31 +6,11 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 17:54:01 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/15 16:36:23 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/16 15:29:42 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// For each token, if it contains a $, it expands it, then it classifies it.
-
-// int	expand_and_classify(t_data *data, char **token, int cmd_nr, int tok_nr)
-// {
-// 	char	*temp;
-
-// 	if (ft_strchr(data->cmd[cmd_nr].tok[tok_nr], '$') 
-// 		&& data->cmd[cmd_nr].qualif[tok_nr] != HERE_END)
-// 	{
-// 		temp = *token;
-// 		*token = manage_expansions(data, temp, 0);
-// 		if (!(*token))
-// 			return (0);
-// 		free (temp);
-// 	}
-// 	if (!classify_token(data, token, cmd_nr, tok_nr))
-// 		return (0);
-// 	return (1);
-// }
 
 int	is_builtin(t_cmd *cmd)
 {
@@ -84,13 +64,16 @@ int	set_into_structure(t_data *data)
 			if (data->cmd[i].qualif[j] != HERE_END
 				&& ft_strchr(data->cmd[i].tok[j], '$'))
 			{
-				if (!manage_expansions(data, &data->cmd[i].tok[j], 0))
+				if (!manage_expansions(data, &data->cmd[i].tok[j], 0)
+				|| !classify_token2(data, &data->cmd[i].tok[j], i, j))
 					return (0);
 			}
-			else if (!remove_quotes(&data->cmd[i].tok[j], data))
-				return (0);
-			if (!classify_token(data, &data->cmd[i].tok[j], i, j))
-				return (0);
+			else 
+			{
+				if (!remove_quotes(&data->cmd[i].tok[j], data)
+				|| !classify_token1(data, &data->cmd[i].tok[j], i, j))
+					return (0);
+			}
 			j++;
 		}
 		i++;
