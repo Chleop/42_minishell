@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 11:19:50 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/16 10:44:15 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/16 16:03:02 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,7 @@ int	fork_function(t_cmd *cmd)
 		return (ft_error2(strerror(errno), NULL, cmd->data, 1));
 	else if (cmd->data->process_id[cmd->id] == 0)
 	{
-		//signal_handler(cmd->data, 0);
-		//here we are in the child, my idea is to execute the signal handler
-		//with 0, so the program knows to not ignore signals and kill
-		//a process with ctrl-c and do nothing with other signals.
+		//signal_handler(0);
 		if (!redirect_io(cmd))
 			final_exit(cmd->data);
 		if (cmd->data->nr_cmds > 1)

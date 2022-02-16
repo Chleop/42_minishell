@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 15:33:03 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/10 13:15:38 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/16 15:42:48 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	reverse_redirection(t_cmd *cmd, int in, int out);
 //built in functions
 void	ft_echo(t_cmd *cmd);
 void	ft_env(t_cmd *cmd);
+int		export_possible(t_cmd *cmd);
 void	ft_export_prefork(t_cmd *cmd);
 void	ft_export_fork(t_cmd *cmd);
 int		check_identifier(t_data *data, char *id, int code);

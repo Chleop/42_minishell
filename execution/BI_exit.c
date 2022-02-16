@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 10:57:26 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/10 14:08:41 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/16 16:19:45 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,12 @@ void	ft_exit(t_cmd *cmd)
 	else if (!numeric_string(cmd->param[1]))
 		ft_error2("exit: numeric argument required", NULL, cmd->data, 2);
 	else
+	{
 		code = calculate_status(cmd->param[1]);
-	if (code == -1)
-		ft_error2("exit: numeric argument required", NULL, cmd->data, 2);
-	else
-		cmd->data->exit_code = code;
+		if (code == -1)
+			ft_error2("exit: numeric argument required", NULL, cmd->data, 2);
+		else
+			cmd->data->exit_code = code;
+	}
 	final_exit(cmd->data);
 }

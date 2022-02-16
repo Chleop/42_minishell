@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:47:05 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/10 13:06:22 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/16 13:56:36 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,5 @@ void	set_path_dots(t_cmd *cmd, t_cd *cd)
 				ft_strlen(dir_tab[i]) + 1) != 0)
 			add_dir(cd, dir_tab[i]);
 	}
-	//chdir_path(cmd->data, cd);
 	ft_del_stringtab(&dir_tab);
 }

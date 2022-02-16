@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:22:30 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/16 12:35:39 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/16 13:35:13 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	lexer_parser(t_data *data, int *ret)
 	if (!input)
 	{
 		data->eof = 1;
+		ft_printf("exit\n", 1);
 		return ;
 	}
 	add_history(input);
@@ -75,6 +76,11 @@ void	execute_commands(t_data *data, int *ret)
 	}
 }
 
+void	handle(int sig)
+{
+	signal(sig, SIG_IGN);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
@@ -89,6 +95,8 @@ int	main(int argc, char **argv, char **envp)
 		final_exit(&data);
 	}
 	//signal_handler(1);
+	// signal(SIGINT, &handle);
+	// signal(SIGQUIT, SIG_IGN);
 	data.envp = NULL;
 	init_envp(&data, envp);
 	while (!data.eof)

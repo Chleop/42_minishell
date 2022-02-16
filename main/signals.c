@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 12:53:55 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/14 17:10:44 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/16 13:16:06 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,27 +38,38 @@ void	handle_signals(int sig)
 		signal(sig, SIG_IGN);
 }
 
-void	signal_handler(t_data *data, int parent)
+void	signal_handler(int parent)
 {
-	//I've tried this function with sigaction, signal,
-	//sigemptyset + sigaddset and combinations of those. Nothing works. 
-	//Even the child/parent thing doesn't work, because apparently
-	//when we are in the child (in a infinite command), the
-	//program is still executing catch_signal in stead of handle_signals.
-	
-	//sigset_t			set;
 	struct sigaction	sa;
-	//this sets the struct for sigaction
+	sigset_t 			set;
 
-	sa.sa_flags = 0;
+	// printf("Signal: %d\n", SIGINT);
+	// printf("Signal: %d\n", SIGQUIT);
+	// sa.sa_flags = 0;
+	// if (parent)
+	// 	sa.sa_handler = &catch_signal;
+	// else
+	// 	sa.sa_handler = &handle_signals;
+	// sigaction(SIGINT, &sa, NULL);
+	// sigaction(SIGQUIT, &sa, NULL);
 	if (parent)
-		sa.sa_handler = &catch_signal;
+	{
+		sigemptyset(&sa.sa_mask);
+		sa.sa_flags = 0;
+		sa.sa_handler = catch_signal;
+		sigaction(SIGINT, &sa, NULL);
+		sigaction(SIGQUIT, &sa, NULL);
+		sigaddset(&set, SIGQUIT);
+		sigaddset(&set, SIGINT);
+	}
 	else
-		sa.sa_handler = &handle_signals;
-	sigaction(SIGINT, &sa, NULL);
-	sigaction(SIGQUIT, &sa, NULL);
-	//after you have to set every key you want handled with the handler
-	if (parent)
-		printf("Exit code: %d\n", data->exit_code);
-	//This was just to silence the 'unused variable data' error
+	{
+		sigemptyset(&sa.sa_mask);
+		sa.sa_flags = 0;
+		sa.sa_handler = handle_signals;
+		sigaction(SIGINT, &sa, NULL);
+		sigaction(SIGQUIT, &sa, NULL);
+		sigaddset(&set, SIGQUIT);
+		sigaddset(&set, SIGINT);
+	}
 }
