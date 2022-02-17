@@ -6,13 +6,13 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:22:30 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/17 16:37:00 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/17 18:15:14 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	g_sig;
+int	g_pid;
 
 void	lexer_parser(t_data *data, int *ret)
 {
@@ -84,6 +84,7 @@ int	main(int argc, char **argv, char **envp)
 	t_data	data;
 	int		ret;
 
+	g_pid = 1;
 	data.exit_code = 0;
 	data.eof = 0;
 	data.here_doc = NULL;
@@ -92,7 +93,7 @@ int	main(int argc, char **argv, char **envp)
 		ft_error2("Error: too many arguments", NULL, &data, 127);
 		final_exit(&data);
 	}
-	signal_handler(1);
+	signal_handler();
 	data.envp = NULL;
 	init_envp(&data, envp);
 	while (!data.eof)

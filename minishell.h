@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 17:38:24 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/17 13:10:01 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/17 18:14:18 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 
 # ifndef GLOBAL_SIG
 # define GLOBAL_SIG
-extern int g_sig;
+extern int g_pid;
 # endif
 
 struct		s_envp;
@@ -77,6 +77,6 @@ typedef struct	s_data
 # include "execute.h"
 
 int		ft_error2(char *string, char *name, t_data *data, int code);
-void	signal_handler(int parent);
+void	signal_handler(void);
 
 #endif
