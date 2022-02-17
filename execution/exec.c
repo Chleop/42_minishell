@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 11:19:50 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/16 18:13:57 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/17 16:15:52 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	exec_nonbuiltins(t_cmd *cmd)
 	else
 	{
 		convert_envp(cmd->data->envp, &envp_tab);
+		cmd->data->exit_code = 0;
 		if (execve(cmd->param[0], cmd->param, envp_tab) == -1)
 			ft_error2(strerror(errno), cmd->param[0], cmd->data, 126);
 		ft_del_stringtab(&envp_tab);
@@ -41,16 +42,19 @@ int	exec_builtins(t_cmd *cmd)
 		ft_export_fork(cmd);
 	else
 		return (0);
+	cmd->data->exit_code = 0;
 	return (1);
 }
 
 int	fork_function(t_cmd *cmd)
 {
+	//signal_handler(0);
 	cmd->data->process_id[cmd->id] = fork();
 	if (cmd->data->process_id[cmd->id] == -1)
 		return (ft_error2(strerror(errno), NULL, cmd->data, 1));
 	else if (cmd->data->process_id[cmd->id] == 0)
-	{
+	{	
+		signal_handler(0);
 		if (!redirect_io(cmd))
 			final_exit(cmd->data);
 		if (cmd->data->nr_cmds > 1)
@@ -60,6 +64,7 @@ int	fork_function(t_cmd *cmd)
 		final_exit(cmd->data);
 		return (1);
 	}
+	//signal_handler(1);
 	return (0);
 }
 

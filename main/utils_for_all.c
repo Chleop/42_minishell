@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:26:28 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/16 16:39:24 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/17 15:29:54 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	final_exit(t_data *data)
 
 	ft_free_data(data, 1);
 	ex_code = data->exit_code;
-	data->exit_code = 0;
+//	data->exit_code = 0;
 	exit (ex_code);
 }
 

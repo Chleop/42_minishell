@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 15:06:37 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/16 13:57:44 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/17 14:45:03 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	chdir_path(t_data *data, t_cd *cd)
 	if (cd->path)
 	{
 		if (chdir(cd->path) == -1)
-			ft_error2(strerror(errno), cd->path, data, 128);
+			ft_error2(strerror(errno), cd->path, data, 1);
 		else
 			finish_cd(data, cd);
 	}

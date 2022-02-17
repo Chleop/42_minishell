@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:22:30 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/17 10:40:04 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/17 16:37:00 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_sig;
 
 void	lexer_parser(t_data *data, int *ret)
 {
@@ -19,9 +21,6 @@ void	lexer_parser(t_data *data, int *ret)
 
 	input = NULL;
 	token = NULL;
-	//signal_handler(data, 1);
-	//my idea was to catch ctrl-c with this, saying we are in the parent (1),
-	//so we want to display '^C' and then a new prompt
 	input = readline(PURPLE "our_minishell:~$ " RESET);
 	if (!input)
 	{
@@ -44,6 +43,7 @@ void	loop_through_commands(t_data *data)
 	int		current_stdin;
 	int		current_stdout;
 	int		i;
+	int		status;
 
 	i = -1;
 	while (++i < data->nr_cmds)
@@ -56,7 +56,10 @@ void	loop_through_commands(t_data *data)
 				reverse_redirection(&data->cmd[i],
 					current_stdin, current_stdout);
 		}
-		else if (exec_prefork_builtins(&(data->cmd[i])) == 2)
+		status = exec_prefork_builtins(&(data->cmd[i]));
+		if (status == 1)
+			data->exit_code = 0;
+		if (status == 2)
 			fork_function(&data->cmd[i]);
 	}
 }
@@ -74,11 +77,6 @@ void	execute_commands(t_data *data, int *ret)
 			loop_through_commands(data);
 		finish_up(data);
 	}
-}
-
-void	handle(int sig)
-{
-	signal(sig, SIG_IGN);
 }
 
 int	main(int argc, char **argv, char **envp)
