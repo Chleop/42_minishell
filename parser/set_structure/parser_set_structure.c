@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 17:54:01 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/17 14:41:12 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/17 15:59:27 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,26 @@ void	expand_cmd_path(t_data *data)
 // structure or in the file in/out tables. Finally expand_path expands 
 // the command paths.
 
+// int	expand_and_classify(t_data *data, char **token, int cmd_nr, int tok_nr)
+// {
+
+// 	if (ft_strchr(data->cmd[cmd_nr].tok[tok_nr], '$'))
+// 	{
+// 		manage_expansions(data, *token, );
+// 		if (!(*token))
+// 			return (0);
+// 		if (!classify_token2(data, token, cmd_nr, tok_nr))
+// 			return (0);
+// 	}
+// 	else if (!classify_token1(data, token, cmd_nr, tok_nr))
+// 		return (0);
+// 	return (1);
+// }
+
 int	set_into_structure(t_data *data)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (i < data->nr_cmds)
@@ -68,16 +84,45 @@ int	set_into_structure(t_data *data)
 				|| !classify_token2(data, &data->cmd[i].tok[j], i, j))
 					return (0);
 			}
-			else 
-			{
-				if (!remove_quotes(&data->cmd[i].tok[j], data)
-				|| !classify_token1(data, &data->cmd[i].tok[j], i, j))
-					return (0);
-			}
+			else if (!classify_token1(data, &data->cmd[i].tok[j], i, j))
+				return (0);
 			j++;
 		}
 		i++;
 	}
+	remove_quotes_inside_struct(data);
 	expand_cmd_path(data);
 	return (1);
 }
+
+// int	set_into_structure(t_data *data)
+// {
+// 	int		i;
+// 	int		j;
+
+// 	i = 0;
+// 	while (i < data->nr_cmds)
+// 	{
+// 		j = 0;
+// 		while (j < data->cmd[i].nr_tok)
+// 		{
+// 			if (data->cmd[i].qualif[j] != HERE_END
+// 				&& ft_strchr(data->cmd[i].tok[j], '$'))
+// 			{
+// 				if (!manage_expansions(data, &data->cmd[i].tok[j], 0)
+// 				|| !classify_token2(data, &data->cmd[i].tok[j], i, j))
+// 					return (0);
+// 			}
+// 			else 
+// 			{
+// 				if (!remove_quotes(&data->cmd[i].tok[j], data)
+// 				|| !classify_token1(data, &data->cmd[i].tok[j], i, j))
+// 					return (0);
+// 			}
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// 	expand_cmd_path(data);
+// 	return (1);
+// }

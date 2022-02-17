@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:16:35 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/17 11:43:30 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/17 15:39:09 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ char	*get_path(t_data *data, char *cmd);
 int		set_into_structure(t_data *data);
 int		is_quoted(char *token);
 
+int		remove_quotes_inside_struct(t_data *data);
 int		remove_quotes(char **token, t_data *data);
 void	add_quotes(char **param, char *quote);
 

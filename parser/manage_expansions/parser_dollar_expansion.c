@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:56:24 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/16 10:45:45 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/17 16:20:19 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ char	*replace_subtok_by_expansion(t_data *data, char **param, int here_doc)
 	char	*new_param;
 
 	quote = is_quoted(*param);
-	remove_quotes(param, data);
 	if (!here_doc && quote == '\'')
 		new_param = ft_strdup(*param);
 	else 
