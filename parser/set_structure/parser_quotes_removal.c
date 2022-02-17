@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:51:50 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/17 13:17:47 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/17 14:45:12 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,6 @@ char	*remove_c(char *str, int i, char c)
 	if (ft_strlen(str) > 2)
 		copy_without_tabs(&new_str, index_tab, str);
 	printf("new str = %s\n", new_str);
-	// exit(1);
 	free (index_tab);
 	return (new_str);
 }
@@ -165,17 +164,9 @@ int	remove_quotes(char **token, t_data *data)
 		*token = remove_c(*token, i, quote);
 		if (!*token)
 			return (ft_error2("Error: malloc failed", NULL, data, 1));
-		// printf("quote = %c, tempt = %s, i + 1 = %d\n", quote, temp, i + 1);
 		i = is_paired(quote, temp, i + 1) - 1;
-		// printf("i = %d\n", i);
 		free (temp);
 		temp = NULL;
-		// printf("token =%s\n", *token);
-		// exit(1);
-		// if (((*token + i)[0] != '\0') && ((*token + i)[0] != '\n'))
-			// printf("token + i =%s\n", *token +i);
-		// else
-			// printf("token + i n'existe pas\n");
 		if (*token + i)
 			quote = is_quoted(*token + i);
 		else
