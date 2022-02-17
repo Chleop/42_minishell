@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 17:38:24 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/16 18:42:08 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/17 13:10:01 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,13 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-struct	s_envp;
-struct	s_data;
+# ifndef GLOBAL_SIG
+# define GLOBAL_SIG
+extern int g_sig;
+# endif
+
+struct		s_envp;
+struct		s_data;
 
 typedef struct s_cmd
 {
