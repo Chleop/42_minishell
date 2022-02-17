@@ -6,13 +6,39 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:51:50 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/16 18:27:44 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/17 13:17:47 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	*locate_c_in_string(char *token, char c)
+int	is_paired(char q, char *input, int i)
+{
+	while (input[i])
+	{
+		if (input[i] == q)
+			return (i);
+		i++;
+	}
+	return (0);
+}
+
+int	is_quoted(char *token)
+{
+	int	i;
+
+	i = 0;
+	while ((token[i] != '\0') && (token[i] != '\n'))
+	{
+		if (((token[i] == '\'') || (token[i] == '\"'))
+			&& is_paired(token[i], token, i + 1))
+			return (token[i]);
+		i++;
+	}
+	return (0);
+}
+
+int	*locate_c_in_string(char *token, char c, int len)
 {
 	int	i;
 	int	j;
@@ -20,7 +46,7 @@ int	*locate_c_in_string(char *token, char c)
 
 	i = 0;
 	j = 0;
-	while ((token[i]) && c)
+	while ((token[i]) && c && j < 2)
 	{
 		if (token[i] == c)
 			j++;
@@ -29,11 +55,11 @@ int	*locate_c_in_string(char *token, char c)
 	index_tab = ft_calloc(j + 1, sizeof(int));
 	i = 0;
 	j = 0;
-	while (token[i] && c)
+	while ((token[i]) && c && j < 2)
 	{
 		if (token[i] == c)
 		{
-			index_tab[j] = i;
+			index_tab[j] = i + len;
 			j++;
 		}
 		i++;
@@ -104,20 +130,23 @@ void	add_quotes(char **param, char *quote)
 	free(temp);
 }
 
-char	*remove_c(char *str, char c)
+char	*remove_c(char *str, int i, char c)
 {
 	int		*index_tab;
 	char	*new_str;
 
+	printf("str = %s\n", str);
 	if (ft_strlen(str) < 2)
 		return (NULL);
-	index_tab = locate_c_in_string(str, c);
-	printf("indextab[0] = %d, indextab[1] = %d\n", index_tab[0], index_tab[1]);
+	index_tab = locate_c_in_string(str + i, c, ft_strlen(str) - ft_strlen(str + i));
 	new_str = ft_calloc(ft_strlen(str) - 1, sizeof(char));
+	printf("size of new string after quotes removal = %lu\n", ft_strlen(str) -1);
 	if (!new_str)
 		return (NULL);
 	if (ft_strlen(str) > 2)
 		copy_without_tabs(&new_str, index_tab, str);
+	printf("new str = %s\n", new_str);
+	// exit(1);
 	free (index_tab);
 	return (new_str);
 }
@@ -126,18 +155,31 @@ int	remove_quotes(char **token, t_data *data)
 {
 	char	quote;
 	char	*temp;
+	int		i;
 
-	quote = is_quoted(*token);
+	i = 0;
+	quote = is_quoted(*token + i);
 	while (quote)
 	{
 		temp = *token;
-		*token = remove_c(*token, quote);
+		*token = remove_c(*token, i, quote);
 		if (!*token)
 			return (ft_error2("Error: malloc failed", NULL, data, 1));
+		// printf("quote = %c, tempt = %s, i + 1 = %d\n", quote, temp, i + 1);
+		i = is_paired(quote, temp, i + 1) - 1;
+		// printf("i = %d\n", i);
 		free (temp);
 		temp = NULL;
-		quote = is_quoted(*token);
+		// printf("token =%s\n", *token);
+		// exit(1);
+		// if (((*token + i)[0] != '\0') && ((*token + i)[0] != '\n'))
+			// printf("token + i =%s\n", *token +i);
+		// else
+			// printf("token + i n'existe pas\n");
+		if (*token + i)
+			quote = is_quoted(*token + i);
+		else
+			break ;
 	}
 	return (1);
 }
-

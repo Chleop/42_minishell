@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 17:46:43 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/16 12:35:56 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/17 11:32:22 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	get_here_file(t_data *data, char **token)
 	if (quoted)
 	{
 		temp = *token;
-		*token = remove_c(*token, quoted);
+		remove_quotes(token, data);
 		free_string(&temp);
 	}
 	open_here_file(data, &fd);

@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:16:35 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/16 15:31:13 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/17 11:43:30 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ int		grammatize_tokens(t_data *data);
 
 int		count_strings(char **token);
 
-int		*locate_c_in_string(char *token, char c);
+int		*locate_c_in_string(char *token, char c, int len);
 int		*locate_pipes(char **token);
-char	*remove_c(char *str, char c);
+char	*remove_c(char *str, int i, char c);
 int		parse(t_data *data, char **token);
 char	*get_expansion(t_data *data, char *to_be_exp);
 char	*get_path(t_data *data, char *cmd);

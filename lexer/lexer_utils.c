@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 18:38:33 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/07 15:40:42 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/17 10:47:25 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,4 @@ void	add_to_token(char ***token, t_lex *lex, char input)
 		}
 		(*token)[lex->tok_nb - 1][lex->char_nb - 1] = input;
 	}
-}
-
-int	is_paired(char q, char *input, int i)
-{
-	while (input[i])
-	{
-		if (input[i] == q)
-			return (i);
-		i++;
-	}
-	return (0);
 }

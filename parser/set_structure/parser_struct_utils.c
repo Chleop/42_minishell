@@ -6,26 +6,11 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 13:34:16 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/16 15:31:10 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/17 10:43:42 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	is_quoted(char *token)
-{
-	int	i;
-
-	i = 0;
-	while ((token[i] != '\0') && (token[i] != '\n'))
-	{
-		if (((token[i] == '\'') || (token[i] == '\"'))
-			&& is_paired(token[i], token, i + 1))
-			return (token[i]);
-		i++;
-	}
-	return (0);
-}
 
 int	set_redirections(t_data *data, char **token, int n, int qualif)
 {

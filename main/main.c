@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:22:30 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/16 18:42:44 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/17 10:40:04 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	lexer_parser(t_data *data, int *ret)
 	//my idea was to catch ctrl-c with this, saying we are in the parent (1),
 	//so we want to display '^C' and then a new prompt
 	input = readline(PURPLE "our_minishell:~$ " RESET);
-	printf("input = %s\n", input);
 	if (!input)
 	{
 		data->eof = 1;
