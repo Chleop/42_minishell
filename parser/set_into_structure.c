@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 13:34:16 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/18 12:58:21 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/18 15:21:10 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@ int	increment_quoted_part(int i, char **token)
 	quote = is_quoted(*token + i);
 	if (quote)
 	{
-		while ((*token)[i] != quote)
+		while (((*token)[i] && (*token)[i] != quote))
 			i++;
-		i = is_paired(quote, *token + i, i + 1) + i;
+		if ((*token)[i])
+			i = is_paired(quote, *token, i + 1) + 1;
 	}
 	return (i);
 }

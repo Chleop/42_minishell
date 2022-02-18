@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 13:32:12 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/18 13:53:20 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/18 15:23:52 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,22 @@ int	get_end2(char *token, int i, int j)
 void	if_dollar_expand(t_data *data, char **subtok)
 {
 	char	*temp;
-	
+
 	if (ft_strchr(*subtok, '$'))
 	{
 		temp = *subtok;
 		*subtok = expand(data, *subtok);
 		free(temp);
 	}
+}
+
+void	join_subtok(char **subtok, char **new_param)
+{
+	char	*temp;
+
+	temp = *new_param;
+	*new_param = ft_strjoin(*new_param, *subtok);
+	free(temp);
 }
 
 char	*double_quoted_exp(t_data *data, char *param)
@@ -53,7 +62,6 @@ char	*double_quoted_exp(t_data *data, char *param)
 	int		j;
 	int		end;
 	char	*subtok;
-	char	*temp;
 
 	j = 0;
 	new_param = ft_strdup("\0");
@@ -64,10 +72,8 @@ char	*double_quoted_exp(t_data *data, char *param)
 		j++;
 		subtok = ft_substr(param, i, end - i);
 		if_dollar_expand(data, &subtok);
-		temp = new_param;
-		new_param = ft_strjoin(new_param, subtok);
+		join_subtok(&subtok, &new_param);
 		free(subtok);
-		free(temp);
 		i = end;
 	}
 	return (new_param);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_for_all.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:26:28 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/17 15:29:54 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/18 15:34:53 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ void	final_exit(t_data *data)
 
 	ft_free_data(data, 1);
 	ex_code = data->exit_code;
-//	data->exit_code = 0;
 	exit (ex_code);
 }
 
