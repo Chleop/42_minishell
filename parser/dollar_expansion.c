@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_dollar_expansion.c                          :+:      :+:    :+:   */
+/*   dollar_expansion.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:56:24 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/17 16:20:19 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/18 13:47:02 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ char	*expand(t_data *data, char *token)
 	pre_param = ft_substr(token, 0, i);
 	exp = get_expansion(data, token + i + 1);
 	expanded_token = ft_strjoin(pre_param, exp);
-	free(exp);
-	free(pre_param);
+	free_string(&exp);
+	free_string(&pre_param);
 	return (expanded_token);
 }
 
@@ -43,14 +43,14 @@ char	*replace_subtok_by_expansion(t_data *data, char **param, int here_doc)
 	quote = is_quoted(*param);
 	if (!here_doc && quote == '\'')
 		new_param = ft_strdup(*param);
-	else 
+	else
 	{
 		if (here_doc || quote == '\"')
 			new_param = double_quoted_exp(data, *param);
 		else
 			new_param = expand(data, *param);
 	}
-	free(*param);
+	free_string(param);
 	return (new_param);
 }
 
@@ -80,6 +80,15 @@ int	get_end(char *token, int i)
 // Joins the subtoken to the preceding ones
 // Sets the start of the next subtoken to the end of the preceding one + 1
 
+void	replace_token_by_newtok(char **token, char **new_tok)
+{
+	char	*temp;
+
+	temp = *token;
+	*token = *new_tok;
+	free_string(&temp);
+}
+
 int	manage_expansions(t_data *data, char **token, int here_doc)
 {
 	int		i;
@@ -100,13 +109,11 @@ int	manage_expansions(t_data *data, char **token, int here_doc)
 			subtok = replace_subtok_by_expansion(data, &subtok, here_doc);
 		temp = new_tok;
 		new_tok = ft_strjoin(new_tok, subtok);
-		free(subtok);
-		free(temp);
+		free_string(&temp);
+		free_string(&subtok);
 		if (end != (int)ft_strlen((*token)) + 1)
 			i = end + 1;
 	}
-	temp = *token;
-	*token = new_tok;
-	free(temp);
+	replace_token_by_newtok(token, &new_tok);
 	return (1);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_double_quotes_dollar_expansion.c            :+:      :+:    :+:   */
+/*   double_quoted_dollar_expansion.c                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 13:32:12 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/17 16:20:47 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/18 13:53:20 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,23 @@ int	get_end2(char *token, int i, int j)
 			i++;
 		while ((token[i] != '\'') && (token[i] != '\"') && (token[i] != '$')
 			&& (token[i] != ' ') && (token[i] != '\0') && (token[i] != '\n'))
-				i++;
+			i++;
 	}
 	else
-		return(ft_strlen(token));
+		return (ft_strlen(token));
 	return (i);
+}
+
+void	if_dollar_expand(t_data *data, char **subtok)
+{
+	char	*temp;
+	
+	if (ft_strchr(*subtok, '$'))
+	{
+		temp = *subtok;
+		*subtok = expand(data, *subtok);
+		free(temp);
+	}
 }
 
 char	*double_quoted_exp(t_data *data, char *param)
@@ -51,12 +63,7 @@ char	*double_quoted_exp(t_data *data, char *param)
 		end = get_end2(param, i, j);
 		j++;
 		subtok = ft_substr(param, i, end - i);
-		if (ft_strchr(subtok, '$'))
-		{
-			temp = subtok;
-			subtok = expand(data, subtok);
-			free(temp);
-		}
+		if_dollar_expand(data, &subtok);
 		temp = new_param;
 		new_param = ft_strjoin(new_param, subtok);
 		free(subtok);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   here_doc.c                                         :+:      :+:    :+:   */
+/*   set_redirection_tabs_and_here_doc.c                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 17:46:43 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/17 11:32:22 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/18 13:47:33 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	open_here_file(t_data *data, int *fd)
 void	read_here_doc(t_data *data, char **token, int fd)
 {
 	char	*input;
-	
+
 	input = NULL;
 	while (1)
 	{
@@ -75,4 +75,24 @@ void	get_here_file(t_data *data, char **token)
 	open_here_file(data, &fd);
 	read_here_doc(data, token, fd);
 	close (fd);
+}
+
+int	set_redirections_tabs(t_data *data, char **token, int n, int qualif)
+{
+	if (qualif == HERE_END)
+	{
+		get_here_file(data, token);
+		add_tab(&(data->cmd[n].i), &(data->cmd[n].nr_in), data->here_doc);
+	}
+	else if (qualif == RED_IN)
+		add_tab(&(data->cmd[n].i), &(data->cmd[n].nr_in), *token);
+	else
+	{
+		add_tab(&(data->cmd[n].o), &(data->cmd[n].nr_out), *token);
+		if (qualif == RED_OUT_S)
+			add_int(&(data->cmd[n].type), data->cmd[n].nr_out, 1);
+		else
+			add_int(&(data->cmd[n].type), data->cmd[n].nr_out, 2);
+	}
+	return (1);
 }

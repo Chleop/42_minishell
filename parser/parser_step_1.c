@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   parser_step_1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:55:08 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/17 16:21:05 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/18 13:39:06 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,44 @@ int	review_operators(char **token, t_data *data)
 					|| (token[i - 1][0] == '<')))
 					|| (((i - 1) > -1) && (token[i][0] == '|')
 					&& (token[i - 1][0] == '|')))
-					return (ft_error2("Syntax error", token[i], data, 2));
+				return (ft_error2("Syntax error", token[i], data, 2));
+		}
+		i++;
+	}
+	return (1);
+}
+
+int	is_builtin(t_cmd *cmd)
+{
+	if ((ft_strncmp(cmd->param[0], "echo\0", 5) == 0)
+		|| (ft_strncmp(cmd->param[0], "pwd\0", 4) == 0)
+		|| (ft_strncmp(cmd->param[0], "env\0", 4) == 0)
+		|| (ft_strncmp(cmd->param[0], "cd\0", 3) == 0)
+		|| (ft_strncmp(cmd->param[0], "export\0", 7) == 0)
+		|| (ft_strncmp(cmd->param[0], "unset\0", 6) == 0)
+		|| (ft_strncmp(cmd->param[0], "exit\0", 5) == 0))
+		return (1);
+	return (0);
+}
+
+int	expand_cmd_path(t_data *data)
+{
+	int		i;
+	char	*temp;
+
+	i = 0;
+	while (i < data->nr_cmds)
+	{
+		if (!data->cmd[i].param)
+			return (1);
+		if (!is_builtin(&(data->cmd[i])))
+		{
+			temp = data->cmd[i].param[0];
+			data->cmd[i].param[0] = get_path(data, data->cmd[i].param[0]);
+			if (!data->cmd[i].param[0])
+				return (0);
+			free (temp);
+			temp = NULL;
 		}
 		i++;
 	}
@@ -48,11 +85,13 @@ int	parse(t_data *data, char **token)
 		return (0);
 	if (!initialize_cmds(data, token))
 		return (0);
-	// print_char_table("token", token);
 	if (!grammatize_tokens(data))
 		return (0);
-	if (!set_into_structure(data))
+	if (!expand_and_set_into_structure(data))
 		return (0);
-	// print_cmd_parameters(data);
+	if (!remove_quotes_inside_struct(data))
+		return (0);
+	if (!expand_cmd_path(data))
+		return (0);
 	return (1);
 }

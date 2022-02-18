@@ -1,36 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_struct_utils.c                              :+:      :+:    :+:   */
+/*   set_into_structure.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 13:34:16 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/17 16:16:10 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/18 12:58:21 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	set_redirections(t_data *data, char **token, int n, int qualif)
-{
-	if (qualif == HERE_END)
-	{
-		get_here_file(data, token);
-		add_tab(&(data->cmd[n].i), &(data->cmd[n].nr_in), data->here_doc);
-	}
-	else if (qualif == RED_IN)
-		add_tab(&(data->cmd[n].i), &(data->cmd[n].nr_in), *token);
-	else
-	{
-		add_tab(&(data->cmd[n].o), &(data->cmd[n].nr_out), *token);
-		if (qualif == RED_OUT_S)
-			add_int(&(data->cmd[n].type), data->cmd[n].nr_out, 1);
-		else
-			add_int(&(data->cmd[n].type), data->cmd[n].nr_out, 2);
-	}
-	return (1);
-}
 
 // Browse the token, if there is a space that is not quoted, put 
 // the chars before the space in one param and continue browsing
@@ -54,13 +34,6 @@ int	increment_quoted_part(int i, char **token)
 // if the token contains non quoted spaces, then it seperates the token into 
 // several parameters
 // and adds each parameter to the parameter structure
-
-int	set_param1(t_cmd *cmd, char **token)
-{
-	if (!add_tab(&((*cmd).param), &((*cmd).nr_param), *token))
-		return (0);
-	return (1);
-}
 
 int	set_param2(t_cmd *cmd, char **token)
 {
@@ -94,19 +67,22 @@ int	set_param2(t_cmd *cmd, char **token)
 // if the token is a command or a param, set into param table
 // otherwise set into redirections tables
 
-int	classify_token1(t_data *data, char **token, int n, int tok_nr)
+int	set_into_structure1(t_data *data, char **token, int n, int tok_nr)
 {
 	int	qualif;
 
 	qualif = data->cmd[n].qualif[tok_nr];
 	if ((qualif == CMD) || (qualif == PARAM))
-		set_param1(&(data->cmd[n]), token);
+	{
+		if (!add_tab(&(data->cmd[n].param), &(data->cmd[n].nr_param), *token))
+			return (0);
+	}
 	else if ((qualif != OPERATOR) && (qualif != EMPTY))
-		set_redirections(data, token, n, qualif);
+		set_redirections_tabs(data, token, n, qualif);
 	return (1);
 }
 
-int	classify_token2(t_data *data, char **token, int n, int tok_nr)
+int	set_into_structure2(t_data *data, char **token, int n, int tok_nr)
 {
 	int	qualif;
 
@@ -114,6 +90,6 @@ int	classify_token2(t_data *data, char **token, int n, int tok_nr)
 	if ((qualif == CMD) || (qualif == PARAM))
 		set_param2(&(data->cmd[n]), token);
 	else if ((qualif != OPERATOR) && (qualif != EMPTY))
-		set_redirections(data, token, n, qualif);
+		set_redirections_tabs(data, token, n, qualif);
 	return (1);
 }

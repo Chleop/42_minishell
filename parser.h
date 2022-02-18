@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:16:35 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/17 15:39:09 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/18 13:30:12 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,15 @@
 
 # define EMPTY		999
 # define OPERATOR	1
-// # define VAR		2
 # define RED_IN		3 
 # define RED_OUT_S	4
 # define RED_OUT_D	5
 # define HERE_END	6
 # define CMD		7
 # define PARAM		8
+
+# define NO_EXP		1
+# define EXP		2
 
 struct	s_data;
 
@@ -67,32 +69,34 @@ void	condition_7(t_lex *lex, char ***token);
 
 //PARSER
 int		initialize_data(t_data *data, char **token);
-int		set_end(t_data *data, int i);
-int		divide_token(t_data *data, char **token, int *start, int i);
 int		initialize_cmds(t_data *data, char **token);
 int		grammatize_tokens(t_data *data);
+int		expand_and_set_into_structure(t_data *data);
 
-int		count_strings(char **token);
+int		set_into_structure1(t_data *data, char **token, int n, int tok_nr);
+int		set_into_structure2(t_data *data, char **token, int n, int tok_nr);
+int		set_redirections_tabs(t_data *data, char **token, int n, int qualif);
+
+
+int		remove_quotes_inside_struct(t_data *data);
+int		remove_quotes(char **token, t_data *data);
+
+int		is_quoted(char *token);
+int		is_paired(char q, char *input, int i);
+int		*locate_c_in_string(char *token, char c, int len);
+void	copy_without_tabs(char **new_str, int *index_tab, char *str);
+
 
 int		*locate_c_in_string(char *token, char c, int len);
-int		*locate_pipes(char **token);
-char	*remove_c(char *str, int i, char c);
 int		parse(t_data *data, char **token);
 char	*get_expansion(t_data *data, char *to_be_exp);
 char	*get_path(t_data *data, char *cmd);
 
-int		set_into_structure(t_data *data);
-int		is_quoted(char *token);
 
-int		remove_quotes_inside_struct(t_data *data);
-int		remove_quotes(char **token, t_data *data);
 void	add_quotes(char **param, char *quote);
 
 int		manage_expansions(t_data *data, char **token, int here_doc);
 int		seperate_subtoken_and_expand(t_data *data, char **token, int here_doc, int type);
-int		classify_token1(t_data *data, char **token, int cmd_nr, int tok_nr);
-int		classify_token2(t_data *data, char **token, int cmd_nr, int tok_nr);
-void	expand_cmd_path(t_data *data);
 char	*double_quoted_exp(t_data *data, char *param);
 char	*expand(t_data *data, char *token);
 int		get_end(char *token, int i);

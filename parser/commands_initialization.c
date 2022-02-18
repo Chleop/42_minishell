@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_initialization.c                            :+:      :+:    :+:   */
+/*   commands_initialization.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 16:11:06 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/11 15:18:45 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/18 12:21:56 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,26 @@ int	divide_token(t_data *data, char **token, int *start, int i)
 	{
 		len = ft_strlen(token[*start]);
 		data->cmd[i].tok[j] = (char *)ft_calloc(len + 1, sizeof(char));
+		if (!data->cmd[i].tok[j])
+			return (ft_error2("Error: malloc failed", NULL, data, 1));
 		if (!ft_memcpy(data->cmd[i].tok[j], token[*start], len))
 			return (0);
 		j++;
 		*start = *start + 1;
 	}
 	return (1);
+}
+
+void	initialize_other_params_to_null(t_data *data, int i)
+{
+	data->cmd[i].param = NULL;
+	data->cmd[i].nr_param = 0;
+	data->cmd[i].i = NULL;
+	data->cmd[i].nr_in = 0;
+	data->cmd[i].o = NULL;
+	data->cmd[i].nr_out = 0;
+	data->cmd[i].type = NULL;
+	data->process_id[i] = 0;
 }
 
 int	initialize_cmds(t_data *data, char **token)
@@ -55,33 +69,10 @@ int	initialize_cmds(t_data *data, char **token)
 			return (ft_error2("Error: malloc failed", NULL, data, 1));
 		if (!divide_token(data, token, &start, i))
 			return (0);
-		data->cmd[i].param = NULL;
-		data->cmd[i].nr_param = 0;
-		data->cmd[i].i = NULL;
-		data->cmd[i].nr_in = 0;
-		data->cmd[i].o = NULL;
-		data->cmd[i].nr_out = 0;
-		data->cmd[i].type = NULL;
 		data->cmd[i].id = i;
 		data->cmd[i].data = data;
-		data->process_id[i] = 0;
+		initialize_other_params_to_null(data, i);
 		start++;
 	}
-	return (1);
-}
-
-int	initialize_data(t_data *data, char **token)
-{
-	int	nb_pip;
-
-	data->nr_token = count_strings(token);
-	data->pipe_index = locate_pipes(token);
-	nb_pip = 0;
-	while (data->pipe_index[nb_pip])
-		nb_pip++;
-	data->nr_cmds = nb_pip + 1;
-	data->cmd = (t_cmd *)ft_calloc(data->nr_cmds, sizeof(t_cmd));
-	if (!data->cmd)
-		return (ft_error2("Error: malloc failed", NULL, data, 1));
 	return (1);
 }

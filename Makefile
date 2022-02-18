@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+         #
+#    By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/14 15:32:57 by avan-bre          #+#    #+#              #
-#    Updated: 2022/02/17 11:29:48 by avan-bre         ###   ########.fr        #
+#    Updated: 2022/02/18 13:32:59 by cproesch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,15 +37,10 @@ M_SRCS	=	main.c set_envp.c envp_utils.c utils_for_all.c free_utils.c \
 E_SRCS	=	redirection.c pipes.c exec.c BI_cd.c BI_cd2.c BI_cd3.c BI_env_echo_pwd.c \
 			BI_export.c BI_export2.c BI_unset.c BI_exit.c free_exec.c
 L_SRCS	=	lexer.c lexer_functions_1.c lexer_functions_2.c lexer_utils.c
-P_SRCS	=	general_functions/parser.c general_functions/parser_initialization.c \
-			general_functions/parser_utils.c general_functions/parser_grammar.c \
-			set_structure/parser_quotes_removal.c \
-			set_structure/parser_struct_utils.c \
-			set_structure/parser_set_structure.c \
-			set_structure/here_doc.c \
-			manage_expansions/parser_dollar_expansion.c \
-			manage_expansions/parser_command_path.c \
-			manage_expansions/parser_double_quotes_dollar_expansion.c
+P_SRCS	=	parser_step_1.c data_initialization.c commands_initialization.c grammar.c \
+			parser_step_2.c set_into_structure.c set_redirection_tabs_and_here_doc.c \
+			dollar_expansion.c double_quoted_dollar_expansion.c \
+			quotes_removal.c quotes_removal_utils.c parser_command_path.c
 M_DIR	=	main/
 E_DIR	=	execution/
 L_DIR	=	lexer/
