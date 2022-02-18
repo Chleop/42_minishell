@@ -6,23 +6,11 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:51:50 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/18 13:48:12 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/18 15:38:20 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	add_quotes(char **param, char *quote)
-{
-	char	*temp;
-
-	temp = *param;
-	*param = ft_strjoin(quote, *param);
-	free(temp);
-	temp = *param;
-	*param = ft_strjoin(*param, quote);
-	free(temp);
-}
 
 char	*remove_c(char *str, int i, char c)
 {
