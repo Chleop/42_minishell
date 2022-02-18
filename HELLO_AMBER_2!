@@ -1,15 +1,27 @@
 Hello!
 
 So this friday I have :
-> tested the parser and everything I tested passed. YOUPIII!    OK
-> cleaned, reordered and normed the parser                      OK
-> made the last signal work (SIGQUIT in children). YOUPIIII!    OK
+> tested the parser and everything I tested passed. YOUPIII!             OK
+> cleaned, reordered and normed the parser                               OK
+> made the last signal work (SIGQUIT in children). YOUPIIII!             OK
     Thanks to Thomas (again... :D) : it did not work for children 
     because if we use the SIG_IGN... Well the signal is ignored 
     from now on. With sigaction we tell the program what to do 
     with the SIGQUIT so we just tell it to "not print" the ^\
     and that's it! Then we can tell him what we want for the children
 
-> when we press ctrl+C or ctrl+\ after a builtin that is forked
-(for exemple echo), the signal does not behave like we want to: I think
-it's because we don't exit the builtin/child process
+We still have a few problems though :(
+> when we press ctrl+C or ctrl+\ after a builtin that is forked         NOT OK
+    (for exemple echo), the signal does not behave like we want to: 
+    I think it's because we don't exit the builtin/child process.
+> when we try to show the exit_code with "echo $?" in the parent        NOT OK
+    process, we get 0 everytime, I figured we might have to work 
+    with another global variable (we can do a structure) to be able
+    to update the exit_code from the handler.
+> when we try to show the exit_code with "echo $?", we don't get        NOT OK
+    the good exit_code for the children: I absolutely don't know why 
+    (as it's working when we exit normally and also with errors like 
+    "command not found"!...). Thomas has tried to help me on that one
+    too but he doesn't get it either :(.
+> still some norme to do notably on the header files but this should    NOT OK
+    be quick and easy !
