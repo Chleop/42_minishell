@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:16:35 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/18 15:39:25 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/18 15:47:44 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	condition_6(t_lex *lex, char ***token);
 void	condition_7(t_lex *lex, char ***token);
 
 //PARSER
+int		parse(t_data *data, char **token);
 int		initialize_data(t_data *data, char **token);
 int		initialize_cmds(t_data *data, char **token);
 int		grammatize_tokens(t_data *data);

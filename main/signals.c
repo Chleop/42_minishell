@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 12:53:55 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/17 18:17:22 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/18 17:32:07 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	catch_signal(int sig)
 			rl_redisplay();
 		}
 		if (sig == SIGQUIT)
-			signal(SIGQUIT, SIG_IGN);
+			ft_printf("\b\b  \b\b", 1);
 	}
 	else
 	{
@@ -35,14 +35,14 @@ void	catch_signal(int sig)
 		}
 		if (sig == SIGQUIT)
 		{
-			kill(1, SIGQUIT);
 			ft_printf("Quit (core dumped)\n", 1);
+			kill(1, SIGQUIT);
 		}
 		g_pid = 1;
 	}
 }
 
-void	signal_handler(void)
+void	signal_handler()
 {
 	struct sigaction	sa;
 
