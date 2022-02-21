@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 17:38:24 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/21 11:38:05 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/21 13:43:07 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,14 @@
 # ifndef GLOBAL_SIG
 #  define GLOBAL_SIG
 
-extern int	g_sig;
+typedef struct s_global
+{
+	int	g_sig;
+	int	exit_code;
+}	t_global;
+
+extern t_global	global;
+
 # endif
 
 struct		s_envp;
@@ -69,9 +76,10 @@ typedef struct s_data
 	int				pipe[2];
 	int				pipe_fd[1023][2];
 	int				process_id[1024];
-	int				exit_code;
+	// int				exit_code;
 	char			*here_doc;
 	int				eof;
+	int				inutile;
 }	t_data;
 
 # include "parser.h"

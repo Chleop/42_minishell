@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:22:30 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/21 12:09:08 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/21 13:29:58 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	g_sig;
+t_global	global;
 
 void	lexer_parser(t_data *data, int *ret)
 {
@@ -58,7 +58,7 @@ void	loop_through_commands(t_data *data)
 		}
 		status = exec_prefork_builtins(&data->cmd[i]);
 		if (status == 1)
-			data->exit_code = 0;
+			global.exit_code = 0;
 		if (status == 2)
 			fork_function(&data->cmd[i]);
 	}
@@ -84,8 +84,8 @@ int	main(int argc, char **argv, char **envp)
 	t_data	data;
 	int		ret;
 
-	g_sig = 0;
-	data.exit_code = 0;
+	global.g_sig = 0;
+	global.exit_code = 0;
 	data.eof = 0;
 	data.here_doc = NULL;
 	if ((argc > 1) || (argv[1]))

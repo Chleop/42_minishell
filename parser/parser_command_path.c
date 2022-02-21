@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 16:42:54 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/18 11:58:00 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/21 13:45:27 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ char	*exit_code_expansion(t_data *data, char *to_be_exp)
 	char	*exit_char;
 	char	*post;
 
-	exit_char = ft_itoa(data->exit_code);
+	// A SUPPRIMER!!!!!!
+	data->inutile = 0;
+	// A SUPPRIMER!!!!!!
+	exit_char = ft_itoa(global.exit_code);
 	post = ft_strdup(to_be_exp + 1);
 	exp = ft_strjoin(exit_char, post);
 	free(exit_char);

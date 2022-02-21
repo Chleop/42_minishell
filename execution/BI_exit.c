@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BI_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 10:57:26 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/17 15:21:07 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/21 13:29:03 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	ft_exit(t_cmd *cmd)
 		if (code == -1)
 			ft_error2("exit: numeric argument required", NULL, cmd->data, 2);
 		else
-			cmd->data->exit_code = code;
+			global.exit_code = code;
 	}
 	final_exit(cmd->data);
 }
