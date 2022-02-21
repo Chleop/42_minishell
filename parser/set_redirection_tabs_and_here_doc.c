@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_redirection_tabs_and_here_doc.c                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 17:46:43 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/21 15:19:51 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/21 16:38:52 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,14 @@ void	read_here_doc(t_data *data, char **token, int fd)
 	input = NULL;
 	while (1)
 	{
+		g_lobal.g_sig = -42;
 		input = readline(GREEN "heredoc> " RESET);
+		if (!input)
+		{
+			g_lobal.here_d = 1;
+			ft_printf("warning: here-document ended by end-of-file\n", 1);
+			return ;
+		}
 		if (!ft_strncmp(input, *token, ft_strlen(*token) + 1))
 		{
 			free_string(&input);

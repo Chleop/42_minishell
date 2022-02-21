@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/06 11:08:20 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/03 15:18:23 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/21 15:57:04 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,18 @@ int	pick_case(va_list arg_list, char c, int count, int fd)
 	if (c == 'd' || c == 'i')
 		count = count + print_int(va_arg(arg_list, int), 0, fd) - 2;
 	if (c == 'u')
-		count = count + print_uns_int(va_arg(arg_list, unsigned int), 0, fd) - 2;
+		count = count + print_uns_int(va_arg(arg_list, unsigned int),
+				0, fd) - 2;
 	if (c == 'x')
 		count = count + print_hex(va_arg(arg_list, unsigned int), 0, fd) - 2;
 	if (c == 'X')
-		count = count + print_hex_cap(va_arg(arg_list, unsigned int), 0, fd) - 2;
+		count = count + print_hex_cap(va_arg(arg_list, unsigned int),
+				0, fd) - 2;
 	if (c == 'p')
 	{
 		write(fd, "0x", 2);
-		count = count + print_ptr(va_arg(arg_list, long unsigned int), 2, fd) - 2;
+		count = count + print_ptr(va_arg(arg_list, long unsigned int), 2,
+				fd) - 2;
 	}
 	return (count);
 }

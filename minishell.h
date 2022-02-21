@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 17:38:24 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/21 15:50:08 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/21 16:07:48 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@
 # include <readline/history.h>
 # include "parser.h"
 # include "execute.h"
+# include "parser.h"
+# include "execute.h"
 
 # ifndef GLOBAL_SIG
 #  define GLOBAL_SIG
@@ -41,50 +43,15 @@ typedef struct s_global
 {
 	int	g_sig;
 	int	exit_code;
+	int	here_d;
 }	t_global;
 
 extern t_global	g_lobal;
 
 # endif
 
-struct		s_envp;
-struct		s_data;
-
-typedef struct s_cmd
-{
-	int				nr_tok;
-	char			**tok;
-	int				*qualif;
-	int				nr_param;
-	char			**param;
-	int				nr_in;
-	char			**i;
-	int				*fd_i;
-	int				nr_out;
-	char			**o;
-	int				*fd_o;
-	int				*type;
-	int				id;
-	struct s_data	*data;
-}	t_cmd;
-
-typedef struct s_data
-{
-	struct s_envp	*envp;
-	int				nr_token;
-	int				nr_cmds;
-	t_cmd			*cmd;
-	int				*pipe_index;
-	int				pipe[2];
-	int				pipe_fd[1023][2];
-	int				process_id[1024];
-	// int				exit_code;
-	char			*here_doc;
-	int				eof;
-}	t_data;
-
-# include "parser.h"
-# include "execute.h"
+struct			s_envp;
+struct			s_data;
 
 int		ft_error2(char *string, char *name, int code);
 void	signal_handler(void);

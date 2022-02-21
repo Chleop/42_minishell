@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 12:53:55 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/21 15:19:28 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/21 16:23:38 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,10 @@ void	catch_signal(int sig)
 {
 	if (!g_lobal.g_sig)
 		signal_ignore(sig);
+	else if (g_lobal.g_sig < 0)
+	{
+		g_lobal.here_d = 1;
+	}
 	else if (kill(g_lobal.g_sig, sig) == 0)
 		signal_kill(sig);
 	else

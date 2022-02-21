@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 11:19:50 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/21 15:19:28 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/21 15:52:51 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	fork_function(t_cmd *cmd)
 	return (0);
 }
 
-int	exec_prefork_builtins2(t_cmd *cmd, enum BI funct)
+int	exec_prefork_builtins2(t_cmd *cmd, enum e_BI funct)
 {
 	int		current_stdin;
 	int		current_stdout;
@@ -94,7 +94,7 @@ int	exec_prefork_builtins2(t_cmd *cmd, enum BI funct)
 
 int	exec_prefork_builtins(t_cmd *cmd)
 {
-	enum BI	funct;
+	enum e_BI	funct;
 
 	funct = 0;
 	if (ft_strncmp(cmd->param[0], "exit\0", 5) == 0)
