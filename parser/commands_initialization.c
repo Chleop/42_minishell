@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 16:11:06 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/18 12:21:56 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/21 15:04:01 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	divide_token(t_data *data, char **token, int *start, int i)
 		len = ft_strlen(token[*start]);
 		data->cmd[i].tok[j] = (char *)ft_calloc(len + 1, sizeof(char));
 		if (!data->cmd[i].tok[j])
-			return (ft_error2("Error: malloc failed", NULL, data, 1));
+			return (ft_error2("Error: malloc failed", NULL, 1));
 		if (!ft_memcpy(data->cmd[i].tok[j], token[*start], len))
 			return (0);
 		j++;
@@ -66,7 +66,7 @@ int	initialize_cmds(t_data *data, char **token)
 		data->cmd[i].nr_tok = end - start;
 		data->cmd[i].tok = ft_calloc((end - start + 1), sizeof(char *));
 		if (!data->cmd[i].tok)
-			return (ft_error2("Error: malloc failed", NULL, data, 1));
+			return (ft_error2("Error: malloc failed", NULL, 1));
 		if (!divide_token(data, token, &start, i))
 			return (0);
 		data->cmd[i].id = i;

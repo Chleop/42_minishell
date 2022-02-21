@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 15:54:42 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/21 11:38:06 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/21 15:19:28 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,7 @@ void	finish_up(t_data *data)
 		waitpid(data->process_id[i], &ret, 0);
 		data->process_id[i] = 0;
 		if (WIFEXITED(ret))
-			data->exit_code = WEXITSTATUS(ret);
-		else if (WIFSIGNALED(ret))
-		{
-			// printf("WTERMSIG = %d\n", WTERMSIG(ret));
-			data->exit_code = 130;
-			// printf("oui\n");
-		}
+			g_lobal.exit_code = WEXITSTATUS(ret);
 		data->process_id[i] = 0;
 	}
 }

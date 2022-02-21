@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 14:58:05 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/10 17:52:45 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/21 15:03:23 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ int	redirect_input(t_cmd *cmd)
 		if (cmd->fd_i[i] == -1)
 		{
 			free(cmd->fd_i);
-			return (ft_error2(strerror(errno), cmd->i[i], cmd->data, 1));
+			return (ft_error2(strerror(errno), cmd->i[i], 1));
 		}
 		if (access(cmd->i[i], R_OK) != 0)
 		{
 			free(cmd->fd_i);
-			return (ft_error2(strerror(errno), cmd->i[i], cmd->data, 1));
+			return (ft_error2(strerror(errno), cmd->i[i], 1));
 		}
 	}
 	if (cmd->fd_i)
@@ -50,12 +50,12 @@ int	redirect_output(t_cmd *cmd)
 		if (cmd->fd_o[i] == -1)
 		{
 			free(cmd->fd_o);
-			return (ft_error2(strerror(errno), cmd->o[i], cmd->data, 1));
+			return (ft_error2(strerror(errno), cmd->o[i], 1));
 		}
 		if (access(cmd->o[i], W_OK) != 0)
 		{
 			free(cmd->fd_o);
-			return (ft_error2(strerror(errno), cmd->o[i], cmd->data, 1));
+			return (ft_error2(strerror(errno), cmd->o[i], 1));
 		}
 	}
 	if (cmd->fd_o)
@@ -69,13 +69,13 @@ int	redirect_io(t_cmd *cmd)
 	{
 		cmd->fd_o = malloc(sizeof(int) * cmd->nr_out);
 		if (!cmd->fd_o)
-			return (ft_error2(strerror(errno), NULL, cmd->data, 1));
+			return (ft_error2(strerror(errno), NULL, 1));
 	}
 	if (cmd->nr_in)
 	{
 		cmd->fd_i = malloc(sizeof(int) * cmd->nr_in);
 		if (!cmd->fd_i)
-			return (ft_error2(strerror(errno), NULL, cmd->data, 1));
+			return (ft_error2(strerror(errno), NULL, 1));
 	}
 	if (!redirect_input(cmd))
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 17:46:43 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/18 13:47:33 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/21 15:19:51 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	open_here_file(t_data *data, int *fd)
 	}
 	*fd = open(data->here_doc, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	if (!fd)
-		ft_error2(strerror(errno), data->here_doc, data, 1);
+		ft_error2(strerror(errno), data->here_doc, 1);
 }
 
 void	read_here_doc(t_data *data, char **token, int fd)
@@ -69,7 +69,7 @@ void	get_here_file(t_data *data, char **token)
 	if (quoted)
 	{
 		temp = *token;
-		remove_quotes(token, data);
+		remove_quotes(token);
 		free_string(&temp);
 	}
 	open_here_file(data, &fd);

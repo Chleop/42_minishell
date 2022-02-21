@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BI_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 10:57:26 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/17 15:21:07 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/21 15:19:28 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,18 +90,18 @@ void	ft_exit(t_cmd *cmd)
 		final_exit(cmd->data);
 	else if (cmd->param[1] && cmd->param[2])
 	{
-		ft_error2("exit: too many arguments", NULL, cmd->data, 2);
+		ft_error2("exit: too many arguments", NULL, 2);
 		return ;
 	}
 	else if (!numeric_string(cmd->param[1]))
-		ft_error2("exit: numeric argument required", NULL, cmd->data, 2);
+		ft_error2("exit: numeric argument required", NULL, 2);
 	else
 	{
 		code = calculate_status(cmd->param[1]);
 		if (code == -1)
-			ft_error2("exit: numeric argument required", NULL, cmd->data, 2);
+			ft_error2("exit: numeric argument required", NULL, 2);
 		else
-			cmd->data->exit_code = code;
+			g_lobal.exit_code = code;
 	}
 	final_exit(cmd->data);
 }

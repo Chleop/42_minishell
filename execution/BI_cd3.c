@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   BI_cd3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 15:35:11 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/10 13:11:24 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/21 15:06:16 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*malloc_curpath(t_data *data, char *string)
+char	*malloc_curpath(char *string)
 {
 	int		i;
 	int		j;
@@ -32,12 +32,12 @@ char	*malloc_curpath(t_data *data, char *string)
 	{
 		curpath = ft_calloc(j + 1, sizeof(char));
 		if (!curpath)
-			ft_error2("malloc failed", NULL, data, 1);
+			ft_error2("malloc failed", NULL, 1);
 	}
 	return (curpath);
 }
 
-void	set_curpath(t_data *data, t_cd *cd, char *string)
+void	set_curpath(t_cd *cd, char *string)
 {
 	int		i;
 	int		j;
@@ -45,7 +45,7 @@ void	set_curpath(t_data *data, t_cd *cd, char *string)
 
 	i = 0;
 	j = 0;
-	curpath = malloc_curpath(data, string);
+	curpath = malloc_curpath(string);
 	while (string[i])
 	{
 		if (string[i] != '/' || (string[i] == '/'
@@ -67,10 +67,10 @@ void	set_curpath(t_data *data, t_cd *cd, char *string)
 int	init_cd(t_cmd *cmd, t_cd **cd)
 {
 	if (cmd->param[1] && cmd->param[2])
-		return (ft_error2("cd: too many arguments", NULL, cmd->data, 1));
+		return (ft_error2("cd: too many arguments", NULL, 1));
 	*cd = malloc(sizeof(t_cd) * 1);
 	if (!*cd)
-		return (ft_error2(strerror(errno), NULL, cmd->data, 1));
+		return (ft_error2(strerror(errno), NULL, 1));
 	(*cd)->oldpwd = get_var(cmd->data->envp, "PWD");
 	(*cd)->current = getcwd(NULL, 0);
 	(*cd)->path = NULL;

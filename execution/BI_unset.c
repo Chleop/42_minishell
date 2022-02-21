@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BI_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 14:07:45 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/10 13:16:42 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/21 15:07:34 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ft_unset(t_cmd *cmd)
 	i = 0;
 	while (cmd->param[++i])
 	{
-		if (check_identifier(cmd->data, cmd->param[i], UNSET))
+		if (check_identifier(cmd->param[i], UNSET))
 			remove_from_envp(cmd->data->envp, cmd->param[i]);
 	}
 }

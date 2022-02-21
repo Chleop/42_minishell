@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BI_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 15:06:37 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/17 14:45:03 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/21 15:06:08 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	chdir_path(t_data *data, t_cd *cd)
 	if (cd->path)
 	{
 		if (chdir(cd->path) == -1)
-			ft_error2(strerror(errno), cd->path, data, 1);
+			ft_error2(strerror(errno), cd->path, 1);
 		else
 			finish_cd(data, cd);
 	}
@@ -74,7 +74,7 @@ void	set_path_envp(t_data *data, t_cd *cd, char *name)
 		}
 		temp = temp->next;
 	}
-	ft_error2("cd: variable not set:", name, data, 1);
+	ft_error2("cd: variable not set:", name, 1);
 }
 
 void	ft_cd(t_cmd *cmd)
@@ -89,7 +89,7 @@ void	ft_cd(t_cmd *cmd)
 	else if (cmd->param[1][0] == '-' && cmd->param[1][1] == '\0')
 		set_path_envp(cmd->data, cd, "OLDPWD");
 	else if (cmd->param[1][0] == '/')
-		set_curpath(cmd->data, cd, cmd->param[1]);
+		set_curpath(cd, cmd->param[1]);
 	else
 		set_path_dots(cmd, cd);
 	chdir_path(cmd->data, cd);

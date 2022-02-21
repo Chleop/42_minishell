@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:23:36 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/11 15:30:04 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/21 15:03:30 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	delete_here_file(t_data *data)
 	cmd = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
 	if (!cmd)
 	{
-		ft_error2("Error: malloc failed", NULL, data, 1);
+		ft_error2("Error: malloc failed", NULL, 1);
 		return ;
 	}
 	cmd->param = ft_calloc(4, sizeof(char *));
