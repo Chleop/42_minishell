@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+         #
+#    By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/14 15:32:57 by avan-bre          #+#    #+#              #
-#    Updated: 2022/02/18 13:32:59 by cproesch         ###   ########.fr        #
+#    Updated: 2022/02/21 11:38:07 by avan-bre         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,7 @@ CC		=	@clang
 IFLAGS	=	-I. -Ilibft
 RLFLAGS	=	-lreadline
 SFLAGS	=	-fsanitize=address -g3
-TFLAGS	=	#-ltermcap
-CFLAGS	:=	-Wall -Werror -Wextra $(IFLAGS) $(SFLAGS) $(TFLAGS)
+CFLAGS	:=	-Wall -Werror -Wextra $(IFLAGS) $(SFLAGS)
 LFLAGS	:=	-Llibft -lft
 
 ################################################################################

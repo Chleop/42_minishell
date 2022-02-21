@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 17:38:24 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/18 17:32:15 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/21 11:38:05 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@
 # include <readline/history.h>
 
 # ifndef GLOBAL_SIG
-# define GLOBAL_SIG
-extern int g_pid;
+#  define GLOBAL_SIG
+
+extern int	g_sig;
 # endif
 
 struct		s_envp;
@@ -58,7 +59,7 @@ typedef struct s_cmd
 	struct s_data	*data;
 }	t_cmd;
 
-typedef struct	s_data
+typedef struct s_data
 {
 	struct s_envp	*envp;
 	int				nr_token;
@@ -77,6 +78,6 @@ typedef struct	s_data
 # include "execute.h"
 
 int		ft_error2(char *string, char *name, t_data *data, int code);
-void	signal_handler();
+void	signal_handler(void);
 
 #endif
