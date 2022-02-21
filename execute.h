@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 15:33:03 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/17 12:00:52 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/21 15:00:43 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "minishell.h"
 
-enum	BI
+enum	e_BI
 {
 	ECHO,
 	CD,
@@ -26,7 +26,10 @@ enum	BI
 	EXIT
 };
 
-typedef struct	s_envp
+struct		s_envp;
+struct		s_data;
+
+typedef struct s_envp
 {
 	char			*name;
 	char			*var;

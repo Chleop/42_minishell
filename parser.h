@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:16:35 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/18 15:47:44 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/21 13:08:15 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,40 @@
 # define EXP		2
 
 struct	s_data;
+struct	s_envp;
+
+typedef struct s_cmd
+{
+	int				nr_tok;
+	char			**tok;
+	int				*qualif;
+	int				nr_param;
+	char			**param;
+	int				nr_in;
+	char			**i;
+	int				*fd_i;
+	int				nr_out;
+	char			**o;
+	int				*fd_o;
+	int				*type;
+	int				id;
+	struct s_data	*data;
+}	t_cmd;
+
+typedef struct s_data
+{
+	struct s_envp	*envp;
+	int				nr_token;
+	int				nr_cmds;
+	t_cmd			*cmd;
+	int				*pipe_index;
+	int				pipe[2];
+	int				pipe_fd[1023][2];
+	int				process_id[1024];
+	int				exit_code;
+	char			*here_doc;
+	int				eof;
+}	t_data;
 
 typedef struct s_lex
 {
