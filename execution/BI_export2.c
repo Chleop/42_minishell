@@ -3,34 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   BI_export2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 17:14:38 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/16 16:38:11 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/21 15:07:28 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_first_char(t_data *data, char *id, int code)
+int	check_first_char(char *id, int code)
 {
 	if (ft_isdigit(id[0]) || id[0] == '=' || id[0] == '\0')
 	{
 		if (code == 3)
-			return (ft_error2("export: not a valid identifier", id, data, 1));
+			return (ft_error2("export: not a valid identifier", id, 1));
 		else if (code == 4)
-			return (ft_error2("unset: not a valid identifier", id, data, 1));
+			return (ft_error2("unset: not a valid identifier", id, 1));
 		else
 			return (0);
 	}
 	return (1);
 }
 
-int	check_identifier(t_data *data, char *id, int code)
+int	check_identifier(char *id, int code)
 {
 	int	i;
 
-	if (!check_first_char(data, id, code))
+	if (!check_first_char(id, code))
 		return (0);
 	i = -1;
 	while (id[++i] != '=' && id[i] != '\0')
@@ -38,17 +38,15 @@ int	check_identifier(t_data *data, char *id, int code)
 		if (!(ft_isalnum(id[i]) || (id[i] == '_')))
 		{
 			if (code == 3)
-				return (ft_error2("export: not a valid identifier",
-						id, data, 1));
+				return (ft_error2("export: not a valid identifier", id, 1));
 			else if (code == 4)
-				return (ft_error2("unset: not a valid identifier",
-						id, data, 1));
+				return (ft_error2("unset: not a valid identifier", id, 1));
 			else
 				return (0);
 		}
 	}
 	if (id[i] == '=' && code == 4)
-		return (ft_error2("unset: not a valid identifier", id, data, 1));
+		return (ft_error2("unset: not a valid identifier", id, 1));
 	return (1);
 }
 
@@ -88,7 +86,7 @@ void	ft_export_prefork(t_cmd *cmd)
 	i = 0;
 	while (cmd->param[++i])
 	{
-		if (check_identifier(cmd->data, cmd->param[i], EXPORT))
+		if (check_identifier(cmd->param[i], EXPORT))
 			add_to_envp(cmd->data->envp, cmd->param[i]);
 	}
 }

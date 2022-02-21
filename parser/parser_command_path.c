@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 16:42:54 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/21 13:45:27 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/21 15:19:58 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,13 @@ char	*find_accessible_path(char **tab)
 	return (NULL);
 }
 
-char	*exit_code_expansion(t_data *data, char *to_be_exp)
+char	*exit_code_expansion(char *to_be_exp)
 {
 	char	*exp;
 	char	*exit_char;
 	char	*post;
 
-	// A SUPPRIMER!!!!!!
-	data->inutile = 0;
-	// A SUPPRIMER!!!!!!
-	exit_char = ft_itoa(global.exit_code);
+	exit_char = ft_itoa(g_lobal.exit_code);
 	post = ft_strdup(to_be_exp + 1);
 	exp = ft_strjoin(exit_char, post);
 	free(exit_char);
@@ -69,7 +66,7 @@ char	*get_expansion(t_data *data, char *to_be_exp)
 	temp = data->envp;
 	exp = NULL;
 	if (to_be_exp[0] == '?')
-		return (exit_code_expansion(data, to_be_exp));
+		return (exit_code_expansion(to_be_exp));
 	while (temp && ft_strlen(to_be_exp))
 	{
 		if (!ft_strncmp(temp->name, to_be_exp, ft_strlen(temp->name) + 1))

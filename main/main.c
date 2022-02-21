@@ -6,13 +6,13 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:22:30 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/21 13:29:58 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/21 15:20:21 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_global	global;
+t_global	g_lobal;
 
 void	lexer_parser(t_data *data, int *ret)
 {
@@ -58,7 +58,7 @@ void	loop_through_commands(t_data *data)
 		}
 		status = exec_prefork_builtins(&data->cmd[i]);
 		if (status == 1)
-			global.exit_code = 0;
+			g_lobal.exit_code = 0;
 		if (status == 2)
 			fork_function(&data->cmd[i]);
 	}
@@ -84,13 +84,13 @@ int	main(int argc, char **argv, char **envp)
 	t_data	data;
 	int		ret;
 
-	global.g_sig = 0;
-	global.exit_code = 0;
+	g_lobal.g_sig = 0;
+	g_lobal.exit_code = 0;
 	data.eof = 0;
 	data.here_doc = NULL;
 	if ((argc > 1) || (argv[1]))
 	{
-		ft_error2("Error: too many arguments", NULL, &data, 127);
+		ft_error2("Error: too many arguments", NULL, 127);
 		final_exit(&data);
 	}
 	signal_handler();

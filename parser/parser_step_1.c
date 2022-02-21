@@ -6,13 +6,13 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 18:55:08 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/18 13:39:06 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/21 15:08:07 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	review_operators(char **token, t_data *data)
+int	review_operators(char **token)
 {
 	int	i;
 
@@ -33,7 +33,7 @@ int	review_operators(char **token, t_data *data)
 					|| (token[i - 1][0] == '<')))
 					|| (((i - 1) > -1) && (token[i][0] == '|')
 					&& (token[i - 1][0] == '|')))
-				return (ft_error2("Syntax error", token[i], data, 2));
+				return (ft_error2("Syntax error", token[i], 2));
 		}
 		i++;
 	}
@@ -79,7 +79,7 @@ int	expand_cmd_path(t_data *data)
 
 int	parse(t_data *data, char **token)
 {
-	if (!review_operators(token, data))
+	if (!review_operators(token))
 		return (0);
 	if (!initialize_data(data, token))
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 17:38:24 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/21 13:43:07 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/21 15:20:43 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct s_global
 	int	exit_code;
 }	t_global;
 
-extern t_global	global;
+extern t_global	g_lobal;
 
 # endif
 
@@ -79,13 +79,12 @@ typedef struct s_data
 	// int				exit_code;
 	char			*here_doc;
 	int				eof;
-	int				inutile;
 }	t_data;
 
 # include "parser.h"
 # include "execute.h"
 
-int		ft_error2(char *string, char *name, t_data *data, int code);
+int		ft_error2(char *string, char *name, int code);
 void	signal_handler(void);
 
 #endif

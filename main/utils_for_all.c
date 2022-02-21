@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:26:28 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/21 13:45:28 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/21 15:19:28 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,19 +79,16 @@ void	final_exit(t_data *data)
 	int	ex_code;
 
 	ft_free_data(data, 1);
-	ex_code = global.exit_code;
+	ex_code = g_lobal.exit_code;
 	exit (ex_code);
 }
 
-int	ft_error2(char *string, char *name, t_data *data, int code)
+int	ft_error2(char *string, char *name, int code)
 {
-	// A SUPPRIMMER!!!!!!
-	data->inutile = 0;
-	// A SUPPRIMER!!!!!!
 	if (name)
 		ft_printf("%s: %s\n", 2, string, name);
 	else
 		ft_printf("%s\n", 2, string);
-	global.exit_code = code;
+	g_lobal.exit_code = code;
 	return (0);
 }

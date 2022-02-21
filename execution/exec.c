@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 11:19:50 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/21 13:43:42 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/21 15:19:28 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ void	exec_nonbuiltins(t_cmd *cmd)
 
 	envp_tab = NULL;
 	if (access(cmd->param[0], F_OK))
-		ft_error2("command not found", cmd->param[0], cmd->data, 127);
+		ft_error2("command not found", cmd->param[0], 127);
 	else
 	{
 		convert_envp(cmd->data->envp, &envp_tab);
-		global.exit_code = 0;
+		g_lobal.exit_code = 0;
 		if (execve(cmd->param[0], cmd->param, envp_tab) == -1)
-			ft_error2(strerror(errno), cmd->param[0], cmd->data, 126);
+			ft_error2(strerror(errno), cmd->param[0], 126);
 		ft_del_stringtab(&envp_tab);
 	}
 	final_exit(cmd->data);
@@ -42,16 +42,16 @@ int	exec_builtins(t_cmd *cmd)
 		ft_export_fork(cmd);
 	else
 		return (0);
-	global.exit_code = 0;
+	g_lobal.exit_code = 0;
 	return (1);
 }
 
 int	fork_function(t_cmd *cmd)
 {
 	cmd->data->process_id[cmd->id] = fork();
-	global.g_sig = cmd->data->process_id[cmd->id];
+	g_lobal.g_sig = cmd->data->process_id[cmd->id];
 	if (cmd->data->process_id[cmd->id] == -1)
-		return (ft_error2(strerror(errno), NULL, cmd->data, 1));
+		return (ft_error2(strerror(errno), NULL, 1));
 	else if (cmd->data->process_id[cmd->id] == 0)
 	{	
 		if (!redirect_io(cmd))

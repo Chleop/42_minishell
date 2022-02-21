@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:16:35 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/21 13:43:45 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/21 15:19:48 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int		set_into_structure2(t_data *data, char **token, int n, int tok_nr);
 int		set_redirections_tabs(t_data *data, char **token, int n, int qualif);
 
 int		remove_quotes_inside_struct(t_data *data);
-int		remove_quotes(char **token, t_data *data);
+int		remove_quotes(char **token);
 int		is_quoted(char *token);
 int		is_paired(char q, char *input, int i);
 int		*locate_c_in_string(char *token, char c, int len);

@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 16:11:06 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/18 12:04:03 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/21 15:04:07 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,6 @@ int	initialize_data(t_data *data, char **token)
 	data->nr_cmds = nb_pip + 1;
 	data->cmd = (t_cmd *)ft_calloc(data->nr_cmds, sizeof(t_cmd));
 	if (!data->cmd)
-		return (ft_error2("Error: malloc failed", NULL, data, 1));
+		return (ft_error2("Error: malloc failed", NULL, 1));
 	return (1);
 }
