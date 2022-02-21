@@ -6,11 +6,13 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 17:46:43 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/21 15:19:51 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/21 17:54:21 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	catch_signal(int sig);
 
 void	open_here_file(t_data *data, int *fd)
 {
@@ -34,28 +36,42 @@ void	open_here_file(t_data *data, int *fd)
 		free_string(&temp);
 	}
 	*fd = open(data->here_doc, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+	printf("fd = %d\n", *fd);
 	if (!fd)
 		ft_error2(strerror(errno), data->here_doc, 1);
 }
 
 void	read_here_doc(t_data *data, char **token, int fd)
 {
-	char	*input;
+	// char	*input;
+	// struct sigaction	sa;
 
-	input = NULL;
+	// sa.sa_handler = &catch_signal;
+
+	g_lobal.g_sig = -42;
+	g_lobal.token = *token;
+	// sigaction(SIGINT, &sa, NULL);
 	while (1)
 	{
-		input = readline(GREEN "heredoc> " RESET);
-		if (!ft_strncmp(input, *token, ft_strlen(*token) + 1))
-		{
-			free_string(&input);
-			return ;
-		}
-		if (ft_strchr(input, '$'))
-			manage_expansions(data, &input, HERE_END);
-		ft_putstr_fd(input, fd);
-		ft_putstr_fd("\n", fd);
-		free_string(&input);
+		g_lobal.here_input = readline(GREEN "heredoc> " RESET);
+		if (g_lobal.oui)
+			g_lobal.here_input = g_lobal.token;
+		printf("input in here_d = %s\n", g_lobal.here_input);
+		// if (!g_lobal.kill_here_doc)
+		// {
+			if (!ft_strncmp(g_lobal.here_input, *token, ft_strlen(*token) + 1))
+			{
+				free_string(&g_lobal.here_input);
+				return ;
+			}
+			if (ft_strchr(g_lobal.here_input, '$'))
+				manage_expansions(data, &g_lobal.here_input, HERE_END);
+			ft_putstr_fd(g_lobal.here_input, fd);
+			ft_putstr_fd("\n", fd);
+		// }
+		// else
+		// 	printf("on a kill le here_doc!\n");
+		free_string(&g_lobal.here_input);
 	}
 }
 

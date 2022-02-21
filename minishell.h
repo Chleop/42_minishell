@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 17:38:24 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/21 15:20:43 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/21 17:51:30 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@ typedef struct s_global
 {
 	int	g_sig;
 	int	exit_code;
+	char	*here_input;
+	char	*token;
+	int	oui;
+
 }	t_global;
 
 extern t_global	g_lobal;

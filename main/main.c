@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:22:30 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/21 15:20:21 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/21 17:51:50 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,9 @@ int	main(int argc, char **argv, char **envp)
 
 	g_lobal.g_sig = 0;
 	g_lobal.exit_code = 0;
+	g_lobal.here_input = NULL;
+	g_lobal.token = NULL;
+	g_lobal.oui = 0;
 	data.eof = 0;
 	data.here_doc = NULL;
 	if ((argc > 1) || (argv[1]))
