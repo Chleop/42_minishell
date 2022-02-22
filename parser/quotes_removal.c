@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_removal.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:51:50 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/21 15:19:54 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/22 16:12:40 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	remove_quotes(char **token)
 		*token = remove_c(*token, i, quote);
 		if (!*token)
 			return (ft_error2("Error: malloc failed", NULL, 1));
+		while (temp[i] != quote)
+			i++;
 		i = is_paired(quote, temp, i + 1) - 1;
 		free (temp);
 		temp = NULL;

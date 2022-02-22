@@ -6,7 +6,7 @@
 #    By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/14 15:32:57 by avan-bre          #+#    #+#              #
-#    Updated: 2022/02/22 13:50:05 by avan-bre         ###   ########.fr        #
+#    Updated: 2022/02/22 16:14:00 by avan-bre         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,14 +15,12 @@
 ################################################################################
 
 NAME	=	minishell
-B_NAME	=	
 LIBFT	=	libft/libft.a
 RM		=	@rm -rf
 CC		=	@clang
 IFLAGS	=	-I. -Ilibft
 RLFLAGS	=	-lreadline
-SFLAGS	=	#-fsanitize=address -g3
-CFLAGS	:=	-Wall -Werror -Wextra -g $(IFLAGS) $(SFLAGS)
+CFLAGS	:=	-Wall -Werror -Wextra $(IFLAGS)
 LFLAGS	:=	-Llibft -lft
 
 ################################################################################
