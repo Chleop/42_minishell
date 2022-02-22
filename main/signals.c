@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 12:53:55 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/21 16:23:38 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/22 10:18:19 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	signal_kill(int sig)
 {
 	if (sig == SIGINT)
 	{
-		ft_printf("\n", 1);
+		rl_on_new_line();
+		rl_replace_line("xxx", 0);
 		g_lobal.exit_code = 130;
 	}
 	if (sig == SIGQUIT)
@@ -41,13 +42,24 @@ void	signal_kill(int sig)
 	g_lobal.g_sig = 0;
 }
 
+void	signal_here(int sig)
+{
+	// if (sig == SIGINT)
+	// {
+	// 	kill(0, SIGTERM);
+	// }
+	if (sig == SIGQUIT)
+		ft_printf("\b\b  \b\b", 1);
+}
+
 void	catch_signal(int sig)
 {
 	if (!g_lobal.g_sig)
 		signal_ignore(sig);
 	else if (g_lobal.g_sig < 0)
 	{
-		g_lobal.here_d = 1;
+		signal_here(sig);
+		g_lobal.g_sig = 0;
 	}
 	else if (kill(g_lobal.g_sig, sig) == 0)
 		signal_kill(sig);
