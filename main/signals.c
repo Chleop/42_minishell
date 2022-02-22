@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 12:53:55 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/22 10:20:17 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/22 10:33:34 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ void	signal_ignore(int sig)
 void	signal_kill(int sig)
 {
 	if (sig == SIGINT)
+	{
+		ft_printf("\n", 1);
 		g_lobal.exit_code = 130;
+	}
 	if (sig == SIGQUIT)
 	{
 		ft_printf("Quit (core dumped)\n", 1);
