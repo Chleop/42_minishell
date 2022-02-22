@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 11:19:50 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/22 12:30:51 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/22 17:05:10 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ int	exec_builtins(t_cmd *cmd)
 
 int	fork_function(t_cmd *cmd)
 {
-	cmd->data->process_id[cmd->id] = fork();
-	g_lobal.g_sig = cmd->data->process_id[cmd->id];
-	if (cmd->data->process_id[cmd->id] == -1)
+	cmd->data->process_id[cmd->data->nr_pid] = fork();
+	g_lobal.g_sig = cmd->data->process_id[cmd->data->nr_pid];
+	if (cmd->data->process_id[cmd->data->nr_pid] == -1)
 		return (ft_error2(strerror(errno), NULL, 1));
-	else if (cmd->data->process_id[cmd->id] == 0)
+	else if (cmd->data->process_id[cmd->data->nr_pid] == 0)
 	{	
 		if (!redirect_io(cmd))
 			final_exit(cmd->data);
@@ -62,6 +62,7 @@ int	fork_function(t_cmd *cmd)
 		final_exit(cmd->data);
 		return (1);
 	}
+	cmd->data->nr_pid += 1;
 	return (0);
 }
 

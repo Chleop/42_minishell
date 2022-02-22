@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:16:35 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/21 15:53:24 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/22 16:46:04 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_data
 	int				pipe[2];
 	int				pipe_fd[1023][2];
 	int				process_id[1024];
+	int				nr_pid;
 	char			*here_doc;
 	int				eof;
 }	t_data;

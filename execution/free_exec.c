@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 15:54:42 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/22 15:16:56 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/22 17:04:36 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	finish_up(t_data *data)
 		}
 	}
 	i = -1;
-	while ((++i < data->nr_cmds) && data->process_id[i])
+	while ((++i < data->nr_pid) && data->process_id[i])
 	{
 		wret = waitpid(data->process_id[i], &ret, 0);
 		data->process_id[i] = 0;
