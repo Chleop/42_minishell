@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 15:06:37 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/22 12:40:14 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/22 15:16:43 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	chdir_path(t_data *data, t_cd *cd)
 	else
 	{
 		free_cd(&cd);
-		return (0);	
+		return (0);
 	}
 	free_cd(&cd);
 	return (1);

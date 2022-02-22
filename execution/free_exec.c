@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 15:54:42 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/22 13:46:57 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/22 15:16:56 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	finish_up(t_data *data)
 		wret = waitpid(data->process_id[i], &ret, 0);
 		data->process_id[i] = 0;
 		if (wret >= 0 && WIFEXITED(ret))
-				g_lobal.exit_code = WEXITSTATUS(ret);
+			g_lobal.exit_code = WEXITSTATUS(ret);
 	}
 }
 

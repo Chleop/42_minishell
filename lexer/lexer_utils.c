@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 18:38:33 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/17 10:47:25 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/22 15:13:19 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	add_to_token(char ***token, t_lex *lex, char input)
 				(*token)[lex->tok_nb - 1][l] = str_temp[l];
 				l++;
 			}
-			free(str_temp);
+			free_string(&str_temp);
 		}
 		(*token)[lex->tok_nb - 1][lex->char_nb - 1] = input;
 	}

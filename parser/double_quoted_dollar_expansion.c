@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   double_quoted_dollar_expansion.c                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 13:32:12 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/18 15:23:52 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/22 15:00:55 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	if_dollar_expand(t_data *data, char **subtok)
 	{
 		temp = *subtok;
 		*subtok = expand(data, *subtok);
-		free(temp);
+		free_string(&temp);
 	}
 }
 
@@ -52,7 +52,7 @@ void	join_subtok(char **subtok, char **new_param)
 
 	temp = *new_param;
 	*new_param = ft_strjoin(*new_param, *subtok);
-	free(temp);
+	free_string(&temp);
 }
 
 char	*double_quoted_exp(t_data *data, char *param)
@@ -73,7 +73,7 @@ char	*double_quoted_exp(t_data *data, char *param)
 		subtok = ft_substr(param, i, end - i);
 		if_dollar_expand(data, &subtok);
 		join_subtok(&subtok, &new_param);
-		free(subtok);
+		free_string(&subtok);
 		i = end;
 	}
 	return (new_param);

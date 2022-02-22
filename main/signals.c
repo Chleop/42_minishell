@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 12:53:55 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/22 11:21:44 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/22 15:27:08 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void	signal_handler(void)
 	struct sigaction	sa;
 
 	sa.sa_handler = &catch_signal;
+	sa.sa_flags = 0;
+	sigemptyset(&sa.sa_mask);
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGQUIT, &sa, NULL);
 }

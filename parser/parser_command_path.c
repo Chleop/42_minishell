@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_command_path.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 16:42:54 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/21 15:19:58 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/22 15:01:23 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	join_c(char	**tab, char	*str)
 	{
 		temp = tab[i];
 		tab[i] = ft_strjoin(tab[i], str);
-		free(temp);
+		free_string(&temp);
 		if (!tab[i])
 			return (0);
 		i++;
@@ -53,8 +53,8 @@ char	*exit_code_expansion(char *to_be_exp)
 	exit_char = ft_itoa(g_lobal.exit_code);
 	post = ft_strdup(to_be_exp + 1);
 	exp = ft_strjoin(exit_char, post);
-	free(exit_char);
-	free(post);
+	free_string(&exit_char);
+	free_string(&post);
 	return (exp);
 }
 
@@ -94,7 +94,7 @@ char	*get_path(t_data *data, char *cmd)
 		return (ft_strdup(cmd));
 	str_path_env = get_expansion(data, "PATH\0");
 	tab_path_env = ft_split(str_path_env, ':');
-	free(str_path_env);
+	free_string(&str_path_env);
 	if (!tab_path_env)
 		return (NULL);
 	if (!(join_c(tab_path_env, "/")) || !(join_c(tab_path_env, cmd)))
