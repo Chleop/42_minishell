@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 15:22:30 by cproesch          #+#    #+#             */
-/*   Updated: 2022/02/21 16:48:18 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/22 11:21:41 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,14 @@ void	loop_through_commands(t_data *data)
 				reverse_redirection(&data->cmd[i],
 					current_stdin, current_stdout);
 		}
-		status = exec_prefork_builtins(&data->cmd[i]);
-		if (status == 1)
-			g_lobal.exit_code = 0;
-		if (status == 2)
-			fork_function(&data->cmd[i]);
+		else
+		{
+			status = exec_prefork_builtins(&data->cmd[i]);
+			if (status == 1)
+				g_lobal.exit_code = 0;
+			if (status == 2)
+				fork_function(&data->cmd[i]);
+		}
 	}
 }
 
@@ -85,7 +88,6 @@ int	main(int argc, char **argv, char **envp)
 	int		ret;
 
 	g_lobal.g_sig = 0;
-	g_lobal.here_d = 0;
 	g_lobal.exit_code = 0;
 	data.eof = 0;
 	data.here_doc = NULL;

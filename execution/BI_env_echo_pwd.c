@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BI_env_echo_pwd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 17:18:03 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/21 15:00:44 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/22 11:21:42 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_echo(t_cmd *cmd)
 	if (j && cmd->param[i])
 		ft_printf("%s", 1, cmd->param[i]);
 	else if (j)
-		printf("");
+		ft_printf("", 1);
 	else
 		ft_printf("%s\n", 1, cmd->param[i]);
 }

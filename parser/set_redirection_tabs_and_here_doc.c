@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 17:46:43 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/22 10:25:40 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/22 11:21:45 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	read_here_doc(t_data *data, char **token, int fd)
 		input = readline(GREEN "heredoc> " RESET);
 		if (!input)
 		{
-			g_lobal.here_d = 1;
 			ft_printf("warning: here-document ended by end-of-file\n", 1);
 			return ;
 		}
