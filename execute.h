@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 15:33:03 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/21 15:49:38 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/22 12:35:48 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,16 +73,16 @@ void	reverse_redirection(t_cmd *cmd, int in, int out);
 void	ft_echo(t_cmd *cmd);
 void	ft_env(t_cmd *cmd);
 int		export_possible(t_cmd *cmd);
-void	ft_export_prefork(t_cmd *cmd);
+int		ft_export_prefork(t_cmd *cmd);
 void	ft_export_fork(t_cmd *cmd);
 int		check_identifier(char *id, int code);
-void	ft_unset(t_cmd *cmd);
+int		ft_unset(t_cmd *cmd);
 void	ft_pwd(t_cmd *cmd);
-void	ft_cd(t_cmd *cmd);
+int		ft_cd(t_cmd *cmd);
 int		init_cd(t_cmd *cmd, t_cd **cd);
 char	*get_var(t_envp *envp, char *name);
 void	set_path_dots(t_cmd *cmd, t_cd *cd);
-void	chdir_path(t_data *data, t_cd *cd);
+int		chdir_path(t_data *data, t_cd *cd);
 void	set_curpath(t_cd *cd, char *string);
 void	free_cd(t_cd **cd);
 void	ft_exit(t_cmd *cmd);

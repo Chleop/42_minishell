@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 11:19:50 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/22 11:21:43 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/22 12:30:51 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	exec_builtins(t_cmd *cmd)
 		ft_export_fork(cmd);
 	else
 		return (0);
-	g_lobal.exit_code = 0;
 	return (1);
 }
 
@@ -70,7 +69,9 @@ int	exec_prefork_builtins2(t_cmd *cmd, enum e_BI funct)
 {
 	int		current_stdin;
 	int		current_stdout;
+	int		status;
 
+	status = 1;
 	current_stdin = dup(STDIN_FILENO);
 	current_stdout = dup(STDOUT_FILENO);
 	if (!redirect_io(cmd))
@@ -83,13 +84,13 @@ int	exec_prefork_builtins2(t_cmd *cmd, enum e_BI funct)
 	if (cmd->data->nr_cmds > 1)
 		pipe_function(cmd);
 	if (funct == CD)
-		ft_cd(cmd);
+		status = ft_cd(cmd);
 	else if (funct == EXPORT)
-		ft_export_prefork(cmd);
+		status = ft_export_prefork(cmd);
 	else if (funct == UNSET)
-		ft_unset(cmd);
+		status = ft_unset(cmd);
 	reverse_redirection(cmd, current_stdin, current_stdout);
-	return (1);
+	return (status);
 }
 
 int	exec_prefork_builtins(t_cmd *cmd)

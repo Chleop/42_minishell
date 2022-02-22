@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BI_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 15:06:37 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/21 15:06:08 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/22 12:40:14 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,26 @@ void	finish_cd(t_data *data, t_cd *cd)
 	}
 }
 
-void	chdir_path(t_data *data, t_cd *cd)
+int	chdir_path(t_data *data, t_cd *cd)
 {
 	if (cd->path)
 	{
 		if (chdir(cd->path) == -1)
+		{
 			ft_error2(strerror(errno), cd->path, 1);
+			free_cd(&cd);
+			return (0);
+		}
 		else
 			finish_cd(data, cd);
 	}
+	else
+	{
+		free_cd(&cd);
+		return (0);	
+	}
 	free_cd(&cd);
+	return (1);
 }
 
 void	set_path_envp(t_data *data, t_cd *cd, char *name)
@@ -77,13 +87,13 @@ void	set_path_envp(t_data *data, t_cd *cd, char *name)
 	ft_error2("cd: variable not set:", name, 1);
 }
 
-void	ft_cd(t_cmd *cmd)
+int	ft_cd(t_cmd *cmd)
 {
 	t_cd	*cd;
 
 	cd = NULL;
 	if (!init_cd(cmd, &cd))
-		return ;
+		return (0);
 	if (!cmd->param[1])
 		set_path_envp(cmd->data, cd, "HOME");
 	else if (cmd->param[1][0] == '-' && cmd->param[1][1] == '\0')
@@ -92,5 +102,5 @@ void	ft_cd(t_cmd *cmd)
 		set_curpath(cd, cmd->param[1]);
 	else
 		set_path_dots(cmd, cd);
-	chdir_path(cmd->data, cd);
+	return (chdir_path(cmd->data, cd));
 }

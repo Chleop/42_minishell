@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 16:43:49 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/10 13:15:09 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/22 12:04:37 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,5 @@ void	ft_export_fork(t_cmd *cmd)
 		min->printed++;
 	}
 	reset_printed(temp);
+	g_lobal.exit_code = 0;
 }

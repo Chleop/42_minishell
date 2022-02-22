@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BI_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 10:57:26 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/21 15:19:28 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/22 11:54:35 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ int	calculate_status(char *string)
 	while (ft_isdigit(string[i]))
 	{
 		code = code * 10 + (string[i] - '0');
-		if ((neg == 1 && code > 9223372036854775807ULL)
-			|| (neg == -1 && code > 9223372036854775808ULL))
+		if ((neg == 1 && (code > 9223372036854775807ULL || i > 18))
+			|| (neg == -1 && (code > 9223372036854775808ULL || i > 19)))
 			return (-1);
 		i++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BI_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 14:07:45 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/21 15:07:34 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/22 12:36:01 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,24 @@ void	remove_from_envp(t_envp *envp, char *name)
 	}
 }
 
-void	ft_unset(t_cmd *cmd)
+int	ft_unset(t_cmd *cmd)
 {
 	int		i;
+	int		status;
 	t_envp	*temp;
 
 	temp = cmd->data->envp;
+	status = 0;
 	i = 0;
 	while (cmd->param[++i])
 	{
 		if (check_identifier(cmd->param[i], UNSET))
 			remove_from_envp(cmd->data->envp, cmd->param[i]);
+		else
+			status++;
 	}
+	if (status)
+		return (0);
+	else
+		return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 17:18:03 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/22 11:21:42 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/22 12:07:29 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	ft_pwd(t_cmd *cmd)
 		pwd = getcwd(NULL, 0);
 	ft_printf("%s\n", 1, pwd);
 	free_string(&pwd);
+	g_lobal.exit_code = 0;
 }
 
 void	no_backslash(char *param, int *j)
@@ -44,6 +45,7 @@ void	ft_echo(t_cmd *cmd)
 	if (cmd->param[1] == NULL)
 	{
 		ft_printf("\n", 1);
+		g_lobal.exit_code = 0;
 		return ;
 	}
 	i = 0;
@@ -59,6 +61,7 @@ void	ft_echo(t_cmd *cmd)
 		ft_printf("", 1);
 	else
 		ft_printf("%s\n", 1, cmd->param[i]);
+	g_lobal.exit_code = 0;
 }
 
 void	ft_env(t_cmd *cmd)
@@ -81,6 +84,7 @@ void	ft_env(t_cmd *cmd)
 			temp = temp->next;
 		}
 		ft_printf("_=/bin/env\n", 1);
+		g_lobal.exit_code = 0;
 	}
 	else
 		ft_error2("command not found", "env", 127);

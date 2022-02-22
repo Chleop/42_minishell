@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BI_export2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 17:14:38 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/21 15:07:28 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/22 12:34:46 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,22 @@ void	add_to_envp(t_envp *envp, char *var)
 	add_item_back(&temp, new);
 }
 
-void	ft_export_prefork(t_cmd *cmd)
+int	ft_export_prefork(t_cmd *cmd)
 {
 	int		i;
+	int		status;
 
 	i = 0;
+	status = 0;
 	while (cmd->param[++i])
 	{
 		if (check_identifier(cmd->param[i], EXPORT))
 			add_to_envp(cmd->data->envp, cmd->param[i]);
+		else
+			status++;
 	}
+	if (status)
+		return (0);
+	else
+		return (1);
 }
