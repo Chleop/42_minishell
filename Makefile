@@ -6,7 +6,7 @@
 #    By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/14 15:32:57 by avan-bre          #+#    #+#              #
-#    Updated: 2022/02/21 11:38:07 by avan-bre         ###   ########.fr        #
+#    Updated: 2022/02/22 13:50:05 by avan-bre         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,8 @@ RM		=	@rm -rf
 CC		=	@clang
 IFLAGS	=	-I. -Ilibft
 RLFLAGS	=	-lreadline
-SFLAGS	=	-fsanitize=address -g3
-CFLAGS	:=	-Wall -Werror -Wextra $(IFLAGS) $(SFLAGS)
+SFLAGS	=	#-fsanitize=address -g3
+CFLAGS	:=	-Wall -Werror -Wextra -g $(IFLAGS) $(SFLAGS)
 LFLAGS	:=	-Llibft -lft
 
 ################################################################################
