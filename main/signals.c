@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 12:53:55 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/22 10:18:19 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/22 10:20:17 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,7 @@ void	signal_ignore(int sig)
 void	signal_kill(int sig)
 {
 	if (sig == SIGINT)
-	{
-		rl_on_new_line();
-		rl_replace_line("xxx", 0);
 		g_lobal.exit_code = 130;
-	}
 	if (sig == SIGQUIT)
 	{
 		ft_printf("Quit (core dumped)\n", 1);
@@ -44,10 +40,6 @@ void	signal_kill(int sig)
 
 void	signal_here(int sig)
 {
-	// if (sig == SIGINT)
-	// {
-	// 	kill(0, SIGTERM);
-	// }
 	if (sig == SIGQUIT)
 		ft_printf("\b\b  \b\b", 1);
 }
