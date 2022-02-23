@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BI_cd3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 15:35:11 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/21 15:06:16 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/02/23 11:06:48 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,12 @@ int	init_cd(t_cmd *cmd, t_cd **cd)
 		return (ft_error2(strerror(errno), NULL, 1));
 	(*cd)->oldpwd = get_var(cmd->data->envp, "PWD");
 	(*cd)->current = getcwd(NULL, 0);
+	if ((*cd)->oldpwd)
+		(*cd)->level = get_level((*cd)->oldpwd);
+	else if ((*cd)->current)
+		(*cd)->level = get_level((*cd)->current);
+	else
+		(*cd)->level = 0;
 	(*cd)->path = NULL;
 	return (1);
 }

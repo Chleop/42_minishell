@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 11:19:50 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/22 17:05:10 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/23 10:44:12 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,7 @@ int	exec_prefork_builtins(t_cmd *cmd)
 
 	funct = 0;
 	if (ft_strncmp(cmd->param[0], "exit\0", 5) == 0)
-	{
-		ft_exit(cmd);
-		return (1);
-	}
+		return (ft_exit(cmd));
 	else if (ft_strncmp(cmd->param[0], "cd\0", 3) == 0)
 		funct = CD;
 	else if (ft_strncmp(cmd->param[0], "export\0", 7) == 0

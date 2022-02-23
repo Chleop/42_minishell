@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_redirection_tabs_and_here_doc.c                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 17:46:43 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/22 11:21:45 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/23 18:14:54 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,17 +67,12 @@ void	read_here_doc(t_data *data, char **token, int fd)
 
 void	get_here_file(t_data *data, char **token)
 {
-	char	*temp;
 	int		fd;
 	int		quoted;
 
 	quoted = is_quoted(*token);
 	if (quoted)
-	{
-		temp = *token;
 		remove_quotes(token);
-		free_string(&temp);
-	}
 	open_here_file(data, &fd);
 	read_here_doc(data, token, fd);
 	close (fd);

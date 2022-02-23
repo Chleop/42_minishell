@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 15:06:37 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/22 15:16:43 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/23 12:08:10 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ char	*get_var(t_envp *envp, char *name)
 void	finish_cd(t_data *data, t_cd *cd)
 {
 	char	*temp;
+	char	*current;
 	char	*pwd;
 
 	if (cd->oldpwd)
@@ -40,10 +41,15 @@ void	finish_cd(t_data *data, t_cd *cd)
 	pwd = get_var(data->envp, "PWD");
 	if (pwd)
 	{
-		temp = ft_strjoin("PWD=", cd->path);
+		current = getcwd(NULL, 0);
+		if (current)
+			temp = ft_strjoin("PWD=", current);
+		else
+			temp = ft_strjoin("PWD=", cd->path);
 		add_to_envp(data->envp, temp);
 		free_string(&temp);
 		free_string(&pwd);
+		free_string(&current);
 	}
 }
 

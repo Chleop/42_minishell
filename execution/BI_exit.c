@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 10:57:26 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/22 11:54:35 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/23 10:45:04 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	calculate_status(char *string)
 	return (final_status(code, neg));
 }
 
-void	ft_exit(t_cmd *cmd)
+int	ft_exit(t_cmd *cmd)
 {
 	int	code;	
 
@@ -88,13 +88,13 @@ void	ft_exit(t_cmd *cmd)
 	ft_printf("%s\n", 1, "exit");
 	if (!cmd->param[1])
 		final_exit(cmd->data);
+	else if (!numeric_string(cmd->param[1]))
+		ft_error2("exit: numeric argument required", NULL, 2);
 	else if (cmd->param[1] && cmd->param[2])
 	{
 		ft_error2("exit: too many arguments", NULL, 2);
-		return ;
+		return (0);
 	}
-	else if (!numeric_string(cmd->param[1]))
-		ft_error2("exit: numeric argument required", NULL, 2);
 	else
 	{
 		code = calculate_status(cmd->param[1]);
@@ -104,4 +104,5 @@ void	ft_exit(t_cmd *cmd)
 			g_lobal.exit_code = code;
 	}
 	final_exit(cmd->data);
+	return (1);
 }

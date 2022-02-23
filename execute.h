@@ -6,7 +6,7 @@
 /*   By: avan-bre <avan-bre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 15:33:03 by avan-bre          #+#    #+#             */
-/*   Updated: 2022/02/22 12:35:48 by avan-bre         ###   ########.fr       */
+/*   Updated: 2022/02/23 11:10:32 by avan-bre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,12 @@ void	ft_pwd(t_cmd *cmd);
 int		ft_cd(t_cmd *cmd);
 int		init_cd(t_cmd *cmd, t_cd **cd);
 char	*get_var(t_envp *envp, char *name);
+int		get_level(char *oldpwd);
 void	set_path_dots(t_cmd *cmd, t_cd *cd);
 int		chdir_path(t_data *data, t_cd *cd);
 void	set_curpath(t_cd *cd, char *string);
 void	free_cd(t_cd **cd);
-void	ft_exit(t_cmd *cmd);
+int		ft_exit(t_cmd *cmd);
 
 //exit functions
 void	free_io(t_cmd *cmd);
